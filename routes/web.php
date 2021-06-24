@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +18,12 @@ Route::get('/', function () {
     return view('index');
 })->name('home');
 
-Route::get('/panel', function () {
-    return view('panel.index');
+Route::get('/signin', 'AuthController@showFormLogin')->name('signin');
+Route::post('/signin', 'AuthController@postLogin')->name('post_login');
+
+Route::group(['middleware' => ['auth', 'revalidate']], function() {
+    Route::get('/panel', function () {
+        return view('panel.index');
+    });
+    Route::get('/signout', 'AuthController@signout')->name('signout');
 });

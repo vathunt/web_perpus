@@ -347,9 +347,9 @@
                 </li>
 
                 <li class="sidebar-item  ">
-                    <a href="https://github.com/zuramai/mazer#donate" class='sidebar-link'>
-                        <i class="bi bi-cash"></i>
-                        <span>Donate</span>
+                    <a href="{{ route('signout') }}" class='sidebar-link'>
+                        <i class="bi bi-power"></i>
+                        <span>Logout</span>
                     </a>
                 </li>
 
