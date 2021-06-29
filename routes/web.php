@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,12 +17,17 @@ Route::get('/', function () {
     return view('index');
 })->name('home');
 
-Route::get('/signin', 'AuthController@showFormLogin')->name('signin');
-Route::post('/signin', 'AuthController@postLogin')->name('post_login');
+Route::get('/signin', 'AuthController@showFormLogin')->name('login');
+Route::post('/signin', 'AuthController@postLogin')->name('post.login');
 
 Route::group(['middleware' => ['auth', 'revalidate']], function() {
-    Route::get('/panel', function () {
-        return view('panel.index');
-    });
+    Route::get('/panel', 'AdminController@home')->name('admin.panel');
+
+    Route::get('/slide', 'SlideController@index')->name('slide.banner');
+    Route::post('/slide', 'SlideController@store')->name('slide.post');
+
+    Route::get('/artikel', 'AdminController@artikel')->name('artikel');
     Route::get('/signout', 'AuthController@signout')->name('signout');
 });
+
+// Route::resource('image', 'ImageController');

@@ -1,5 +1,7 @@
 @extends('layouts.admin.index')
 
+@section('title', 'Beranda')
+
 @section('content')
 <div id="main">
     <header class="mb-3">
@@ -109,7 +111,7 @@
                                             <svg class="bi text-primary" width="32" height="32" fill="blue"
                                                 style="width:10px">
                                                 <use
-                                                    xlink:href="{{ asset('admin/assets/vendors/bootstrap-icons/bootstrap-icons.svg#circle-fill') }}" />
+                                                    xlink:href="{{ asset('assets/vendors/bootstrap-icons/bootstrap-icons.svg#circle-fill') }}" />
                                             </svg>
                                             <h5 class="mb-0 ms-3">Europe</h5>
                                         </div>
@@ -127,7 +129,7 @@
                                             <svg class="bi text-success" width="32" height="32" fill="blue"
                                                 style="width:10px">
                                                 <use
-                                                    xlink:href="{{ asset('admin/assets/vendors/bootstrap-icons/bootstrap-icons.svg#circle-fill') }}" />
+                                                    xlink:href="{{ asset('assets/vendors/bootstrap-icons/bootstrap-icons.svg#circle-fill') }}" />
                                             </svg>
                                             <h5 class="mb-0 ms-3">America</h5>
                                         </div>
@@ -145,7 +147,7 @@
                                             <svg class="bi text-danger" width="32" height="32" fill="blue"
                                                 style="width:10px">
                                                 <use
-                                                    xlink:href="{{ asset('admin/assets/vendors/bootstrap-icons/bootstrap-icons.svg#circle-fill') }}" />
+                                                    xlink:href="{{ asset('assets/vendors/bootstrap-icons/bootstrap-icons.svg#circle-fill') }}" />
                                             </svg>
                                             <h5 class="mb-0 ms-3">Indonesia</h5>
                                         </div>
@@ -179,7 +181,7 @@
                                                 <td class="col-3">
                                                     <div class="d-flex align-items-center">
                                                         <div class="avatar avatar-md">
-                                                            <img src="{{ asset('admin/assets/images/faces/5.jpg') }}">
+                                                            <img src="{{ asset('assets/images/faces/5.jpg') }}">
                                                         </div>
                                                         <p class="font-bold ms-3 mb-0">Si Cantik</p>
                                                     </div>
@@ -192,7 +194,7 @@
                                                 <td class="col-3">
                                                     <div class="d-flex align-items-center">
                                                         <div class="avatar avatar-md">
-                                                            <img src="{{ asset('admin/assets/images/faces/2.jpg') }}">
+                                                            <img src="{{ asset('assets/images/faces/2.jpg') }}">
                                                         </div>
                                                         <p class="font-bold ms-3 mb-0">Si Ganteng</p>
                                                     </div>
@@ -213,14 +215,14 @@
             </div>
             <div class="col-12 col-lg-3">
                 <div class="card">
-                    <div class="card-body py-4 px-5">
+                    <div class="card-body py-4 px-3">
                         <div class="d-flex align-items-center">
                             <div class="avatar avatar-xl">
-                                <img src="{{ asset('admin/assets/images/faces/1.jpg') }}" alt="Face 1">
+                                <img src="{{ asset('assets/images/faces/1.jpg') }}" alt="Face 1">
                             </div>
                             <div class="ms-3 name">
-                                <h5 class="font-bold">John Duck</h5>
-                                <h6 class="text-muted mb-0">@johnducky</h6>
+                                <h5 class="font-bold">{{ Auth::user()->name }}</h5>
+                                <h6 class="text-muted mb-0">{{ Auth::user()->email }}</h6>
                             </div>
                         </div>
                     </div>
@@ -232,7 +234,7 @@
                     <div class="card-content pb-4">
                         <div class="recent-message d-flex px-4 py-3">
                             <div class="avatar avatar-lg">
-                                <img src="{{ asset('admin/assets/images/faces/4.jpg') }}">
+                                <img src="{{ asset('assets/images/faces/4.jpg') }}">
                             </div>
                             <div class="name ms-4">
                                 <h5 class="mb-1">Hank Schrader</h5>
@@ -241,7 +243,7 @@
                         </div>
                         <div class="recent-message d-flex px-4 py-3">
                             <div class="avatar avatar-lg">
-                                <img src="{{ asset('admin/assets/images/faces/5.jpg') }}">
+                                <img src="{{ asset('assets/images/faces/5.jpg') }}">
                             </div>
                             <div class="name ms-4">
                                 <h5 class="mb-1">Dean Winchester</h5>
@@ -250,7 +252,7 @@
                         </div>
                         <div class="recent-message d-flex px-4 py-3">
                             <div class="avatar avatar-lg">
-                                <img src="{{ asset('admin/assets/images/faces/1.jpg') }}">
+                                <img src="{{ asset('assets/images/faces/1.jpg') }}">
                             </div>
                             <div class="name ms-4">
                                 <h5 class="mb-1">John Dodol</h5>
@@ -274,7 +276,6 @@
             </div>
         </section>
     </div>
-
     @include('layouts.admin.footer')
 </div>
 @endsection

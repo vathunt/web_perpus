@@ -5,15 +5,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Halaman Login - Website Perpustakaan</title>
-    <link rel="icon" href="{{ asset('admin/assets/images/logo/favicon.png') }}">
+    <link rel="icon" href="{{ asset('assets/images/logo/favicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap"
         rel="stylesheet" />
-    <link rel="stylesheet" href="{{ asset('admin/assets/css/bootstrap.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin/assets/vendors/sweetalert2/sweetalert2.min.css') }}">
-    <script src="{{ asset('admin/assets/vendors/sweetalert2/sweetalert2.all.min.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('admin/assets/vendors/bootstrap-icons/bootstrap-icons.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin/assets/css/app.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin/assets/css/pages/auth.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendors/sweetalert2/sweetalert2.min.css') }}">
+    <script src="{{ asset('assets/vendors/sweetalert2/sweetalert2.all.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('assets/vendors/bootstrap-icons/bootstrap-icons.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendors/fontawesome/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/pages/auth.css') }}" />
 </head>
 
 <body>
@@ -21,24 +22,7 @@
         <div class="row h-100">
             <div class="col-lg-5 col-12">
                 <div id="auth-left">
-                    @if(Session::has('sukses'))
-                    <script type="application/javascript">
-                    const swalWithBootstrapButtons = Swal.mixin({
-                        customClass: {
-                            confirmButton: 'btn btn-success',
-                        },
-                        buttonsStyling: false
-                    });
-
-                    swalWithBootstrapButtons.fire({
-                        title: 'Berhasil',
-                        text: "{{ Session::get('sukses') }}",
-                        icon: 'success',
-                        confirmButtonText: '<i class="fa fa-check"></i> OK',
-                        confirmButtonColor: '#3085d6'
-                    });
-                    </script>
-                    @elseif(Session::has('error'))
+                    @if(Session::has('error'))
                     <script type="application/javascript">
                     const swalWithBootstrapButtons = Swal.mixin({
                         customClass: {
@@ -51,13 +35,12 @@
                         title: 'Gagal',
                         text: "Periksa Kembali Username dan Password",
                         icon: 'error',
-                        confirmButtonText: '<i class="fa fa-check"></i> OK'
+                        confirmButtonText: '<i class="fas fa-check"></i> OK'
                     });
                     </script>
                     @endif
                     <div class="auth-logo">
-                        <a href="index.html"><img src="{{ asset('admin/assets/images/logo/logo.png') }}"
-                                alt="Logo" /></a>
+                        <a href="index.html"><img src="{{ asset('assets/images/logo/logo.png') }}" alt="Logo" /></a>
                     </div>
                     <h1 class="auth-title">Log in.</h1>
                     <p class="auth-subtitle mb-5">
@@ -70,7 +53,7 @@
                     </div>
                     @endforeach
                     @endif
-                    <form action="{{ route('post_login') }}" method="POST" id="formLogin">
+                    <form action="{{ route('post.login') }}" method="POST" id="formLogin">
                         @csrf
                         <div class="form-group position-relative has-icon-left mb-4">
                             <input type="text" class="form-control form-control-xl" placeholder="Username"
@@ -93,7 +76,7 @@
                             </label>
                         </div>
                         <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5" id="btnLogin">
-                            Log in
+                            <i class="fas fa-sign-in-alt"></i>&nbsp;Log in
                         </button>
                     </form>
                     <!-- <div class="text-center mt-5 text-lg fs-4">
@@ -109,7 +92,7 @@
             </div>
             <div class="col-lg-7 d-none d-lg-block">
                 <div id="auth-right">
-                    <img src="{{ asset('admin/assets/images/samples/IMG_6547.jpg') }}" alt="Background"
+                    <img src="{{ asset('assets/images/samples/IMG_6547.jpg') }}" alt="Background"
                         style="object-fit: cover; width: 100%; height: 100%;">
                 </div>
             </div>
@@ -126,9 +109,10 @@
         pass.attr("type") == "password" ? pass.attr("type", "text") : pass.attr("type", "password");
     });
     </script>
+
     <!-- jQuery Validate Plugins -->
-    <script src="{{ asset('admin/assets/vendors/validate/jquery.validate.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/vendors/validate/additional-methods.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/validate/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/validate/additional-methods.min.js') }}"></script>
     <script>
     $("#formLogin").on('blur keyup', function() {
         if ($("#formLogin").valid()) {
