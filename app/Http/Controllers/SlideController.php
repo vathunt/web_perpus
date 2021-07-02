@@ -99,7 +99,8 @@ class SlideController extends Controller
 	*/
 	public function edit($id)
 	{
-		//
+		$slides = Slide::find($id);
+        return response()->json($slides);
 	}
 	
 	/**

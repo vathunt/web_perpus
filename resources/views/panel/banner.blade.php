@@ -113,6 +113,32 @@
 </div>
 @endsection
 
+<!-- Update dan Delete Banner Slide -->
+<script>
+let id;
+
+function editBanner(id) {
+    $.ajax({
+        url: "{{ url('/') }}/panel/slide/" + id,
+        dataType: "json"
+    }).done(function(response) {
+        $('#idEdit').val(response.id);
+        $('#keterangan_slide_edit').val(response.keterangan_slide);
+
+        $("#previewBannerSlide").html('');
+        let gambar = response.gambar_slide;
+        if (gambar) {
+            gambar = response.foto_alumni
+        }
+
+        $("#previewAlumni").append("<img src='../images/slider-main/" + gambar +
+            "' id='fotoBannerTampil'>");
+
+        $('#editBanner').modal('toggle');
+    });
+}
+</script>
+
 @section('modal')
 <div class="modal fade text-left" id="editBanner" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160"
     aria-hidden="true">
@@ -152,32 +178,6 @@
 @endsection
 
 @section('javascript')
-<!-- Update dan Delete Banner Slide -->
-<script>
-let id;
-
-function editBanner(id) {
-    $.ajax({
-        url: "{{ url('/') }}/panel/slide/" + id,
-        dataType: "json"
-    }).done(function(response) {
-        $('#idEdit').val(response.id);
-        $('#keterangan_slide_edit').val(response.keterangan_slide);
-
-        $("#previewBannerSlide").html('');
-        let gambar = response.gambar_slide;
-        if (gambar) {
-            gambar = response.foto_alumni
-        }
-
-        $("#previewAlumni").append("<img src='../images/slider-main/" + gambar +
-            "' id='fotoBannerTampil'>");
-
-        $('#editBanner').modal('toggle');
-    });
-}
-</script>
-
 <!-- jQuery Validate Plugins -->
 <script src="{{ asset('assets/vendors/validate/jquery.validate.min.js') }}"></script>
 <script src="{{ asset('assets/vendors/validate/additional-methods.min.js') }}"></script>
