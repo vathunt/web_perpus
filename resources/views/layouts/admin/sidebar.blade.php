@@ -118,7 +118,7 @@ function logout() {
                             icon: 'success',
                             confirmButtonText: '<i class="fas fa-check"></i> OK'
                         }).then(function() {
-                            window.location.href = 'signin';
+                            window.location.href = "{{ route('login') }}";
                         });
                     }
                 });

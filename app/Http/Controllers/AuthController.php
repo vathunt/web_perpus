@@ -11,7 +11,7 @@ class AuthController extends Controller
 {
     public function showFormLogin() {
         if (Auth::check()) {
-    		return redirect('/panel')->with('sukses', 'Anda Sudah Login');
+    		return redirect('/panel/dashboard')->with('sukses', 'Anda Sudah Login');
     	}
     	return view('auth_login');
     }
@@ -42,7 +42,7 @@ class AuthController extends Controller
 
     	Auth::attempt($data);
     	if (Auth::check()) {
-            return redirect('/panel')->with('sukses', 'Anda Berhasil Login');
+            return redirect('/panel/dashboard')->with('sukses', 'Anda Berhasil Login');
         } else { 
             return redirect()->back()->with('error', 'Periksa Kembali Email dan Password')->withInput($request->all());
         }
@@ -51,6 +51,6 @@ class AuthController extends Controller
     public function signout() {
         Auth::logout();
     	Session::flush();
-    	return redirect('/signin');
+    	// return redirect('../signin');
     }
 }

@@ -17,7 +17,7 @@ class CreateSlidesTable extends Migration
             $table->id();
             $table->string('gambar_slide');
             $table->string('keterangan_slide')->nullable();
-            $table->enum('status_tampil', ['1', '0'])->default('0');
+            $table->enum('status_tampil', ['1', '0'])->default('1');
             $table->timestamps();
         });
     }

@@ -38,7 +38,7 @@
                         <div class="card-content">
                             <div class="card-body">
                                 <form method="POST" class="form form-vertical" id="formSlide"
-                                    action="{{ route('slide.post') }}">
+                                    action="{{ route('slide.post') }}" enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-body">
                                         <div class="row">
@@ -90,7 +90,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-hover table-lg">
+                                <table class="table table-hover table-bordered table-lg" id="tbl_slide">
                                     <thead class="text-center">
                                         <tr>
                                             <th>No</th>
@@ -100,56 +100,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="text-center">1</td>
-                                            <td class="col-3">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar avatar-md">
-                                                        <img src="{{ asset('assets/images/faces/5.jpg') }}">
-                                                    </div>
-                                                    <p class="font-bold ms-3 mb-0">Si Cantik</p>
-                                                </div>
-                                            </td>
-                                            <td class="col-auto">
-                                                <p class=" mb-0">Congratulations on your graduation!</p>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="btn-group mb-3" role="group" aria-label="Basic example">
-                                                    <button type="button" class="btn btn-sm btn-primary"><i
-                                                            class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-sm btn-info"><i
-                                                            class="fas fa-eye"></i></button>
-                                                    <button type="button" class="btn btn-sm btn-danger"><i
-                                                            class="fas fa-trash-alt"></i></button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">2</td>
-                                            <td class="col-3">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar avatar-md">
-                                                        <img src="{{ asset('assets/images/faces/2.jpg') }}">
-                                                    </div>
-                                                    <p class="font-bold ms-3 mb-0">Si Ganteng</p>
-                                                </div>
-                                            </td>
-                                            <td class="col-auto">
-                                                <p class=" mb-0">Wow amazing design! Can you make another
-                                                    tutorial for
-                                                    this design?</p>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="btn-group mb-3" role="group" aria-label="Basic example">
-                                                    <button type="button" class="btn btn-sm btn-primary"><i
-                                                            class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-sm btn-info"><i
-                                                            class="fas fa-eye"></i></button>
-                                                    <button type="button" class="btn btn-sm btn-danger"><i
-                                                            class="fas fa-trash-alt"></i></button>
-                                                </div>
-                                            </td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -167,6 +117,8 @@
 <!-- jQuery Validate Plugins -->
 <script src="{{ asset('assets/vendors/validate/jquery.validate.min.js') }}"></script>
 <script src="{{ asset('assets/vendors/validate/additional-methods.min.js') }}"></script>
+
+<!-- Validasi Form Tambah Banner Slide -->
 <script>
 $("#formSlide").on('blur keyup', function() {
     if ($("#formSlide").valid()) {
@@ -221,4 +173,52 @@ $('#formSlide').validate({
     }
 });
 </script>
+<!-- Akhir Validasi Form Tambah Banner Slide -->
+
+<!-- Menampilkan Data Banner Slide di DataTable -->
+<script type="text/javascript">
+var table_slide = $('#tbl_slide').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: {
+        "url": "{{ route('slide.data') }}",
+        "dataType": "json",
+        "type": "POST",
+        "data": {
+            _token: "{{ csrf_token() }}"
+        }
+    },
+    columns: [{
+            "data": null,
+            "orderable": false,
+            render: function(data, type, row, meta) {
+                return meta.row + meta.settings._iDisplayStart + 1;
+            }
+        },
+        {
+            "data": "gambar_slide"
+        },
+        {
+            "data": "keterangan_slide"
+        },
+        {
+            "data": "action",
+            "name": "action",
+            "orderable": false
+        },
+    ],
+    "columnDefs": [{
+            "width": "50%",
+            "targets": 1
+        },
+        {
+            "targets": "_all",
+            "className": "text-center",
+            "visible": true
+        }
+    ],
+    "responsive": true
+});
+</script>
+<!-- Menampilkan Data Banner Slide di DataTable -->
 @endsection
