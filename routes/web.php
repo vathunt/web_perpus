@@ -26,6 +26,7 @@ Route::group(['prefix' => 'panel', 'middleware' => ['auth', 'revalidate']], func
     Route::get('/slide', 'SlideController@index')->name('slide.banner');
     Route::post('/slide', 'SlideController@store')->name('slide.post');
     Route::post('/slide/data', 'SlideController@data')->name('slide.data');
+    Route::get('/slide/{id}', 'SlideController@edit')->name('slide.edit');
 
     Route::get('/artikel', 'AdminController@artikel')->name('artikel');
     Route::get('/signout', 'AuthController@signout')->name('signout');

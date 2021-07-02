@@ -113,7 +113,71 @@
 </div>
 @endsection
 
+@section('modal')
+<div class="modal fade text-left" id="editBanner" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160"
+    aria-hidden="true">
+    <div class="modal-dialog modal-borderless modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h5 class="modal-title white" id="myModalLabel160">
+                    Primary Modal
+                </h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                Tart lemon drops macaroon oat cake chocolate toffee
+                chocolate
+                bar icing. Pudding jelly beans
+                carrot cake pastry gummies cheesecake lollipop. I
+                love cookie
+                lollipop cake I love sweet
+                gummi
+                bears cupcake dessert.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Close</span>
+                </button>
+                <button type="button" class="btn btn-info ml-1" data-bs-dismiss="modal">
+                    <i class="bx bx-check d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Accept</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
 @section('javascript')
+<!-- Update dan Delete Banner Slide -->
+<script>
+let id;
+
+function editBanner(id) {
+    $.ajax({
+        url: "{{ url('/') }}/panel/slide/" + id,
+        dataType: "json"
+    }).done(function(response) {
+        $('#idEdit').val(response.id);
+        $('#keterangan_slide_edit').val(response.keterangan_slide);
+
+        $("#previewBannerSlide").html('');
+        let gambar = response.gambar_slide;
+        if (gambar) {
+            gambar = response.foto_alumni
+        }
+
+        $("#previewAlumni").append("<img src='../images/slider-main/" + gambar +
+            "' id='fotoBannerTampil'>");
+
+        $('#editBanner').modal('toggle');
+    });
+}
+</script>
+
 <!-- jQuery Validate Plugins -->
 <script src="{{ asset('assets/vendors/validate/jquery.validate.min.js') }}"></script>
 <script src="{{ asset('assets/vendors/validate/additional-methods.min.js') }}"></script>

@@ -192,7 +192,7 @@ class SlideController extends Controller
 				$nestedData['keterangan_slide'] = $slide->keterangan_slide;
 				// <a href='{ $show }' ...
 				$nestedData['action'] = "<div class='btn-group mb-3' role='group' aria-label='Basic example'>
-											<a href='#' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i></a>
+											<button type='button' class='btn btn-sm btn-primary' onClick='editBanner(". $slide->id .")' title='Edit Data Banner Slide'><i class='fas fa-edit'></i></button>
 											<button type='button' class='btn btn-sm btn-info'><i class='fas fa-eye'></i></button>
 											<button type='button' class='btn btn-sm btn-danger'><i class='fas fa-trash-alt'></i></button>
 										</div>";

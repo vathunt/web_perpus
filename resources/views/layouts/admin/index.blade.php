@@ -42,6 +42,7 @@
         @endif
         @include('layouts.admin.sidebar')
         @yield('content')
+        @yield('modal')
     </div>
     <!-- jQuery Plugins -->
     <script src="{{ asset('plugins/jQuery/jquery.min.js') }}"></script>
