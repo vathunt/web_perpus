@@ -97,32 +97,35 @@ class PengumumanController extends Controller
         $lampPengumuman = [];
         $lampiran_pengumuman = $request->file('lampPengumuman');
 
+        $namaFile         = [];
+        $namaFileLampiran = $request->namaLampPengumuman;
+
         if ($request->hasFile('lampPengumuman')) {
-            foreach ($lampiran_pengumuman as $lampiran) {
-                $fileLampiran = Carbon::now()->timestamp . '_' . uniqid() . '.' . $lampiran->getClientOriginalExtension();
+            for ($i = 0; $i < count($lampiran_pengumuman); $i++) { 
+                $fileLampiran = Carbon::now()->timestamp . '_' . uniqid() . '.' . $lampiran_pengumuman[$i]->getClientOriginalExtension();
                 array_push($lampPengumuman, $fileLampiran);
-                $lampiran->move($this->pathLampiran . '/', $fileLampiran);
+                $lampiran_pengumuman[$i]->move($this->pathLampiran . '/', $fileLampiran);
+
+                if (!empty($namaFileLampiran[$i])) {
+                    array_push($namaFile, ucwords($namaFileLampiran[$i]));
+                } else {
+                    array_push($namaFile, $fileLampiran);
+                }
             }
-        } 
+        }
         // else 
         // {
         //     $lampPengumuman = '';
         // }
         // Akhir Proses Lampiran Pengumuman
-         
+        
         // Proses Nama File Lampiran
-        $namaFile         = [];
-        $namaFileLampiran = $request->namaLampPengumuman;
+        // $namaFile         = [];
+        // $namaFileLampiran = $request->namaLampPengumuman;
 
-        if (empty($namaFileLampiran)) {
-            foreach ($namaFileLampiran as $nama_file) {
-                array_push($namaFile, ucwords($nama_file));
-            }
-        } else {
-            foreach ($lampPengumuman as $nama_file) {
-                array_push($namaFile, $nama_file);
-            }
-        }
+        // foreach ($namaFileLampiran as $nama_file) {
+        //     array_push($namaFile, ucwords($nama_file));
+        // }
         // Akhir Proses Nama File Lampiran
 
         $pengumuman                          = new Pengumuman;

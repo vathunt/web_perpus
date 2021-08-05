@@ -13,10 +13,12 @@
 
     <!-- Data Table CSS -->
     <link rel="stylesheet" href="{{ asset('assets/vendors/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendors/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('assets/vendors/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}">
 
     @yield('style-css')
 
+    <!-- Icon On Dashboard -->
     <link rel="stylesheet" href="{{ asset('assets/vendors/iconly/bold.css') }}">
 
     <link rel="stylesheet" href="{{ asset('assets/vendors/perfect-scrollbar/perfect-scrollbar.css') }}">

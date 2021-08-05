@@ -39,6 +39,7 @@ Route::group(['prefix' => 'panel', 'middleware' => ['auth', 'revalidate']], func
     Route::post('/pengumuman', 'PengumumanController@store')->name('pengumuman.post');
     Route::post('/pengumuman/data', 'PengumumanController@data')->name('pengumuman.data');
     Route::get('/pengumuman/{id}', 'PengumumanController@show')->name('pengumuman.show');
+    Route::put('/pengumuman', 'PengumumanController@update')->name('pengumuman.update');
     Route::delete('/pengumuman', 'PengumumanController@destroy')->name('pengumuman.delete');
 
     Route::get('/signout', 'AuthController@signout')->name('signout');
