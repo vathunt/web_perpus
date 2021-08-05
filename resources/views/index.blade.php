@@ -15,7 +15,7 @@
             <div class="col-lg-4 col-md-6 mb-5">
                 <div class="ts-service-box">
                     <div class="ts-service-image-wrapper">
-                        <img loading="lazy" class="w-100" src="images/services/service1.jpg" alt="service-image">
+                        <img loading="lazy" class="w-100" src="images/services/image1.jpg" alt="service-image">
                     </div>
                     <div class="d-flex">
                         <div class="ts-service-info">
@@ -31,13 +31,13 @@
                                     class="fa fa-caret-right"></i> Selengkapnya</a>
                         </div>
                     </div>
-                </div><!-- Service1 end -->
+                </div><!-- image1 end -->
             </div><!-- Col 1 end -->
 
             <div class="col-lg-4 col-md-6 mb-5">
                 <div class="ts-service-box">
                     <div class="ts-service-image-wrapper">
-                        <img loading="lazy" class="w-100" src="images/services/service2.jpg" alt="service-image">
+                        <img loading="lazy" class="w-100" src="images/services/image2.jpg" alt="service-image">
                     </div>
                     <div class="d-flex">
                         <div class="ts-service-info">
@@ -53,13 +53,13 @@
                                     class="fa fa-caret-right"></i> Selengkapnya</a>
                         </div>
                     </div>
-                </div><!-- Service2 end -->
+                </div><!-- image2 end -->
             </div><!-- Col 2 end -->
 
             <div class="col-lg-4 col-md-6 mb-5">
                 <div class="ts-service-box">
                     <div class="ts-service-image-wrapper">
-                        <img loading="lazy" class="w-100" src="images/services/service3.jpg" alt="service-image">
+                        <img loading="lazy" class="w-100" src="images/services/image3.jpg" alt="service-image">
                     </div>
                     <div class="d-flex">
                         <div class="ts-service-info">
@@ -75,7 +75,7 @@
                                     class="fa fa-caret-right"></i> Selengkapnya</a>
                         </div>
                     </div>
-                </div><!-- Service3 end -->
+                </div><!-- image3 end -->
             </div><!-- Col 3 end -->
         </div><!-- Content row end -->
 
@@ -102,7 +102,7 @@
             <div class="col-lg-4 col-md-6 mb-5">
                 <div class="ts-service-box">
                     <div class="ts-service-image-wrapper">
-                        <img loading="lazy" class="w-100" src="images/services/service1.jpg" alt="service-image">
+                        <img loading="lazy" class="w-100" src="images/services/image1.jpg" alt="service-image">
                     </div>
                     <div class="d-flex">
                         <div class="ts-service-info">
@@ -118,13 +118,13 @@
                                     class="fa fa-caret-right"></i> Selengkapnya</a>
                         </div>
                     </div>
-                </div><!-- Service1 end -->
+                </div><!-- image1 end -->
             </div><!-- Col 1 end -->
 
             <div class="col-lg-4 col-md-6 mb-5">
                 <div class="ts-service-box">
                     <div class="ts-service-image-wrapper">
-                        <img loading="lazy" class="w-100" src="images/services/service2.jpg" alt="service-image">
+                        <img loading="lazy" class="w-100" src="images/services/image2.jpg" alt="service-image">
                     </div>
                     <div class="d-flex">
                         <div class="ts-service-info">
@@ -140,13 +140,13 @@
                                     class="fa fa-caret-right"></i> Selengkapnya</a>
                         </div>
                     </div>
-                </div><!-- Service2 end -->
+                </div><!-- image2 end -->
             </div><!-- Col 2 end -->
 
             <div class="col-lg-4 col-md-6 mb-5">
                 <div class="ts-service-box">
                     <div class="ts-service-image-wrapper">
-                        <img loading="lazy" class="w-100" src="images/services/service3.jpg" alt="service-image">
+                        <img loading="lazy" class="w-100" src="images/services/image3.jpg" alt="service-image">
                     </div>
                     <div class="d-flex">
                         <div class="ts-service-info">
@@ -162,7 +162,7 @@
                                     class="fa fa-caret-right"></i> Selengkapnya</a>
                         </div>
                     </div>
-                </div><!-- Service3 end -->
+                </div><!-- image3 end -->
             </div><!-- Col 3 end -->
         </div><!-- Content row end -->
 
@@ -312,7 +312,7 @@
             <div class="row">
                 <div class="col-md-3 col-sm-6 ts-facts">
                     <div class="ts-facts-img">
-                        <img loading="lazy" src="images/icon-image/fact1.png" alt="facts-img">
+                        <img loading="lazy" src="images/icon-image/service-icon3.png" alt="facts-img">
                     </div>
                     <div class="ts-facts-content">
                         <h2 class="ts-facts-num"><span class="counterUp" data-count="1789">0</span></h2>
@@ -322,7 +322,7 @@
 
                 <div class="col-md-3 col-sm-6 ts-facts mt-5 mt-sm-0">
                     <div class="ts-facts-img">
-                        <img loading="lazy" src="images/icon-image/fact2.png" alt="facts-img">
+                        <img loading="lazy" src="images/icon-image/service-icon4.png" alt="facts-img">
                     </div>
                     <div class="ts-facts-content">
                         <h2 class="ts-facts-num"><span class="counterUp" data-count="647">0</span></h2>
@@ -342,7 +342,7 @@
 
                 <div class="col-md-3 col-sm-6 ts-facts mt-5 mt-md-0">
                     <div class="ts-facts-img">
-                        <img loading="lazy" src="images/icon-image/fact4.png" alt="facts-img">
+                        <img loading="lazy" src="images/icon-image/service-icon2.png" alt="facts-img">
                     </div>
                     <div class="ts-facts-content">
                         <h2 class="ts-facts-num"><span class="counterUp" data-count="44">0</span></h2>
@@ -368,41 +368,8 @@
         <!--/ Title row end -->
 
         <div class="row">
-            <div class="col-lg-4">
-                <div class="ts-service-box d-flex">
-                    <div class="ts-service-box-img">
-                        <img loading="lazy" src="images/icon-image/service-icon1.png" alt="service-icon">
-                    </div>
-                    <div class="ts-service-box-info">
-                        <h3 class="service-box-title"><a href="#">Home Construction</a></h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit Integer adipiscing erat</p>
-                    </div>
-                </div><!-- Service 1 end -->
-
-                <div class="ts-service-box d-flex">
-                    <div class="ts-service-box-img">
-                        <img loading="lazy" src="images/icon-image/service-icon2.png" alt="service-icon">
-                    </div>
-                    <div class="ts-service-box-info">
-                        <h3 class="service-box-title"><a href="#">Building Remodels</a></h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit Integer adipiscing erat</p>
-                    </div>
-                </div><!-- Service 2 end -->
-
-                <div class="ts-service-box d-flex">
-                    <div class="ts-service-box-img">
-                        <img loading="lazy" src="images/icon-image/service-icon3.png" alt="service-icon">
-                    </div>
-                    <div class="ts-service-box-info">
-                        <h3 class="service-box-title"><a href="#">Interior Design</a></h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit Integer adipiscing erat</p>
-                    </div>
-                </div><!-- Service 3 end -->
-
-            </div><!-- Col end -->
-
-            <div class="col-lg-4 text-center">
-                <img loading="lazy" class="img-fluid" src="images/services/service-center.jpg"
+            <div class="col-lg-8 text-center">
+                <img loading="lazy" class="img-fluid" src="images/services/image4.png"
                     alt="service-avater-image">
             </div><!-- Col end -->
 
@@ -413,31 +380,31 @@
                     </div>
                     <div class="ts-service-box-info">
                         <h3 class="service-box-title"><a href="#">Exterior Design</a></h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit Integer adipiscing erat</p>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo consectetur placeat repellat fugit et debitis, explicabo officia eum accusamus nam.</p>
                     </div>
-                </div><!-- Service 4 end -->
+                </div>
 
                 <div class="ts-service-box d-flex">
                     <div class="ts-service-box-img">
-                        <img loading="lazy" src="images/icon-image/service-icon5.png" alt="service-icon">
+                        <img loading="lazy" src="images/icon-image/service-icon3.png" alt="service-icon">
                     </div>
                     <div class="ts-service-box-info">
                         <h3 class="service-box-title"><a href="#">Renovation</a></h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit Integer adipiscing erat</p>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem in, sint nulla corrupti quod provident temporibus obcaecati distinctio praesentium, sit.</p>
                     </div>
-                </div><!-- Service 5 end -->
+                </div>
 
                 <div class="ts-service-box d-flex">
                     <div class="ts-service-box-img">
-                        <img loading="lazy" src="images/icon-image/service-icon6.png" alt="service-icon">
+                        <img loading="lazy" src="images/icon-image/service-icon2.png" alt="service-icon">
                     </div>
                     <div class="ts-service-box-info">
                         <h3 class="service-box-title"><a href="#">Safety Management</a></h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit Integer adipiscing erat</p>
+                        <p>Lorem, ipsum dolor sit, amet consectetur adipisicing elit. Fuga modi ducimus, voluptatum, sequi placeat quod voluptas sunt dolorem esse ea!</p>
                     </div>
-                </div><!-- Service 6 end -->
-            </div><!-- Col end -->
-        </div><!-- Content row end -->
+                </div>
+            </div>
+        </div>
 
     </div>
     <!--/ Container end -->
@@ -461,7 +428,7 @@
                             </span>
 
                             <div class="quote-item-footer">
-                                <img loading="lazy" class="testimonial-thumb" src="images/clients/testimonial1.png"
+                                <img loading="lazy" class="testimonial-thumb" src="images/clients/testimonial4.png"
                                     alt="testimonial">
                                 <div class="quote-item-info">
                                     <h3 class="quote-author">Gabriel Denis</h3>
@@ -483,7 +450,7 @@
                             </span>
 
                             <div class="quote-item-footer">
-                                <img loading="lazy" class="testimonial-thumb" src="images/clients/testimonial2.png"
+                                <img loading="lazy" class="testimonial-thumb" src="images/clients/testimonial5.png"
                                     alt="testimonial">
                                 <div class="quote-item-info">
                                     <h3 class="quote-author">Weldon Cash</h3>
@@ -505,7 +472,7 @@
                             </span>
 
                             <div class="quote-item-footer">
-                                <img loading="lazy" class="testimonial-thumb" src="images/clients/testimonial3.png"
+                                <img loading="lazy" class="testimonial-thumb" src="images/clients/testimonial1.png"
                                     alt="testimonial">
                                 <div class="quote-item-info">
                                     <h3 class="quote-author">Minter Puchan</h3>

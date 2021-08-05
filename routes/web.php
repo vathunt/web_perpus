@@ -13,12 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-})->name('home');
+Route::get('/', 'LandingController@index')->name('home');
 
 Route::get('/signin', 'AuthController@showFormLogin')->name('login');
 Route::post('/signin', 'AuthController@postLogin')->name('post.login');
+
+Route::group(['middleware' => ['auth', 'revalidate']], function() {
+    Route::get('/panel', 'AdminController@home');
+});
 
 Route::group(['prefix' => 'panel', 'middleware' => ['auth', 'revalidate']], function() {
     Route::get('/dashboard', 'AdminController@home')->name('admin.panel');
@@ -27,8 +29,18 @@ Route::group(['prefix' => 'panel', 'middleware' => ['auth', 'revalidate']], func
     Route::post('/slide', 'SlideController@store')->name('slide.post');
     Route::post('/slide/data', 'SlideController@data')->name('slide.data');
     Route::get('/slide/{id}', 'SlideController@edit')->name('slide.edit');
+    Route::put('/slide', 'SlideController@update')->name('slide.update');
+    Route::get('/slide/status/{id}', 'SlideController@update_status')->name('slide.status');
+    Route::delete('/slide', 'SlideController@destroy')->name('slide.delete');
 
-    Route::get('/artikel', 'AdminController@artikel')->name('artikel');
+    Route::get('/artikel', 'ArtikelController@index')->name('panel.artikel');
+
+    Route::get('/pengumuman', 'PengumumanController@index')->name('panel.pengumuman');
+    Route::post('/pengumuman', 'PengumumanController@store')->name('pengumuman.post');
+    Route::post('/pengumuman/data', 'PengumumanController@data')->name('pengumuman.data');
+    Route::get('/pengumuman/{id}', 'PengumumanController@show')->name('pengumuman.show');
+    Route::delete('/pengumuman', 'PengumumanController@destroy')->name('pengumuman.delete');
+
     Route::get('/signout', 'AuthController@signout')->name('signout');
 });
 

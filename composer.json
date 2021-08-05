@@ -42,7 +42,11 @@
             "database/factories"
         ],
         "files": [
-            "app/Helpers/ActiveMenuHelper.php"
+            "app/Helpers/ActiveMenuHelper.php",
+            "app/Helpers/DateHelper.php",
+            "app/Helpers/Tanggal.php",
+            "app/Helpers/FormatUang.php",
+            "app/Helpers/AngkaTerbilang.php"
         ]
     },
     "autoload-dev": {

@@ -28,8 +28,8 @@
                     </a>
                 </li>
 
-                <li class="sidebar-item ">
-                    <a href="{{ route('artikel') }}" class='sidebar-link'>
+                <li class="sidebar-item {{ set_active('panel.artikel') }}">
+                    <a href="{{ route('panel.artikel') }}" class='sidebar-link'>
                         <i class="bi bi-pen-fill"></i>
                         <span>Artikel</span>
                     </a>
@@ -42,8 +42,8 @@
                     </a>
                 </li>
 
-                <li class="sidebar-item ">
-                    <a href="#" class='sidebar-link'>
+                <li class="sidebar-item {{ set_active('panel.pengumuman') }}">
+                    <a href="{{ route('panel.pengumuman') }}" class='sidebar-link'>
                         <i class="bi bi-mic"></i>
                         <span>Pengumuman</span>
                     </a>

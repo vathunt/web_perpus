@@ -3,7 +3,7 @@
     <!-- Basic Page Needs
 ================================================== -->
     <meta charset="utf-8">
-    <title>Constra - Construction Html5 Template</title>
+    <title>Perpustakaan - IAIN Madura</title>
 
     <!-- Mobile Specific Metas
 ================================================== -->
@@ -13,7 +13,7 @@
 
     <!-- Favicon
 ================================================== -->
-    <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('assets/images/logo/favicon.png') }}">
 
     <!-- CSS
 ================================================== -->

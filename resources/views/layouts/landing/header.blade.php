@@ -6,7 +6,7 @@
                   <div class="row align-items-center">
                       <div class="logo col-lg-3 text-center text-lg-left mb-3 mb-md-5 mb-lg-0">
                           <a class="d-block" href="{{ route('home') }}">
-                              <img loading="lazy" src="{{ asset('images/logo.png') }}" alt="Constra">
+                              <img loading="lazy" src="{{ asset('images/logo-iain.png') }}" alt="Perpustakaan IAIN Madura" style="width: 300px; height: 85px;">
                           </a>
                       </div><!-- logo end -->
 
@@ -15,24 +15,24 @@
                               <li>
                                   <div class="info-box">
                                       <div class="info-box-content">
-                                          <p class="info-box-title">Call Us</p>
-                                          <p class="info-box-subtitle">(+9) 847-291-4353</p>
+                                          <p class="info-box-title">Telp./Fax</p>
+                                          <p class="info-box-subtitle">(+62) 324-322551</p>
                                       </div>
                                   </div>
                               </li>
                               <li>
                                   <div class="info-box">
                                       <div class="info-box-content">
-                                          <p class="info-box-title">Email Us</p>
-                                          <p class="info-box-subtitle">office@Constra.com</p>
+                                          <p class="info-box-title">Email</p>
+                                          <p class="info-box-subtitle">perpustakaan@iainmadura.ac.id</p>
                                       </div>
                                   </div>
                               </li>
                               <li class="last">
                                   <div class="info-box last">
                                       <div class="info-box-content">
-                                          <p class="info-box-title">Global Certificate</p>
-                                          <p class="info-box-subtitle">ISO 9001:2017</p>
+                                          <p class="info-box-title">Akreditasi</p>
+                                          <p class="info-box-subtitle">A (Unggul)</p>
                                       </div>
                                   </div>
                               </li>

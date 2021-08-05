@@ -59,6 +59,12 @@
     <script src="{{ asset('assets/vendors/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('assets/vendors/datatables.net-buttons/js/buttons.colVis.min.js') }}"></script>
 
+    <!-- Feather Icons -->
+    <script src="{{ asset('assets/js/feather-icons.min.js') }}"></script>
+    <script>
+        feather.replace();
+    </script>
+
     <script src="{{ asset('assets/js/main.js') }}"></script>
     @yield('javascript')
 </body>

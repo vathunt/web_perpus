@@ -11,8 +11,4 @@ class AdminController extends Controller
     public function home() {
         return view('panel.index');
     }
-
-    public function artikel() {
-        return view('panel.artikel');
-    }
 }
