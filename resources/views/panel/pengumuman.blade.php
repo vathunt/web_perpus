@@ -96,6 +96,14 @@ function formattedDate(inputDate) {
     }
 }
 
+function stripTopLevelTags(html) {
+    let r = '';
+    $(html).each(function() {
+        r += $(this).unwrap().html();
+    });
+    return r;
+}
+
 function lihatPengumuman(id) {
     $.ajax({
         url: "{{ url('/') }}/panel/pengumuman/" + id,
@@ -158,7 +166,8 @@ function hapusPengumuman(id) {
 }
 
 function editPengumuman(id) {
-    $('.datepicker').datepicker('remove');
+    // $('.datepicker').datepicker('remove');
+    $('.datepicker').datepicker('destroy');
     $.ajax({
         url: "{{ url('/') }}/panel/pengumuman/" + id,
         dataType: "json"
@@ -166,6 +175,7 @@ function editPengumuman(id) {
         $('#idEdit').val(response.id);
         $('#judulEdit').val(response.judul_pengumuman);
         $('#tglEdit').val(formattedDate(response.tgl_pengumuman));
+        // $('#detailLampiranEdit').html(response.detail_pengumuman);
 
         // Preview Thumbnail
         $("#previewThumbnail").html('');
@@ -210,6 +220,41 @@ function editPengumuman(id) {
                 if (d !== i.lastVal) $(this).change()
             },
             endDate: new Date(new Date().setDate(new Date().getDate() + 0))
+        });
+
+        new FroalaEditor('#detailEdit', {
+            "charCounterCount": true,
+            "toolbarButtons": [
+                'undo', 'redo', 'clearFormatting', '|',
+                'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'inlineClass',
+                'paragraphStyle',
+                'lineHeight', '|',
+                'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|',
+                'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote',
+                '-', 'insertLink',
+                'insertImage', 'insertTable', '|',
+                'specialCharacters', 'insertHR', 'selectAll', '|',
+                'spellChecker', 'help', 'html', '|',
+            ],
+            "tabSpaces": 4,
+            "fontFamilyDefaultSelection": "Arial",
+            "fontFamilySelection": true,
+            "fontSizeSelection": true,
+            "fontSizeDefaultSelection": "12",
+            "fontSizeUnit": "px",
+            "autofocus": true,
+            "attribution": false,
+            "height": -1,
+            "linkAlwaysBlank": true,
+            "paragraphDefaultSelection": "Normal",
+            "paragraphFormatSelection": true,
+            "quickInsertButtons": ['table', 'ol', 'ul', 'hr'],
+            "language": "id",
+            events: {
+                'html.set': function(html) {
+                    $('#detailLampiranEdit').html(stripTopLevelTags(response.detail_pengumuman));
+                }
+            }
         });
 
         $('#editPengumuman').modal('toggle');
@@ -416,35 +461,42 @@ function editPengumuman(id) {
                             </div>
                             <div class="col-md-8 col-12">
                                 <div class="form-group">
-                                    <label for="lampPengumuman" class="font-bold">Lampiran Pengumuman</label>
+                                    <label for="lampEdit" class="font-bold">Lampiran Pengumuman</label>
+                                    <small class="text-muted"><i class="text-primary font-bold">*) Kosongkan jika tidak
+                                            ada
+                                            perubahan</i></small>
                                     <div class="input-group">
-                                        <input type="text" name="namaLampPengumuman[]" class="form-control"
-                                            id="namaLampPengumuman" placeholder="Nama File Lampiran" autocomplete="off">
-                                        <input type="file" name="lampPengumuman[]" class="form-control" data-id="0"
-                                            id="lampPengumuman">
+                                        <input type="text" name="namaLampEdit[]" class="form-control" id="namaLampEdit"
+                                            placeholder="Nama File Lampiran" autocomplete="off">
+                                        <input type="file" name="lampEdit[]" class="form-control" data-id="0"
+                                            id="lampEdit">
                                         <button class="btn btn-primary" type="button"
-                                            id="btnTmbLampiran">&plus;</button>
+                                            id="btnTmbLampiranEdit">&plus;</button>
                                     </div>
-                                    <div>
+                                    <div class="mt-2">
                                         <ol id="previewLampiran"></ol>
                                     </div>
-                                    <div id="errLampPengumuman-0"></div>
+                                    <div id="errLampEdit-0"></div>
                                     <p></p>
-                                    <div id="inputLampiran"></div>
+                                    <div id="inputLampiranEdit"></div>
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="form-group">
-                                    <label for="thumbPengumuman" class="font-bold">Thumbnail Pengumuman</label>
-                                    <input type="file" name="thumbPengumuman" class="form-control" id="thumbPengumuman"
+                                    <label for="thumbEdit" class="font-bold">Thumbnail Pengumuman</label>
+                                    <small class="text-muted"><i class="text-primary font-bold">*) Kosongkan jika tidak
+                                            ada
+                                            perubahan</i></small>
+                                    <input type="file" name="thumbEdit" class="form-control" id="thumbEdit"
                                         accept="image/*">
+                                    <div id="previewThumbnail" class="mt-2"></div>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-group has-icon-left">
-                                    <label for="detailPengumuman">Detail Pengumuman</label>
-                                    <textarea name="detailPengumuman" id="detailPengumuman"
-                                        class="form-control"></textarea>
+                                    <label for="detailEdit">Detail Pengumuman</label>
+                                    <textarea name="detailEdit" id="detailEdit"
+                                        class="form-control"><p id="detailLampiranEdit"></p></textarea>
                                 </div>
                             </div>
                         </div>
@@ -455,7 +507,7 @@ function editPengumuman(id) {
                         <i class="bx bx-x d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Close</span>
                     </button>
-                    <button type="submit" class="btn btn-primary ml-1" id="btnSubmit">
+                    <button type="submit" class="btn btn-primary ml-1" id="btnEdit">
                         <i class="bx bx-check d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Simpan</span>
                     </button>
@@ -634,10 +686,10 @@ $('#formTmbPengumuman').validate({
 </script>
 <!-- Akhir Validasi Form Tambah Pengumuman -->
 
-<!-- Validasi Form Edit Banner Slide -->
+<!-- Validasi Form Edit Pengumuman -->
 <script>
-$("#formSlideEdit").on('blur keyup', function() {
-    if ($("#formSlideEdit").valid()) {
+$("#formEditPengumuman").on('blur keyup', function() {
+    if ($("#formEditPengumuman").valid()) {
         $('#btnEdit').prop('disabled', false);
     } else {
         $('#btnEdit').prop('disabled', 'disabled');
@@ -656,35 +708,54 @@ $.validator.addMethod('maxfilesize', function(value, element, param) {
     }
 });
 
-$('#formSlideEdit').validate({
+$('#formEditPengumuman').validate({
     errorClass: 'error is-invalid',
     validClass: 'is-valid',
+    ignore: "[contenteditable='true'].fr-element.fr-view",
     rules: {
-        gambar_slide_edit: {
+        judulEdit: {
+            required: true
+        },
+        tglEdit: {
+            required: true
+        },
+        detailEdit: {
+            required: true
+        },
+        thumbEdit: {
             extension: "jpg|jpeg|png",
-            maxfilesize: 1
+            maxfilesize: 2
         },
-        ket_gambar_edit: {
-            required: true
-        },
-        status_tampil_edit: {
-            required: true
+        "lampEdit[]": {
+            extension: "jpg|jpeg|png|doc|docx|xls|xlsx|ppt|pptx|txt|pdf",
+            maxfilesize: 10
         }
     },
     messages: {
-        gambar_slide_edit: {
-            required: "Gambar Belum Dipilih",
-            extension: "Ekstensi File *.jpg, *.jpeg atau *.png"
+        judulEdit: {
+            required: "Judul Pengumuman Harus Diisi"
         },
-        ket_gambar_edit: {
-            required: "Keterangan Gambar Harus Diisi"
+        tglEdit: {
+            required: "Tanggal Pengumuman Belum Dipilih"
         },
-        status_tampil_edit: {
-            required: "Status Tampil Harus Dipilih"
+        detailEdit: {
+            required: "Detail Pengumuman Harus Diisi"
+        },
+        thumbEdit: {
+            extension: "Ekstensi File *.jpg, *.jpeg atau *.png",
+            maxfilesize: 'Ukuran File Tidak Boleh Lebih dari 2 MB'
+        },
+        "lampEdit[]": {
+            extension: "Ekstensi File *.jpg, *.jpeg, *.png, *.doc, *.docx, *.xls, *.xlsx, *.ppt, *.pptx, *.txt, *.pdf",
+            maxfilesize: 'Ukuran File Tidak Boleh Lebih dari 10 MB'
         }
     },
     errorPlacement: function(error, element) {
-        error.insertAfter(element);
+        if (element.attr("name") == "lampEdit[]") {
+            error.appendTo($('#errLampEdit-' + element.attr("data-id")));
+        } else {
+            error.insertAfter(element);
+        }
     },
     highlight: function(element, errorClass, validClass) {
         $(element).addClass(errorClass).removeClass(validClass);
@@ -694,7 +765,7 @@ $('#formSlideEdit').validate({
     }
 });
 </script>
-<!-- Akhir Validasi Form Edit Banner Slide -->
+<!-- Akhir Validasi Form Edit Pengumuman -->
 
 <!-- Menampilkan Data Pengumuman di DataTable -->
 <script type="text/javascript">
