@@ -172,9 +172,101 @@ class PengumumanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $this->validate(
+            $request,
+            [
+                'judulEdit'   => 'required',
+                'tglEdit'     => 'required',
+                'detailEdit'  => 'required',
+                'thumbEdit'   => 'image|mimes:jpg,png,jpeg|file|max:2048',
+                'lampEdit'    => 'max:10000'
+            ],
+            [
+                'judulEdit.required'  => 'Judul Pengumuman Harus Diisi',
+                'tglEdit.required'    => 'Tanggal Pengumuman Belum Dipilih',
+                'detailEdit.required' => 'Detail Pengumuman Belum Diisi',
+                'thumbEdit.image'     => 'Thumbnail Pengumuman Harus Berbentuk File Gambar',
+                'thumbEdit.mimes'     => 'Ekstensi Yang Diijinkan Harus *.png, *.jpg, *.jpeg',
+                'thumbEdit.max'       => 'Ukuran File Tidak Boleh Lebih dari 2 MB',
+                'lampEdit.max'        => 'Ukuran File Tidak Boleh Lebih dari 10 MB'
+            ]
+        );
+
+        // Proses Thumbnail Pengumuman
+        if (!File::isDirectory($this->pathThumbnail)) {
+            // Buat Folder untuk Menyimpan Thumbnail Pengumuman
+            File::makeDirectory($this->pathThumbnail, 0777, true, true);
+        }
+
+        $thumbPengumuman = $request->file('thumbEdit');
+        if ($request->hasFile('thumbEdit')) {
+            $fileThumb = Carbon::now()->timestamp . '_' . uniqid() . '.' . $thumbPengumuman->getClientOriginalExtension();
+            Image::make($thumbPengumuman)->save($this->pathThumbnail . '/' . $fileThumb);
+        } else {
+            $fileThumb = '';
+        }
+        // Akhir Proses Thumbnail Pengumuman
+
+        // Proses Lampiran Pengumuman
+        if (!File::isDirectory($this->pathLampiran)) {
+            // Buat Folder untuk Menyimpan Lampiran Pengumuman
+            File::makeDirectory($this->pathLampiran, 0777, true, true);
+        }
+
+        $lampPengumuman = [];
+        $lampiran_pengumuman = $request->file('lampEdit');
+
+        $namaFile         = [];
+        $namaFileLampiran = $request->namaLampEdit;
+
+        if ($request->hasFile('lampEdit')) {
+            for ($i = 0; $i < count($lampiran_pengumuman); $i++) { 
+                $fileLampiran = Carbon::now()->timestamp . '_' . uniqid() . '.' . $lampiran_pengumuman[$i]->getClientOriginalExtension();
+                array_push($lampPengumuman, $fileLampiran);
+                $lampiran_pengumuman[$i]->move($this->pathLampiran . '/', $fileLampiran);
+
+                if (!empty($namaFileLampiran[$i])) {
+                    array_push($namaFile, ucwords($namaFileLampiran[$i]));
+                } else {
+                    array_push($namaFile, $fileLampiran);
+                }
+            }
+        }
+        // Akhir Proses Lampiran Pengumuman
+
+        $pengumuman = Pengumuman::find(request('idEdit'));
+
+        // Jika thumbnail pengumuman diubah
+        if ($thumbPengumuman) {
+            // Hapus File Thumbnail Pengumuman
+			File::delete($this->pathThumbnail . '/' . $pengumuman->thumbnail_pengumuman);
+
+            $pengumuman->thumbnail_pengumuman = $fileThumb;
+        }
+        // Akhir jika thumbnail pengumuman diubah
+
+        // Jika lampiran pengumuman diubah
+        if ($lampiran_pengumuman) {
+            // Hapus File Lampiran Pengumuman
+            foreach ($pengumuman->lampiran_pengumuman as $lampiran) {
+                File::delete($this->pathLampiran . '/' . $lampiran);
+            }
+
+            $pengumuman->lampiran_pengumuman = $lampPengumuman;
+            $pengumuman->nama_file_lampiran = $namaFile;
+        }
+        // Akhir jika lampiran pengumuman diubah
+
+        $pengumuman->judul_pengumuman        = strtoupper(strip_tags($request->judulEdit));
+        $pengumuman->judul_seo               = Str::slug(strip_tags($request->judulEdit));
+        $pengumuman->tgl_pengumuman          = $request->tglEdit;
+        $pengumuman->detail_pengumuman       = $request->detailEdit;
+        $pengumuman->user_id                 = Auth::user()->id;
+        $pengumuman->update();
+
+        return redirect('/panel/pengumuman')->with('sukses', 'Data Pengumuman Berhasil Diubah');
     }
 
     /**

@@ -96,14 +96,6 @@ function formattedDate(inputDate) {
     }
 }
 
-function stripTopLevelTags(html) {
-    let r = '';
-    $(html).each(function() {
-        r += $(this).unwrap().html();
-    });
-    return r;
-}
-
 function lihatPengumuman(id) {
     $.ajax({
         url: "{{ url('/') }}/panel/pengumuman/" + id,
@@ -222,7 +214,7 @@ function editPengumuman(id) {
             endDate: new Date(new Date().setDate(new Date().getDate() + 0))
         });
 
-        new FroalaEditor('#detailEdit', {
+        const editor = new FroalaEditor('#detailEdit', {
             "charCounterCount": true,
             "toolbarButtons": [
                 'undo', 'redo', 'clearFormatting', '|',
@@ -250,12 +242,10 @@ function editPengumuman(id) {
             "paragraphFormatSelection": true,
             "quickInsertButtons": ['table', 'ol', 'ul', 'hr'],
             "language": "id",
-            events: {
-                'html.set': function(html) {
-                    $('#detailLampiranEdit').html(stripTopLevelTags(response.detail_pengumuman));
-                }
-            }
-        });
+        }, () => {
+            // Call the method inside the initialized event.
+            editor.html.set(response.detail_pengumuman);
+        })
 
         $('#editPengumuman').modal('toggle');
     });
@@ -423,6 +413,8 @@ function editPengumuman(id) {
         <form method="POST" class="form form-vertical" id="formEditPengumuman" action="{{ route('pengumuman.update') }}"
             enctype="multipart/form-data">
             @csrf
+            @method('PUT')
+            <input type="hidden" name="idEdit" id="idEdit">
             <div class="modal-content">
                 <div class="modal-header bg-primary">
                     <h5 class="modal-title white" id="myModalLabel160">
@@ -473,12 +465,12 @@ function editPengumuman(id) {
                                         <button class="btn btn-primary" type="button"
                                             id="btnTmbLampiranEdit">&plus;</button>
                                     </div>
-                                    <div class="mt-2">
-                                        <ol id="previewLampiran"></ol>
-                                    </div>
                                     <div id="errLampEdit-0"></div>
                                     <p></p>
                                     <div id="inputLampiranEdit"></div>
+                                    <div class="mt-2">
+                                        <ol id="previewLampiran"></ol>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
@@ -495,8 +487,7 @@ function editPengumuman(id) {
                             <div class="col-12">
                                 <div class="form-group has-icon-left">
                                     <label for="detailEdit">Detail Pengumuman</label>
-                                    <textarea name="detailEdit" id="detailEdit"
-                                        class="form-control"><p id="detailLampiranEdit"></p></textarea>
+                                    <textarea name="detailEdit" id="detailEdit" class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -564,6 +555,10 @@ $('#judulPengumuman').keyup(function() {
     // $(this).val($('#judulPengumuman').val().toUpperCase());
     document.getElementById('judulPengumuman').style.textTransform = "uppercase";
 });
+
+$('#judulEdit').keyup(() => {
+    document.getElementById('judulEdit').style.textTransform = "uppercase";
+});
 </script>
 <!-- End of Uppercase Judul Pengumuman -->
 
@@ -574,21 +569,33 @@ $(document).ready(function() {
     $("#btnTmbLampiran").on('click', function(event) {
         i++;
         event.preventDefault();
-        $("<div id='remove_" + i +
+        $("<div class='remove_" + i +
                 "'><div class='input-group'><input type='text' name='namaLampPengumuman[]' class='form-control' placeholder='Nama File Lampiran' autocomplete='off'><input type='file' name='lampPengumuman[]' class='form-control' data-id='" +
                 i + "'><button type='button' class='btn btn-danger' onclick=\"hapus_lampiran('" + i +
                 "')\">&times;</button></div><div id='errLampPengumuman-" + i + "'></div><p></p></div>")
             .appendTo($("#inputLampiran"));
     });
 
+    $("#btnTmbLampiranEdit").on('click', function(event) {
+        i++;
+        event.preventDefault();
+        $("<div class='remove_" + i +
+                "'><div class='input-group'><input type='text' name='namaLampEdit[]' class='form-control' placeholder='Nama File Lampiran' autocomplete='off'><input type='file' name='lampEdit[]' class='form-control' data-id='" +
+                i + "'><button type='button' class='btn btn-danger' onclick=\"hapus_lampiran('" +
+                i +
+                "')\">&times;</button></div><div id='errLampEdit-" + i + "'></div><p></p></div>")
+            .appendTo($("#inputLampiranEdit"));
+    });
 });
 
 function hapus_lampiran(i) {
-    $('#remove_' + i).fadeOut('slow', function() {
-        $('#remove_' + i).remove();
+    $('.remove_' + i).fadeOut('slow', function() {
+        $('.remove_' + i).remove();
     });
 }
 </script>
+
+
 <!-- End of Tombol Tambah Lampiran -->
 
 <!-- Toggle Modal Tambah Pengumuman -->
