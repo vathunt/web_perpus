@@ -7,7 +7,7 @@
     <title>Halaman Login - Website Perpustakaan</title>
     <link rel="icon" href="{{ asset('assets/images/logo/favicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap"
-        rel="stylesheet" />
+    rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendors/sweetalert2/sweetalert2.min.css') }}">
     <script src="{{ asset('assets/vendors/sweetalert2/sweetalert2.all.min.js') }}"></script>
@@ -24,23 +24,23 @@
                 <div id="auth-left">
                     @if(Session::has('error'))
                     <script type="application/javascript">
-                    const swalWithBootstrapButtons = Swal.mixin({
-                        customClass: {
-                            confirmButton: 'btn btn-danger'
-                        },
-                        buttonsStyling: false
-                    });
+                        const swalWithBootstrapButtons = Swal.mixin({
+                            customClass: {
+                                confirmButton: 'btn btn-danger'
+                            },
+                            buttonsStyling: false
+                        });
 
-                    swalWithBootstrapButtons.fire({
-                        title: 'Gagal',
-                        text: "Periksa Kembali Username dan Password",
-                        icon: 'error',
-                        confirmButtonText: '<i class="fas fa-check"></i> OK'
-                    });
+                        swalWithBootstrapButtons.fire({
+                            title: 'Gagal',
+                            text: "Periksa Kembali Username dan Password",
+                            icon: 'error',
+                            confirmButtonText: '<i class="fas fa-check"></i> OK'
+                        });
                     </script>
                     @endif
                     <div class="auth-logo">
-                        <a href="index.html"><img src="{{ asset('assets/images/logo/logo.png') }}" alt="Logo" /></a>
+                        <a href="#"><img src="{{ asset('images/logo-iain.png') }}" alt="Logo" /></a>
                     </div>
                     <h1 class="auth-title">Log in.</h1>
                     <p class="auth-subtitle mb-5">
@@ -57,14 +57,14 @@
                         @csrf
                         <div class="form-group position-relative has-icon-left mb-4">
                             <input type="text" class="form-control form-control-xl" placeholder="Username"
-                                name="username" id="username" value="{{ old('username') }}" autocomplete="off" />
+                            name="username" id="username" value="{{ old('username') }}" autocomplete="off" />
                             <div class="form-control-icon">
                                 <i class="bi bi-person"></i>
                             </div>
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
                             <input type="password" class="form-control form-control-xl" placeholder="Password"
-                                name="password" id="password" value="{{ old('password') }}" />
+                            name="password" id="password" value="{{ old('password') }}" />
                             <div class="form-control-icon">
                                 <i class="bi bi-shield-lock"></i>
                             </div>
@@ -76,9 +76,9 @@
                             </label>
                         </div>
                         <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5" id="btnLogin">
-                           Log in
-                        </button>
-                    </form>
+                         Log in
+                     </button>
+                 </form>
                     <!-- <div class="text-center mt-5 text-lg fs-4">
                         <p class="text-gray-600">
                             Don't have an account?
@@ -93,7 +93,7 @@
             <div class="col-lg-7 d-none d-lg-block">
                 <div id="auth-right">
                     <img src="{{ asset('assets/images/samples/IMG_6547.jpg') }}" alt="Background"
-                        style="object-fit: cover; width: 100%; height: 100%;">
+                    style="object-fit: cover; width: 100%; height: 100%;">
                 </div>
             </div>
         </div>
@@ -102,18 +102,18 @@
     <script src="{{ asset('plugins/jQuery/jquery.min.js') }}"></script>
     <!-- Lihat Password -->
     <script>
-    $("#lihatPassword").on('click', function() {
+        $("#lihatPassword").on('click', function() {
 
         // $(this).toggleClass("fa-eye fa-eye-slash");
         var pass = $("#password");
         pass.attr("type") == "password" ? pass.attr("type", "text") : pass.attr("type", "password");
     });
-    </script>
+</script>
 
-    <!-- jQuery Validate Plugins -->
-    <script src="{{ asset('assets/vendors/validate/jquery.validate.min.js') }}"></script>
-    <script src="{{ asset('assets/vendors/validate/additional-methods.min.js') }}"></script>
-    <script>
+<!-- jQuery Validate Plugins -->
+<script src="{{ asset('assets/vendors/validate/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/validate/additional-methods.min.js') }}"></script>
+<script>
     $("#formLogin").on('blur keyup', function() {
         if ($("#formLogin").valid()) {
             $('#btnLogin').prop('disabled', false);
@@ -153,7 +153,7 @@
             $(element).removeClass(errorClass).addClass(validClass);
         }
     });
-    </script>
+</script>
 </body>
 
 </html>

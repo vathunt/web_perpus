@@ -474,15 +474,15 @@
     padding-left: 3rem;
 }
 .form-group[class*="has-icon-"]
-    .form-control.form-control-xl
-    ~ .form-control-icon
-    i {
+.form-control.form-control-xl
+~ .form-control-icon
+i {
     font-size: 1.6rem;
 }
 .form-group[class*="has-icon-"]
-    .form-control.form-control-xl
-    ~ .form-control-icon
-    i:before {
+.form-control.form-control-xl
+~ .form-control-icon
+i:before {
     color: #a6a8aa;
 }
 .form-group[class*="has-icon-"] .form-control-icon {
@@ -537,7 +537,7 @@
     box-shadow: 0 0 5px #868e96;
 }
 .form-check
-    .form-check-input.form-check-secondary.form-check-glow:not(:checked) {
+.form-check-input.form-check-secondary.form-check-glow:not(:checked) {
     box-shadow: none;
 }
 .form-check .form-check-input.form-check-success {
@@ -763,7 +763,8 @@
     font-weight: 700;
 }
 .sidebar-wrapper .sidebar-header img {
-    height: 1.2rem;
+    /*height: 1.2rem;*/
+    height: 4rem;
 }
 .sidebar-wrapper .sidebar-toggler.x {
     position: absolute;

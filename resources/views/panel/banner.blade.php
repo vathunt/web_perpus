@@ -52,90 +52,90 @@
                                 <form method="POST" class="form" id="formSlide"
                                 action="{{ route('slide.post') }}" enctype="multipart/form-data">
                                 @csrf
-                                    <div class="form-body">
-                                        <div class="row">
-                                            <div class="col-md-6 col-12">
-                                                <div class="form-group">
-                                                    <label for="gambar_slide" class="font-bold">Gambar Slide</label>
-                                                    <small class="text-muted">&nbsp;
-                                                        <i class="text-primary font-bold">*) Ukuran gambar akan diubah ke 1600x800 pixel</i>
-                                                    </small>
-                                                    <img id="fotoSlide" style="max-width: 100%; margin: 15px 0;" />
-                                                    <input type="file" name="gambar_slide" class="form-control" id="gambar_slide" accept="image/*">
-                                                    <div id="errGambarSlide"></div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-12">
-                                                <div class="form-group">
-                                                    <label for="ket_gambar">Keterangan Gambar</label>
-                                                    <textarea name="ket_gambar" id="ket_gambar" class="form-control" rows="4"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 d-flex justify-content-end">
-                                                <button type="submit" class="btn btn-primary me-1 mb-1" id="btnSubmit">Simpan</button>
-                                                <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                <div class="form-body">
+                                    <div class="row">
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label for="gambar_slide" class="font-bold">Gambar Slide</label>
+                                                <small class="text-muted">&nbsp;
+                                                    <i class="text-primary font-bold">*) Ukuran gambar akan diubah ke 1600x800 pixel</i>
+                                                </small>
+                                                <img id="fotoSlide" style="max-width: 100%; margin: 15px 0;" />
+                                                <input type="file" name="gambar_slide" class="form-control" id="gambar_slide" accept="image/*">
+                                                <div id="errGambarSlide"></div>
                                             </div>
                                         </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label for="ket_gambar">Keterangan Gambar</label>
+                                                <textarea name="ket_gambar" id="ket_gambar" class="form-control" rows="4"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 d-flex justify-content-end">
+                                            <button type="submit" class="btn btn-primary me-1 mb-1" id="btnSubmit">Simpan</button>
+                                            <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                        </div>
                                     </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>Data Banner Slide</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-hover table-bordered table-lg" id="tbl_slide">
-                                        <thead class="text-center">
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Gambar</th>
-                                                <th>Keterangan</th>
-                                                <th>Status Tampil</th>
-                                                <th>Aksi</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
                                 </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Data Banner Slide</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered table-lg" id="tbl_slide">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Gambar</th>
+                                            <th>Keterangan</th>
+                                            <th>Status Tampil</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
-        @include('layouts.admin.footer')
+            </div>
+        </section>
     </div>
-    @endsection
+    @include('layouts.admin.footer')
+</div>
+@endsection
 
-    <!-- Update dan Delete Banner Slide -->
-    <script>
-        let id;
+<!-- Update dan Delete Banner Slide -->
+<script>
+    let id;
 
-        function hapusBanner(id, image) {
-            $('#idDelete').val(id);
-            $("#previewHapusBanner").html('');
-            let gambar = image;
+    function hapusBanner(id, image) {
+        $('#idDelete').val(id);
+        $("#previewHapusBanner").html('');
+        let gambar = image;
 
-            $("#previewHapusBanner").append("<img src='../images/slider-main/" + gambar +
-                "' style='max-width: 100%;'>");
+        $("#previewHapusBanner").append("<img src='../images/slider-main/" + gambar +
+            "' style='max-width: 100%;'>");
 
-            $('#hapusBanner').modal('toggle');
-        }
+        $('#hapusBanner').modal('toggle');
+    }
 
-        function editBanner(id) {
-            $.ajax({
-                url: "{{ url('/') }}/panel/slide/" + id,
-                dataType: "json"
-            }).done(function(response) {
-                $('#idEdit').val(response.id);
-                $('#ket_gambar_edit').val(response.keterangan_slide);
+    function editBanner(id) {
+        $.ajax({
+            url: "{{ url('/') }}/panel/slide/" + id,
+            dataType: "json"
+        }).done(function(response) {
+            $('#idEdit').val(response.id);
+            $('#ket_gambar_edit').val(response.keterangan_slide);
                 // $('[name="status_tampil_edit"][value="' + response.status_tampil + '"]').prop('checked', true);
 
                 $("#previewBannerSlide").html('');
@@ -149,71 +149,71 @@
 
                 $('#editBanner').modal('toggle');
             });
-        }
+    }
 
-        function editStatus(id) {
-            $.ajax({
-                url: "{{ url('/') }}/panel/slide/status/" + id,
-                type: "get",
-                success: function() {
-                    swal.fire({
-                        title: 'Berhasil',
-                        text: "Status Tampil Berhasil Diubah",
-                        icon: 'success',
-                        confirmButtonText: '<i class="fas fa-check"></i> OK'
-                    }).then(function() {
-                        window.location.reload();
-                    });
-                }
-            });
-        }
-    </script>
+    function editStatus(id) {
+        $.ajax({
+            url: "{{ url('/') }}/panel/slide/status/" + id,
+            type: "get",
+            success: function() {
+                swal.fire({
+                    title: 'Berhasil',
+                    text: "Status Tampil Berhasil Diubah",
+                    icon: 'success',
+                    confirmButtonText: '<i class="fas fa-check"></i> OK'
+                }).then(function() {
+                    window.location.reload();
+                });
+            }
+        });
+    }
+</script>
 
-    @section('modal')
-    <!-- Modal Edit Banner Slide -->
-    <div class="modal fade text-left" id="editBanner" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160"
-    aria-hidden="true">
-        <div class="modal-dialog modal-borderless modal-dialog-scrollable modal-lg" role="document">
-            <form method="POST" class="form form-vertical" id="formSlideEdit" action="{{ route('slide.update') }}" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
-                <div class="modal-content">
-                    <div class="modal-header bg-primary">
-                        <h5 class="modal-title white" id="myModalLabel160">
-                            Edit Banner Slide
-                        </h5>
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                            <i data-feather="x"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="col-md-12 mb-1">
-                                        <div class="input-group mb-3">
-                                            <input type="hidden" id="idEdit" name="idEdit">
-                                            <div id="previewBannerSlide" style="margin-bottom: 15px;"></div>
-                                            <label for="gambar_slide_edit" class="font-bold">Gambar Slide</label>
-                                            <small class="text-muted">&nbsp;<i
-                                            class="text-primary font-bold">*) Ukuran
-                                            Gambar 1600x800 pixel</i></small>
-                                            <div class="input-group mb-3">
-                                                <label class="input-group-text" for="icon-label"><i class="bi bi-upload"></i></label>
-                                                <input type="file" name="gambar_slide_edit" class="form-control" id="gambar_slide_edit" accept="image/*">
-                                            </div>
-                                        </div>
+@section('modal')
+<!-- Modal Edit Banner Slide -->
+<div class="modal fade text-left" id="editBanner" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160"
+aria-hidden="true">
+<div class="modal-dialog modal-borderless modal-dialog-scrollable modal-lg" role="document">
+    <form method="POST" class="form form-vertical" id="formSlideEdit" action="{{ route('slide.update') }}" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title white" id="myModalLabel160">
+                    Edit Banner Slide
+                </h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="col-md-12 mb-1">
+                                <div class="input-group mb-3">
+                                    <input type="hidden" id="idEdit" name="idEdit">
+                                    <div id="previewBannerSlide" style="margin-bottom: 15px;"></div>
+                                    <label for="gambar_slide_edit" class="font-bold">Gambar Slide</label>
+                                    <small class="text-muted">&nbsp;<i
+                                        class="text-primary font-bold">*) Ukuran
+                                    Gambar 1600x800 pixel</i></small>
+                                    <div class="input-group mb-3">
+                                        <label class="input-group-text" for="icon-label"><i class="bi bi-upload"></i></label>
+                                        <input type="file" name="gambar_slide_edit" class="form-control" id="gambar_slide_edit" accept="image/*">
                                     </div>
-                                    <div class="form-group has-icon-left">
-                                        <label for="ket_gambar_edit">Keterangan Gambar</label>
-                                        <div class="position-relative">
-                                            <textarea name="ket_gambar_edit" id="ket_gambar_edit" class="form-control"
-                                            rows="5"></textarea>
-                                            <div class="form-control-icon">
-                                                <i class="bi bi-chat-text"></i>
-                                            </div>
-                                        </div>
+                                </div>
+                            </div>
+                            <div class="form-group has-icon-left">
+                                <label for="ket_gambar_edit">Keterangan Gambar</label>
+                                <div class="position-relative">
+                                    <textarea name="ket_gambar_edit" id="ket_gambar_edit" class="form-control"
+                                    rows="5"></textarea>
+                                    <div class="form-control-icon">
+                                        <i class="bi bi-chat-text"></i>
                                     </div>
+                                </div>
+                            </div>
                                     <!-- <div class="form-group has-icon-left">
                                         <label for="status_tampil_edit">Status Tampil</label>
                                         <div class="position-relative">
@@ -477,22 +477,22 @@
 
 <!-- Menampilkan Foto Ketika Diupload (Insert) -->
 <script>
-$(document).ready(function() {
-    $("#gambar_slide").change(function(event) {
-        fadeInAdd();
-        getURL(this);
-    });
+    $(document).ready(function() {
+        $("#gambar_slide").change(function(event) {
+            fadeInAdd();
+            getURL(this);
+        });
 
-    $("#gambar_slide").on('click', function(event) {
-        fadeInAdd();
-    });
+        $("#gambar_slide").on('click', function(event) {
+            fadeInAdd();
+        });
 
-    function getURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            var filename = $("#gambar_slide").val();
-            filename = filename.substring(filename.lastIndexOf('\\') + 1);
-            reader.onload = function(e) {
+        function getURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                var filename = $("#gambar_slide").val();
+                filename = filename.substring(filename.lastIndexOf('\\') + 1);
+                reader.onload = function(e) {
                 // debugger;
                 $('#fotoSlide').attr('src', e.target.result);
                 $('#fotoSlide').hide();
@@ -504,13 +504,13 @@ $(document).ready(function() {
     }
 });
 
-function fadeInAdd() {
-    fadeInAlert();
-}
+    function fadeInAdd() {
+        fadeInAlert();
+    }
 
-function fadeInAlert(text) {
-    $(".alert").text(text).addClass("loadAnimate");
-}
+    function fadeInAlert(text) {
+        $(".alert").text(text).addClass("loadAnimate");
+    }
 </script>
 <!-- Akhir Menampilkan Foto (Insert) -->
 
@@ -518,7 +518,7 @@ function fadeInAlert(text) {
 <!-- <script type="text/javascript" src="{{ asset('assets/vendors/froala-editor/froala_editor.pkgd.min.js') }}"></script> -->
 <!-- <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet"
     type="text/css" />
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script> -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script> -->
 
 <!-- <script>
 new FroalaEditor('#ket_gambar', {

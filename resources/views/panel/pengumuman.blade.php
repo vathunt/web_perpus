@@ -10,11 +10,7 @@
 
 @section('content')
 <div id="main">
-    <header class="mb-3">
-        <a href="#" class="burger-btn btn-sm d-block d-xl-none">
-            <i class="bi bi-justify fs-3"></i>
-        </a>
-    </header>
+    @include('layouts.admin.header')
 
     <div class="page-heading">
         <div class="page-title">
@@ -211,22 +207,22 @@ function editPengumuman(id) {
             onSelect: (d, i) => {
                 if (d !== i.lastVal) $(this).change()
             },
-            endDate: new Date(new Date().setDate(new Date().getDate() + 0))
-        });
+        endDate: new Date(new Date().setDate(new Date().getDate() + 0))
+    });
 
         const editor = new FroalaEditor('#detailEdit', {
             "charCounterCount": true,
             "toolbarButtons": [
-                'undo', 'redo', 'clearFormatting', '|',
-                'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'inlineClass',
-                'paragraphStyle',
-                'lineHeight', '|',
-                'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|',
-                'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote',
-                '-', 'insertLink',
-                'insertImage', 'insertTable', '|',
-                'specialCharacters', 'insertHR', 'selectAll', '|',
-                'spellChecker', 'help', 'html', '|',
+            'undo', 'redo', 'clearFormatting', '|',
+            'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'inlineClass',
+            'paragraphStyle',
+            'lineHeight', '|',
+            'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|',
+            'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote',
+            '-', 'insertLink',
+            'insertImage', 'insertTable', '|',
+            'specialCharacters', 'insertHR', 'selectAll', '|',
+            'spellChecker', 'help', 'html', '|',
             ],
             "tabSpaces": 4,
             "fontFamilyDefaultSelection": "Arial",
@@ -255,47 +251,47 @@ function editPengumuman(id) {
 @section('modal')
 <!-- Modal Tambah Pengumuman -->
 <div class="modal fade text-left" id="tmbPengumuman" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160"
-    aria-hidden="true">
-    <div class="modal-dialog modal-borderless modal-dialog-scrollable modal-full" role="document">
-        <form method="POST" class="form form-vertical" id="formTmbPengumuman" action="{{ route('pengumuman.post') }}"
-            enctype="multipart/form-data">
-            @csrf
-            <div class="modal-content">
-                <div class="modal-header bg-primary">
-                    <h5 class="modal-title white" id="myModalLabel160">
-                        Tambah Pengumuman
-                    </h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <i data-feather="x"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-body">
-                        <div class="row">
-                            <div class="col-md-8 col-12">
-                                <div class="form-group has-icon-left">
-                                    <label for="judulPengumuman">Judul Pengumuman</label>
-                                    <div class="position-relative">
-                                        <input type="text" name="judulPengumuman" id="judulPengumuman"
-                                            class="form-control" autocomplete="off">
-                                        <div class="form-control-icon">
-                                            <i class="bi bi-chat-text"></i>
-                                        </div>
-                                    </div>
+aria-hidden="true">
+<div class="modal-dialog modal-borderless modal-dialog-scrollable modal-full" role="document">
+    <form method="POST" class="form form-vertical" id="formTmbPengumuman" action="{{ route('pengumuman.post') }}"
+    enctype="multipart/form-data">
+    @csrf
+    <div class="modal-content">
+        <div class="modal-header bg-primary">
+            <h5 class="modal-title white" id="myModalLabel160">
+                Tambah Pengumuman
+            </h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <i data-feather="x"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-body">
+                <div class="row">
+                    <div class="col-md-8 col-12">
+                        <div class="form-group has-icon-left">
+                            <label for="judulPengumuman">Judul Pengumuman</label>
+                            <div class="position-relative">
+                                <input type="text" name="judulPengumuman" id="judulPengumuman"
+                                class="form-control" autocomplete="off">
+                                <div class="form-control-icon">
+                                    <i class="bi bi-chat-text"></i>
                                 </div>
                             </div>
-                            <div class="col-md-4 col-12">
-                                <div class="form-group has-icon-left">
-                                    <label for="tglPengumuman">Tanggal Pengumuman</label>
-                                    <div class="position-relative">
-                                        <input type="text" name="tglPengumuman" id="tglPengumuman"
-                                            class="datepicker form-control" readonly>
-                                        <div class="form-control-icon">
-                                            <i class="bi bi-calendar-date"></i>
-                                        </div>
-                                    </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group has-icon-left">
+                            <label for="tglPengumuman">Tanggal Pengumuman</label>
+                            <div class="position-relative">
+                                <input type="text" name="tglPengumuman" id="tglPengumuman"
+                                class="datepicker form-control" readonly>
+                                <div class="form-control-icon">
+                                    <i class="bi bi-calendar-date"></i>
                                 </div>
                             </div>
+                        </div>
+                    </div>
                             <!-- <div class="input-group mb-3">
                                 <label for="thumbPengumuman" class="font-bold">Thumbnail Pengumuman</label>
                                 <div class="input-group mb-3">
@@ -311,11 +307,11 @@ function editPengumuman(id) {
                                     <!-- <input type="file" name="lampPengumuman[]" class="form-control" id="lampPengumuman" multiple> -->
                                     <div class="input-group">
                                         <input type="text" name="namaLampPengumuman[]" class="form-control"
-                                            id="namaLampPengumuman" placeholder="Nama File Lampiran" autocomplete="off">
+                                        id="namaLampPengumuman" placeholder="Nama File Lampiran" autocomplete="off">
                                         <input type="file" name="lampPengumuman[]" class="form-control" data-id="0"
-                                            id="lampPengumuman">
+                                        id="lampPengumuman">
                                         <button class="btn btn-primary" type="button"
-                                            id="btnTmbLampiran">&plus;</button>
+                                        id="btnTmbLampiran">&plus;</button>
                                     </div>
                                     <div id="errLampPengumuman-0"></div>
                                     <p></p>
@@ -326,7 +322,8 @@ function editPengumuman(id) {
                                 <div class="form-group">
                                     <label for="thumbPengumuman" class="font-bold">Thumbnail Pengumuman</label>
                                     <input type="file" name="thumbPengumuman" class="form-control" id="thumbPengumuman"
-                                        accept="image/*">
+                                    accept="image/*">
+                                    <img class="fotoThumbnail mt-2" style="max-width: 100%;">
                                 </div>
                             </div>
                             <!-- <div class="input-group mb-3">
@@ -340,7 +337,7 @@ function editPengumuman(id) {
                                 <div class="form-group has-icon-left">
                                     <label for="detailPengumuman">Detail Pengumuman</label>
                                     <textarea name="detailPengumuman" id="detailPengumuman"
-                                        class="form-control"></textarea>
+                                    class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -364,29 +361,29 @@ function editPengumuman(id) {
 
 <!-- Modal Lihat Pengumuman -->
 <div class="modal fade text-left" id="lhtPengumuman" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160"
-    aria-hidden="true">
-    <div class="modal-dialog modal-borderless modal-dialog-scrollable modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-success">
-                <h5 class="modal-title white" id="myModalLabel160">
-                    Lihat Pengumuman
-                </h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <i data-feather="x"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="card">
-                    <div class="card-content">
-                        <div id="viewThumbnail"></div>
-                        <div class="card-body">
-                            <h5 class="card-title text-center" id="viewJudul"></h5>
-                            <div class="card-text text-justify" id="viewDetail"></div>
-                        </div>
+aria-hidden="true">
+<div class="modal-dialog modal-borderless modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header bg-success">
+            <h5 class="modal-title white" id="myModalLabel160">
+                Lihat Pengumuman
+            </h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <i data-feather="x"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="card">
+                <div class="card-content">
+                    <div id="viewThumbnail"></div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center" id="viewJudul"></h5>
+                        <div class="card-text text-justify" id="viewDetail"></div>
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Tanggal Pengumuman : <span class="font-bold"
-                                id="viewTanggal"></span></li>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Tanggal Pengumuman : <span class="font-bold"
+                        id="viewTanggal"></span></li>
                         <li class="list-group-item">Diupload Oleh : <span class="font-bold" id="viewAdmin"></span></li>
                         <li class="list-group-item">
                             <span class="font-bold">Lampiran Pengumuman</span>
@@ -408,142 +405,142 @@ function editPengumuman(id) {
 
 <!-- Modal Edit Pengumuman -->
 <div class="modal fade text-left" id="editPengumuman" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160"
-    aria-hidden="true">
-    <div class="modal-dialog modal-borderless modal-dialog-scrollable modal-full" role="document">
-        <form method="POST" class="form form-vertical" id="formEditPengumuman" action="{{ route('pengumuman.update') }}"
-            enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
-            <input type="hidden" name="idEdit" id="idEdit">
-            <div class="modal-content">
-                <div class="modal-header bg-primary">
-                    <h5 class="modal-title white" id="myModalLabel160">
-                        Edit Pengumuman
-                    </h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <i data-feather="x"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-body">
-                        <div class="row">
-                            <div class="col-md-8 col-12">
-                                <div class="form-group has-icon-left">
-                                    <label for="judulEdit">Judul Pengumuman</label>
-                                    <div class="position-relative">
-                                        <input type="text" name="judulEdit" id="judulEdit" class="form-control"
-                                            autocomplete="off">
-                                        <div class="form-control-icon">
-                                            <i class="bi bi-chat-text"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="form-group has-icon-left">
-                                    <label for="tglEdit">Tanggal Pengumuman</label>
-                                    <div class="position-relative">
-                                        <input type="text" name="tglEdit" id="tglEdit" class="datepicker form-control"
-                                            readonly>
-                                        <div class="form-control-icon">
-                                            <i class="bi bi-calendar-date"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-8 col-12">
-                                <div class="form-group">
-                                    <label for="lampEdit" class="font-bold">Lampiran Pengumuman</label>
-                                    <small class="text-muted"><i class="text-primary font-bold">*) Kosongkan jika tidak
-                                            ada
-                                            perubahan</i></small>
-                                    <div class="input-group">
-                                        <input type="text" name="namaLampEdit[]" class="form-control" id="namaLampEdit"
-                                            placeholder="Nama File Lampiran" autocomplete="off">
-                                        <input type="file" name="lampEdit[]" class="form-control" data-id="0"
-                                            id="lampEdit">
-                                        <button class="btn btn-primary" type="button"
-                                            id="btnTmbLampiranEdit">&plus;</button>
-                                    </div>
-                                    <div id="errLampEdit-0"></div>
-                                    <p></p>
-                                    <div id="inputLampiranEdit"></div>
-                                    <div class="mt-2">
-                                        <ol id="previewLampiran"></ol>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="form-group">
-                                    <label for="thumbEdit" class="font-bold">Thumbnail Pengumuman</label>
-                                    <small class="text-muted"><i class="text-primary font-bold">*) Kosongkan jika tidak
-                                            ada
-                                            perubahan</i></small>
-                                    <input type="file" name="thumbEdit" class="form-control" id="thumbEdit"
-                                        accept="image/*">
-                                    <div id="previewThumbnail" class="mt-2"></div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group has-icon-left">
-                                    <label for="detailEdit">Detail Pengumuman</label>
-                                    <textarea name="detailEdit" id="detailEdit" class="form-control"></textarea>
+aria-hidden="true">
+<div class="modal-dialog modal-borderless modal-dialog-scrollable modal-full" role="document">
+    <form method="POST" class="form form-vertical" id="formEditPengumuman" action="{{ route('pengumuman.update') }}"
+    enctype="multipart/form-data">
+    @csrf
+    @method('PUT')
+    <input type="hidden" name="idEdit" id="idEdit">
+    <div class="modal-content">
+        <div class="modal-header bg-primary">
+            <h5 class="modal-title white" id="myModalLabel160">
+                Edit Pengumuman
+            </h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <i data-feather="x"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-body">
+                <div class="row">
+                    <div class="col-md-8 col-12">
+                        <div class="form-group has-icon-left">
+                            <label for="judulEdit">Judul Pengumuman</label>
+                            <div class="position-relative">
+                                <input type="text" name="judulEdit" id="judulEdit" class="form-control"
+                                autocomplete="off">
+                                <div class="form-control-icon">
+                                    <i class="bi bi-chat-text"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                        <i class="bx bx-x d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Close</span>
-                    </button>
-                    <button type="submit" class="btn btn-primary ml-1" id="btnEdit">
-                        <i class="bx bx-check d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Simpan</span>
-                    </button>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group has-icon-left">
+                            <label for="tglEdit">Tanggal Pengumuman</label>
+                            <div class="position-relative">
+                                <input type="text" name="tglEdit" id="tglEdit" class="datepicker form-control"
+                                readonly>
+                                <div class="form-control-icon">
+                                    <i class="bi bi-calendar-date"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-12">
+                        <div class="form-group">
+                            <label for="lampEdit" class="font-bold">Lampiran Pengumuman</label>
+                            <small class="text-muted"><i class="text-primary font-bold">*) Kosongkan jika tidak
+                                ada
+                            perubahan</i></small>
+                            <div class="input-group">
+                                <input type="text" name="namaLampEdit[]" class="form-control" id="namaLampEdit"
+                                placeholder="Nama File Lampiran" autocomplete="off">
+                                <input type="file" name="lampEdit[]" class="form-control" data-id="0"
+                                id="lampEdit">
+                                <button class="btn btn-primary" type="button"
+                                id="btnTmbLampiranEdit">&plus;</button>
+                            </div>
+                            <div id="errLampEdit-0"></div>
+                            <p></p>
+                            <div id="inputLampiranEdit"></div>
+                            <div class="mt-2">
+                                <ol id="previewLampiran"></ol>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="thumbEdit" class="font-bold">Thumbnail Pengumuman</label>
+                            <small class="text-muted"><i class="text-primary font-bold">*) Kosongkan jika tidak
+                                ada
+                            perubahan</i></small>
+                            <input type="file" name="thumbEdit" class="form-control" id="thumbEdit"
+                            accept="image/*">
+                            <div id="previewThumbnail" class="mt-2"></div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group has-icon-left">
+                            <label for="detailEdit">Detail Pengumuman</label>
+                            <textarea name="detailEdit" id="detailEdit" class="form-control"></textarea>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                <i class="bx bx-x d-block d-sm-none"></i>
+                <span class="d-none d-sm-block">Close</span>
+            </button>
+            <button type="submit" class="btn btn-primary ml-1" id="btnEdit">
+                <i class="bx bx-check d-block d-sm-none"></i>
+                <span class="d-none d-sm-block">Simpan</span>
+            </button>
+        </div>
     </div>
+</form>
+</div>
 </div>
 <!-- Akhir Modal Edit Pengumuman -->
 
 <!-- Modal Hapus Pengumuman -->
 <div class="modal fade text-left" id="hapusPengumuman" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160"
-    aria-hidden="true">
-    <div class="modal-dialog modal-borderless modal-dialog-scrollable modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-danger">
-                <h5 class="modal-title white" id="myModalLabel160">
-                    Hapus Pengumuman
-                </h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <i data-feather="x"></i>
+aria-hidden="true">
+<div class="modal-dialog modal-borderless modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header bg-danger">
+            <h5 class="modal-title white" id="myModalLabel160">
+                Hapus Pengumuman
+            </h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <i data-feather="x"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <h4 class="text-center">Hapus Pengumuman Ini?</h4>
+            <h5 class="text-center fst-italic" id="judulPengumumanDelete">
+            </h3>
+        </div>
+        <div class="modal-footer">
+            <form action="{{ route('pengumuman.delete') }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <input type="hidden" name="idDelete" id="idDelete">
+                <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Close</span>
                 </button>
-            </div>
-            <div class="modal-body">
-                <h4 class="text-center">Hapus Pengumuman Ini?</h4>
-                <h5 class="text-center fst-italic" id="judulPengumumanDelete">
-                    </h3>
-            </div>
-            <div class="modal-footer">
-                <form action="{{ route('pengumuman.delete') }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <input type="hidden" name="idDelete" id="idDelete">
-                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                        <i class="bx bx-x d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Close</span>
-                    </button>
-                    <button type="submit" class="btn btn-danger ml-1">
-                        <i class="bx bx-check d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Hapus</span>
-                    </button>
-                </form>
-            </div>
+                <button type="submit" class="btn btn-danger ml-1">
+                    <i class="bx bx-check d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Hapus</span>
+                </button>
+            </form>
         </div>
     </div>
+</div>
 </div>
 <!-- Akhir Modal Hapus Pengumuman -->
 @endsection
@@ -551,48 +548,48 @@ function editPengumuman(id) {
 @section('javascript')
 <!-- Uppercase Judul Pengumuman -->
 <script>
-$('#judulPengumuman').keyup(function() {
+    $('#judulPengumuman').keyup(function() {
     // $(this).val($('#judulPengumuman').val().toUpperCase());
     document.getElementById('judulPengumuman').style.textTransform = "uppercase";
 });
 
-$('#judulEdit').keyup(() => {
-    document.getElementById('judulEdit').style.textTransform = "uppercase";
-});
+    $('#judulEdit').keyup(() => {
+        document.getElementById('judulEdit').style.textTransform = "uppercase";
+    });
 </script>
 <!-- End of Uppercase Judul Pengumuman -->
 
 <!-- Tombol Tambah Lampiran -->
 <script>
-$(document).ready(function() {
-    let i = 0;
-    $("#btnTmbLampiran").on('click', function(event) {
-        i++;
-        event.preventDefault();
-        $("<div class='remove_" + i +
+    $(document).ready(function() {
+        let i = 0;
+        $("#btnTmbLampiran").on('click', function(event) {
+            i++;
+            event.preventDefault();
+            $("<div class='remove_" + i +
                 "'><div class='input-group'><input type='text' name='namaLampPengumuman[]' class='form-control' placeholder='Nama File Lampiran' autocomplete='off'><input type='file' name='lampPengumuman[]' class='form-control' data-id='" +
                 i + "'><button type='button' class='btn btn-danger' onclick=\"hapus_lampiran('" + i +
                 "')\">&times;</button></div><div id='errLampPengumuman-" + i + "'></div><p></p></div>")
             .appendTo($("#inputLampiran"));
-    });
+        });
 
-    $("#btnTmbLampiranEdit").on('click', function(event) {
-        i++;
-        event.preventDefault();
-        $("<div class='remove_" + i +
+        $("#btnTmbLampiranEdit").on('click', function(event) {
+            i++;
+            event.preventDefault();
+            $("<div class='remove_" + i +
                 "'><div class='input-group'><input type='text' name='namaLampEdit[]' class='form-control' placeholder='Nama File Lampiran' autocomplete='off'><input type='file' name='lampEdit[]' class='form-control' data-id='" +
                 i + "'><button type='button' class='btn btn-danger' onclick=\"hapus_lampiran('" +
                 i +
                 "')\">&times;</button></div><div id='errLampEdit-" + i + "'></div><p></p></div>")
             .appendTo($("#inputLampiranEdit"));
+        });
     });
-});
 
-function hapus_lampiran(i) {
-    $('.remove_' + i).fadeOut('slow', function() {
-        $('.remove_' + i).remove();
-    });
-}
+    function hapus_lampiran(i) {
+        $('.remove_' + i).fadeOut('slow', function() {
+            $('.remove_' + i).remove();
+        });
+    }
 </script>
 
 
@@ -600,9 +597,9 @@ function hapus_lampiran(i) {
 
 <!-- Toggle Modal Tambah Pengumuman -->
 <script type="text/javascript">
-$('#btnTmbPengumuman').on('click', () => {
-    $('#tmbPengumuman').modal('toggle');
-});
+    $('#btnTmbPengumuman').on('click', () => {
+        $('#tmbPengumuman').modal('toggle');
+    });
 </script>
 <!-- Akhir Toggle Modal Tambah Pengumuman -->
 
@@ -612,18 +609,18 @@ $('#btnTmbPengumuman').on('click', () => {
 
 <!-- Validasi Form Tambah Pengumuman -->
 <script>
-$("#formTmbPengumuman").on('blur keyup', function() {
-    if ($("#formTmbPengumuman").valid()) {
-        $('#btnSubmit').prop('disabled', false);
-    } else {
-        $('#btnSubmit').prop('disabled', 'disabled');
-    }
-});
+    $("#formTmbPengumuman").on('blur keyup', function() {
+        if ($("#formTmbPengumuman").valid()) {
+            $('#btnSubmit').prop('disabled', false);
+        } else {
+            $('#btnSubmit').prop('disabled', 'disabled');
+        }
+    });
 
-$.validator.addMethod('maxfilesize', function(value, element, param) {
-    let length = (element.files.length);
-    let fileSize = 0;
-    if (length > 0) {
+    $.validator.addMethod('maxfilesize', function(value, element, param) {
+        let length = (element.files.length);
+        let fileSize = 0;
+        if (length > 0) {
         fileSize = element.files[0].size; // get file size
         fileSize = fileSize / 1000000; //file size in Mb
         return this.optional(element) || fileSize <= param;
@@ -632,81 +629,81 @@ $.validator.addMethod('maxfilesize', function(value, element, param) {
     }
 });
 
-$('#formTmbPengumuman').validate({
-    errorClass: 'error is-invalid',
-    validClass: 'is-valid',
-    ignore: "[contenteditable='true'].fr-element.fr-view",
-    rules: {
-        judulPengumuman: {
-            required: true
+    $('#formTmbPengumuman').validate({
+        errorClass: 'error is-invalid',
+        validClass: 'is-valid',
+        ignore: "[contenteditable='true'].fr-element.fr-view",
+        rules: {
+            judulPengumuman: {
+                required: true
+            },
+            tglPengumuman: {
+                required: true
+            },
+            detailPengumuman: {
+                required: true
+            },
+            thumbPengumuman: {
+                required: true,
+                extension: "jpg|jpeg|png",
+                maxfilesize: 2
+            },
+            "lampPengumuman[]": {
+                extension: "jpg|jpeg|png|doc|docx|xls|xlsx|ppt|pptx|txt|pdf",
+                maxfilesize: 10
+            }
         },
-        tglPengumuman: {
-            required: true
+        messages: {
+            judulPengumuman: {
+                required: "Judul Pengumuman Harus Diisi"
+            },
+            tglPengumuman: {
+                required: "Tanggal Pengumuman Belum Dipilih"
+            },
+            detailPengumuman: {
+                required: "Detail Pengumuman Harus Diisi"
+            },
+            thumbPengumuman: {
+                required: "Thumbnail Pengumuman Belum Dipilih",
+                extension: "Ekstensi File *.jpg, *.jpeg atau *.png",
+                maxfilesize: 'Ukuran File Tidak Boleh Lebih dari 2 MB'
+            },
+            "lampPengumuman[]": {
+                extension: "Ekstensi File *.jpg, *.jpeg, *.png, *.doc, *.docx, *.xls, *.xlsx, *.ppt, *.pptx, *.txt, *.pdf",
+                maxfilesize: 'Ukuran File Tidak Boleh Lebih dari 10 MB'
+            }
         },
-        detailPengumuman: {
-            required: true
+        errorPlacement: function(error, element) {
+            if (element.attr("name") == "lampPengumuman[]") {
+                error.appendTo($('#errLampPengumuman-' + element.attr("data-id")));
+            } else {
+                error.insertAfter(element);
+            }
         },
-        thumbPengumuman: {
-            required: true,
-            extension: "jpg|jpeg|png",
-            maxfilesize: 2
+        highlight: function(element, errorClass, validClass) {
+            $(element).addClass(errorClass).removeClass(validClass);
         },
-        "lampPengumuman[]": {
-            extension: "jpg|jpeg|png|doc|docx|xls|xlsx|ppt|pptx|txt|pdf",
-            maxfilesize: 10
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).removeClass(errorClass).addClass(validClass);
         }
-    },
-    messages: {
-        judulPengumuman: {
-            required: "Judul Pengumuman Harus Diisi"
-        },
-        tglPengumuman: {
-            required: "Tanggal Pengumuman Belum Dipilih"
-        },
-        detailPengumuman: {
-            required: "Detail Pengumuman Harus Diisi"
-        },
-        thumbPengumuman: {
-            required: "Thumbnail Pengumuman Belum Dipilih",
-            extension: "Ekstensi File *.jpg, *.jpeg atau *.png",
-            maxfilesize: 'Ukuran File Tidak Boleh Lebih dari 2 MB'
-        },
-        "lampPengumuman[]": {
-            extension: "Ekstensi File *.jpg, *.jpeg, *.png, *.doc, *.docx, *.xls, *.xlsx, *.ppt, *.pptx, *.txt, *.pdf",
-            maxfilesize: 'Ukuran File Tidak Boleh Lebih dari 10 MB'
-        }
-    },
-    errorPlacement: function(error, element) {
-        if (element.attr("name") == "lampPengumuman[]") {
-            error.appendTo($('#errLampPengumuman-' + element.attr("data-id")));
-        } else {
-            error.insertAfter(element);
-        }
-    },
-    highlight: function(element, errorClass, validClass) {
-        $(element).addClass(errorClass).removeClass(validClass);
-    },
-    unhighlight: function(element, errorClass, validClass) {
-        $(element).removeClass(errorClass).addClass(validClass);
-    }
-});
+    });
 </script>
 <!-- Akhir Validasi Form Tambah Pengumuman -->
 
 <!-- Validasi Form Edit Pengumuman -->
 <script>
-$("#formEditPengumuman").on('blur keyup', function() {
-    if ($("#formEditPengumuman").valid()) {
-        $('#btnEdit').prop('disabled', false);
-    } else {
-        $('#btnEdit').prop('disabled', 'disabled');
-    }
-});
+    $("#formEditPengumuman").on('blur keyup', function() {
+        if ($("#formEditPengumuman").valid()) {
+            $('#btnEdit').prop('disabled', false);
+        } else {
+            $('#btnEdit').prop('disabled', 'disabled');
+        }
+    });
 
-$.validator.addMethod('maxfilesize', function(value, element, param) {
-    let length = (element.files.length);
-    let fileSize = 0;
-    if (length > 0) {
+    $.validator.addMethod('maxfilesize', function(value, element, param) {
+        let length = (element.files.length);
+        let fileSize = 0;
+        if (length > 0) {
         fileSize = element.files[0].size; // get file size
         fileSize = fileSize / 1000000; //file size in Mb
         return this.optional(element) || fileSize <= param;
@@ -715,79 +712,79 @@ $.validator.addMethod('maxfilesize', function(value, element, param) {
     }
 });
 
-$('#formEditPengumuman').validate({
-    errorClass: 'error is-invalid',
-    validClass: 'is-valid',
-    ignore: "[contenteditable='true'].fr-element.fr-view",
-    rules: {
-        judulEdit: {
-            required: true
+    $('#formEditPengumuman').validate({
+        errorClass: 'error is-invalid',
+        validClass: 'is-valid',
+        ignore: "[contenteditable='true'].fr-element.fr-view",
+        rules: {
+            judulEdit: {
+                required: true
+            },
+            tglEdit: {
+                required: true
+            },
+            detailEdit: {
+                required: true
+            },
+            thumbEdit: {
+                extension: "jpg|jpeg|png",
+                maxfilesize: 2
+            },
+            "lampEdit[]": {
+                extension: "jpg|jpeg|png|doc|docx|xls|xlsx|ppt|pptx|txt|pdf",
+                maxfilesize: 10
+            }
         },
-        tglEdit: {
-            required: true
+        messages: {
+            judulEdit: {
+                required: "Judul Pengumuman Harus Diisi"
+            },
+            tglEdit: {
+                required: "Tanggal Pengumuman Belum Dipilih"
+            },
+            detailEdit: {
+                required: "Detail Pengumuman Harus Diisi"
+            },
+            thumbEdit: {
+                extension: "Ekstensi File *.jpg, *.jpeg atau *.png",
+                maxfilesize: 'Ukuran File Tidak Boleh Lebih dari 2 MB'
+            },
+            "lampEdit[]": {
+                extension: "Ekstensi File *.jpg, *.jpeg, *.png, *.doc, *.docx, *.xls, *.xlsx, *.ppt, *.pptx, *.txt, *.pdf",
+                maxfilesize: 'Ukuran File Tidak Boleh Lebih dari 10 MB'
+            }
         },
-        detailEdit: {
-            required: true
+        errorPlacement: function(error, element) {
+            if (element.attr("name") == "lampEdit[]") {
+                error.appendTo($('#errLampEdit-' + element.attr("data-id")));
+            } else {
+                error.insertAfter(element);
+            }
         },
-        thumbEdit: {
-            extension: "jpg|jpeg|png",
-            maxfilesize: 2
+        highlight: function(element, errorClass, validClass) {
+            $(element).addClass(errorClass).removeClass(validClass);
         },
-        "lampEdit[]": {
-            extension: "jpg|jpeg|png|doc|docx|xls|xlsx|ppt|pptx|txt|pdf",
-            maxfilesize: 10
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).removeClass(errorClass).addClass(validClass);
         }
-    },
-    messages: {
-        judulEdit: {
-            required: "Judul Pengumuman Harus Diisi"
-        },
-        tglEdit: {
-            required: "Tanggal Pengumuman Belum Dipilih"
-        },
-        detailEdit: {
-            required: "Detail Pengumuman Harus Diisi"
-        },
-        thumbEdit: {
-            extension: "Ekstensi File *.jpg, *.jpeg atau *.png",
-            maxfilesize: 'Ukuran File Tidak Boleh Lebih dari 2 MB'
-        },
-        "lampEdit[]": {
-            extension: "Ekstensi File *.jpg, *.jpeg, *.png, *.doc, *.docx, *.xls, *.xlsx, *.ppt, *.pptx, *.txt, *.pdf",
-            maxfilesize: 'Ukuran File Tidak Boleh Lebih dari 10 MB'
-        }
-    },
-    errorPlacement: function(error, element) {
-        if (element.attr("name") == "lampEdit[]") {
-            error.appendTo($('#errLampEdit-' + element.attr("data-id")));
-        } else {
-            error.insertAfter(element);
-        }
-    },
-    highlight: function(element, errorClass, validClass) {
-        $(element).addClass(errorClass).removeClass(validClass);
-    },
-    unhighlight: function(element, errorClass, validClass) {
-        $(element).removeClass(errorClass).addClass(validClass);
-    }
-});
+    });
 </script>
 <!-- Akhir Validasi Form Edit Pengumuman -->
 
 <!-- Menampilkan Data Pengumuman di DataTable -->
 <script type="text/javascript">
-var table_slide = $('#tbl_pengumuman').DataTable({
-    processing: true,
-    serverSide: true,
-    ajax: {
-        "url": "{{ route('pengumuman.data') }}",
-        "dataType": "json",
-        "type": "POST",
-        "data": {
-            _token: "{{ csrf_token() }}"
-        }
-    },
-    columns: [{
+    var table_slide = $('#tbl_pengumuman').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            "url": "{{ route('pengumuman.data') }}",
+            "dataType": "json",
+            "type": "POST",
+            "data": {
+                _token: "{{ csrf_token() }}"
+            }
+        },
+        columns: [{
             "data": null,
             "orderable": false,
             render: function(data, type, row, meta) {
@@ -808,38 +805,38 @@ var table_slide = $('#tbl_pengumuman').DataTable({
             "name": "action",
             "orderable": false
         },
-    ],
-    "columnDefs": [{
-        "targets": "_all",
-        "className": "text-center",
-        "visible": true
-    }],
-    "responsive": true
-});
+        ],
+        "columnDefs": [{
+            "targets": "_all",
+            "className": "text-center",
+            "visible": true
+        }],
+        "responsive": true
+    });
 </script>
 <!-- Menampilkan Data Pengumuman di DataTable -->
 
 <!-- Datepicker -->
 <link rel="stylesheet" type="text/css"
-    href="{{ asset('assets/vendors/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css') }}">
+href="{{ asset('assets/vendors/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css') }}">
 <script type="text/javascript" src="{{ asset('assets/vendors/bootstrap-datepicker/dist/js/bootstrap-datepicker.js') }}">
 </script>
 <script type="text/javascript"
-    src="{{ asset('assets/vendors/bootstrap-datepicker/dist/locales/bootstrap-datepicker.id.min.js') }}"></script>
+src="{{ asset('assets/vendors/bootstrap-datepicker/dist/locales/bootstrap-datepicker.id.min.js') }}"></script>
 
 <script>
-$('.datepicker').datepicker({
-    format: 'yyyy-mm-dd',
-    autoclose: true,
-    clearBtn: true,
-    language: 'id',
-    orientation: 'bottom right',
-    showOnFocus: true,
-    todayBtn: "linked",
-    todayHighlight: true,
-    onSelect: (d, i) => {
-        if (d !== i.lastVal) $(this).change()
-    },
+    $('.datepicker').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        clearBtn: true,
+        language: 'id',
+        orientation: 'bottom right',
+        showOnFocus: true,
+        todayBtn: "linked",
+        todayHighlight: true,
+        onSelect: (d, i) => {
+            if (d !== i.lastVal) $(this).change()
+        },
     endDate: new Date(new Date().setDate(new Date().getDate() + 0))
 });
 </script>
@@ -849,9 +846,9 @@ $('.datepicker').datepicker({
 <script type="text/javascript" src="{{ asset('assets/vendors/froala-editor/froala_editor.pkgd.min.js') }}"></script>
 
 <script>
-new FroalaEditor('#detailPengumuman', {
-    "charCounterCount": true,
-    "toolbarButtons": [
+    new FroalaEditor('#detailPengumuman', {
+        "charCounterCount": true,
+        "toolbarButtons": [
         'undo', 'redo', 'clearFormatting', '|',
         'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'inlineClass', 'paragraphStyle',
         'lineHeight', '|',
@@ -860,22 +857,61 @@ new FroalaEditor('#detailPengumuman', {
         'insertImage', 'insertTable', '|',
         'specialCharacters', 'insertHR', 'selectAll', '|',
         'spellChecker', 'help', 'html', '|',
-    ],
-    "tabSpaces": 4,
-    "fontFamilyDefaultSelection": "Arial",
-    "fontFamilySelection": true,
-    "fontSizeSelection": true,
-    "fontSizeDefaultSelection": "12",
-    "fontSizeUnit": "px",
-    "autofocus": true,
-    "attribution": false,
-    "height": -1,
-    "linkAlwaysBlank": true,
-    "paragraphDefaultSelection": "Normal",
-    "paragraphFormatSelection": true,
-    "quickInsertButtons": ['table', 'ol', 'ul', 'hr'],
-    "language": "id"
-});
+        ],
+        "tabSpaces": 4,
+        "fontFamilyDefaultSelection": "Arial",
+        "fontFamilySelection": true,
+        "fontSizeSelection": true,
+        "fontSizeDefaultSelection": "12",
+        "fontSizeUnit": "px",
+        "autofocus": true,
+        "attribution": false,
+        "height": -1,
+        "linkAlwaysBlank": true,
+        "paragraphDefaultSelection": "Normal",
+        "paragraphFormatSelection": true,
+        "quickInsertButtons": ['table', 'ol', 'ul', 'hr'],
+        "language": "id"
+    });
 </script>
 <!-- End of Text Editor -->
+
+<!-- Menampilkan Foto Thumbnail -->
+<script>
+    $(document).ready(function() {
+        $("#thumbPengumuman").change(function(event) {
+            fadeInAdd();
+            getURL(this);
+        });
+
+        $("#thumbPengumuman").on('click', function(event) {
+            fadeInAdd();
+        });
+
+        function getURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                var filename = $("#thumbPengumuman").val();
+                filename = filename.substring(filename.lastIndexOf('\\') + 1);
+                reader.onload = function(e) {
+                // debugger;
+                $('.fotoThumbnail').attr('src', e.target.result);
+                $('.fotoThumbnail').hide();
+                $('.fotoThumbnail').fadeIn(500);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+        $(".alert").removeClass("loadAnimate").hide();
+    }
+});
+
+    function fadeInAdd() {
+        fadeInAlert();
+    }
+
+    function fadeInAlert(text) {
+        $(".alert").text(text).addClass("loadAnimate");
+    }
+</script>
+<!-- Akhir Menampilkan Foto Thumbnail -->
 @endsection
