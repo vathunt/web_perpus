@@ -159,11 +159,10 @@ function editPengumuman(id) {
     $.ajax({
         url: "{{ url('/') }}/panel/pengumuman/" + id,
         dataType: "json"
-    }).done(function(response) {
+    }).done( response => {
         $('#idEdit').val(response.id);
         $('#judulEdit').val(response.judul_pengumuman);
         $('#tglEdit').val(formattedDate(response.tgl_pengumuman));
-        // $('#detailLampiranEdit').html(response.detail_pengumuman);
 
         // Preview Thumbnail
         $("#previewThumbnail").html('');
@@ -173,7 +172,7 @@ function editPengumuman(id) {
         }
 
         $("#previewThumbnail").append("<img src='../assets/images/thumbnail/pengumuman/" + gambar +
-            "' style='max-width: 100%;'>");
+            "' id='thumbnailTampil' style='max-width: 100%;'>");
         // End of Preview Thumbnail
 
         // Preview Lampiran
@@ -240,8 +239,9 @@ function editPengumuman(id) {
             "language": "id",
         }, () => {
             // Call the method inside the initialized event.
+            editor.events.focus(true);
             editor.html.set(response.detail_pengumuman);
-        })
+        });
 
         $('#editPengumuman').modal('toggle');
     });
@@ -348,9 +348,13 @@ aria-hidden="true">
                         <i class="bx bx-x d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Close</span>
                     </button>
-                    <button type="submit" class="btn btn-primary ml-1" id="btnSubmit">
+                    <button type="submit" class="btn btn-primary ml-1" id="btnSubmit" disabled>
                         <i class="bx bx-check d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Simpan</span>
+                    </button>
+                    <button class="btn btn-primary" type="button" id="btnSubmitLoading" disabled="" style="display: none;">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
                     </button>
                 </div>
             </div>
@@ -484,7 +488,7 @@ aria-hidden="true">
                     <div class="col-12">
                         <div class="form-group has-icon-left">
                             <label for="detailEdit">Detail Pengumuman</label>
-                            <textarea name="detailEdit" id="detailEdit" class="form-control"></textarea>
+                            <textarea name="detailEdit" id="detailEdit" class="form-control" autofocus="true"></textarea>
                         </div>
                     </div>
                 </div>
@@ -546,6 +550,13 @@ aria-hidden="true">
 @endsection
 
 @section('javascript')
+<script>
+    $('#btnSubmit').on('click', () => {
+        document.getElementById('btnSubmit').style.display = 'none';
+        document.getElementById('btnSubmitLoading').style.display = 'block';
+    });
+</script>
+
 <!-- Uppercase Judul Pengumuman -->
 <script>
     $('#judulPengumuman').keyup(function() {
@@ -591,8 +602,6 @@ aria-hidden="true">
         });
     }
 </script>
-
-
 <!-- End of Tombol Tambah Lampiran -->
 
 <!-- Toggle Modal Tambah Pengumuman -->
@@ -704,13 +713,13 @@ aria-hidden="true">
         let length = (element.files.length);
         let fileSize = 0;
         if (length > 0) {
-        fileSize = element.files[0].size; // get file size
-        fileSize = fileSize / 1000000; //file size in Mb
-        return this.optional(element) || fileSize <= param;
-    } else {
-        return this.optional(element) || fileSize <= param;
-    }
-});
+            fileSize = element.files[0].size; // get file size
+            fileSize = fileSize / 1000000; //file size in Mb
+            return this.optional(element) || fileSize <= param;
+        } else {
+            return this.optional(element) || fileSize <= param;
+        }
+    });
 
     $('#formEditPengumuman').validate({
         errorClass: 'error is-invalid',
@@ -876,7 +885,7 @@ src="{{ asset('assets/vendors/bootstrap-datepicker/dist/locales/bootstrap-datepi
 </script>
 <!-- End of Text Editor -->
 
-<!-- Menampilkan Foto Thumbnail -->
+<!-- Menampilkan Foto Thumbnail (Insert) -->
 <script>
     $(document).ready(function() {
         $("#thumbPengumuman").change(function(event) {
@@ -913,5 +922,44 @@ src="{{ asset('assets/vendors/bootstrap-datepicker/dist/locales/bootstrap-datepi
         $(".alert").text(text).addClass("loadAnimate");
     }
 </script>
-<!-- Akhir Menampilkan Foto Thumbnail -->
+<!-- Akhir Menampilkan Foto Thumbnail (Insert) -->
+
+<!-- Menampilkan Foto Thumbnail (Update) -->
+<script>
+    $(document).ready(function() {
+        $("#thumbEdit").change(function(event) {
+            fadeInAdd();
+            getURL(this);
+        });
+
+        $("#thumbEdit").on('click', function(event) {
+            fadeInAdd();
+        });
+
+        function getURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                var filename = $("#thumbEdit").val();
+                filename = filename.substring(filename.lastIndexOf('\\') + 1);
+                reader.onload = function(e) {
+                // debugger;
+                $('#thumbnailTampil').attr('src', e.target.result);
+                $('#thumbnailTampil').hide();
+                $('#thumbnailTampil').fadeIn(500);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+        $(".alert").removeClass("loadAnimate").hide();
+    }
+});
+
+    function fadeInAdd() {
+        fadeInAlert();
+    }
+
+    function fadeInAlert(text) {
+        $(".alert").text(text).addClass("loadAnimate");
+    }
+</script>
+<!-- Akhir Menampilkan Foto Thumbnail (Update) -->
 @endsection

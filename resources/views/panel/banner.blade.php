@@ -136,19 +136,19 @@
         }).done(function(response) {
             $('#idEdit').val(response.id);
             $('#ket_gambar_edit').val(response.keterangan_slide);
-                // $('[name="status_tampil_edit"][value="' + response.status_tampil + '"]').prop('checked', true);
+            // $('[name="status_tampil_edit"][value="' + response.status_tampil + '"]').prop('checked', true);
 
-                $("#previewBannerSlide").html('');
-                let gambar = response.gambar_slide;
-                if (gambar) {
-                    gambar = response.gambar_slide
-                }
+            $("#previewBannerSlide").html('');
+            let gambar = response.gambar_slide;
+            if (gambar) {
+                gambar = response.gambar_slide
+            }
 
-                $("#previewBannerSlide").append("<img src='../images/slider-main/" + gambar +
-                    "' id='fotoBannerTampil' style='max-width: 100%;'>");
+            $("#previewBannerSlide").append("<img src='../images/slider-main/" + gambar +
+                "' id='fotoBannerTampil' style='max-width: 100%;'>");
 
-                $('#editBanner').modal('toggle');
-            });
+            $('#editBanner').modal('toggle');
+        });
     }
 
     function editStatus(id) {
@@ -493,16 +493,16 @@ aria-hidden="true">
                 var filename = $("#gambar_slide").val();
                 filename = filename.substring(filename.lastIndexOf('\\') + 1);
                 reader.onload = function(e) {
-                // debugger;
-                $('#fotoSlide').attr('src', e.target.result);
-                $('#fotoSlide').hide();
-                $('#fotoSlide').fadeIn(500);
+                    // debugger;
+                    $('#fotoSlide').attr('src', e.target.result);
+                    $('#fotoSlide').hide();
+                    $('#fotoSlide').fadeIn(500);
+                }
+                reader.readAsDataURL(input.files[0]);
             }
-            reader.readAsDataURL(input.files[0]);
+            $(".alert").removeClass("loadAnimate").hide();
         }
-        $(".alert").removeClass("loadAnimate").hide();
-    }
-});
+    });
 
     function fadeInAdd() {
         fadeInAlert();
@@ -514,25 +514,42 @@ aria-hidden="true">
 </script>
 <!-- Akhir Menampilkan Foto (Insert) -->
 
-<!-- Text Editor -->
-<!-- <script type="text/javascript" src="{{ asset('assets/vendors/froala-editor/froala_editor.pkgd.min.js') }}"></script> -->
-<!-- <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet"
-    type="text/css" />
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script> -->
+<!-- Menampilkan Foto Ketika Diupload (Update) -->
+<script>
+    $(document).ready(function() {
+        $("#gambar_slide_edit").change(function(event) {
+            fadeInAdd();
+            getURL(this);
+        });
 
-<!-- <script>
-new FroalaEditor('#ket_gambar', {
-    "charCounterCount": true,
-    "toolbarButtons": [
-        'undo', 'redo', 'clearFormatting', '|',
-        'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|'
-    ],
-    "autofocus": true,
-    "attribution": false,
-    "height": -1,
-    "quickInsertButtons": false,
-    "language": "id"
-});
-</script> -->
-<!-- Akhir Text Editor -->
+        $("#gambar_slide_edit").on('click', function(event) {
+            fadeInAdd();
+        });
+
+        function getURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                var filename = $("#gambar_slide_edit").val();
+                filename = filename.substring(filename.lastIndexOf('\\') + 1);
+                reader.onload = function(e) {
+                    // debugger;
+                    $('#fotoBannerTampil').attr('src', e.target.result);
+                    $('#fotoBannerTampil').hide();
+                    $('#fotoBannerTampil').fadeIn(500);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+            $(".alert").removeClass("loadAnimate").hide();
+        }
+    });
+
+    function fadeInAdd() {
+        fadeInAlert();
+    }
+
+    function fadeInAlert(text) {
+        $(".alert").text(text).addClass("loadAnimate");
+    }
+</script>
+<!-- Akhir Menampilkan Foto (Update) -->
 @endsection
