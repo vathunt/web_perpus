@@ -78,11 +78,6 @@ jQuery(function($) {
 </script>
 
 <!-- Froala Editor -->
-<!-- Include the Tables plugin CSS file -->
-<!-- <link rel="stylesheet" href="{{ asset('assets/vendors/froala-editor/plugins/css/image.min.css') }}"> -->
-
-<!-- Include the Tables plugin JS file -->
-<!-- <script src="{{ asset('assets/vendors/froala-editor/plugins/js/image.min.js') }}"></script> -->
 <script type="text/javascript" src="{{ asset('assets/vendors/froala-editor/froala_editor.pkgd.min.js') }}"></script>
 
 <script>
@@ -107,88 +102,35 @@ new FroalaEditor('#detailPengumuman', {
     "fontSizeUnit": "px",
     "autofocus": true,
     "attribution": false,
-    "height": -1,
     "linkAlwaysBlank": true,
     "paragraphDefaultSelection": "Normal",
     "paragraphFormatSelection": true,
     "quickInsertButtons": ['table', 'ol', 'ul', 'hr'],
-
     "language": "id",
     "imageEditButtons": ['imageReplace', 'imageAlign', 'imageRemove', '|', 'imageLink', 'linkOpen',
         'linkEdit', 'linkRemove', '-', 'imageDisplay', 'imageStyle', 'imageAlt', 'imageSize'
-    ]
+    ],
+
     // Set the image upload parameter.
-    // "imageUploadParam": 'image_param',
+    "imageUploadParam": 'image_param',
 
-    // // Set the image upload URL.
-    // "imageUploadURL": '/upload_image',
+    // Set the image upload URL.
+    "imageUploadURL": "{{ route('upload_gambar') }}",
 
-    // // Additional upload params.
-    // "imageUploadParams": {
-    //     "id": 'my_editor'
-    // },
+    // Additional upload params.
+    "imageUploadParams": {
+        "froala": 'true',
+        "_token": "{{ csrf_token() }}"
+    },
 
-    // // Set request type.
-    // "imageUploadMethod": 'POST',
+    // Set request type.
+    "imageUploadMethod": 'POST',
 
-    // // Set max image size to 5MB.
-    // "imageMaxSize": 5 * 1024 * 1024,
+    // Set max image size to 5MB.
+    "imageMaxSize": 5 * 1024 * 1024,
 
-    // // Allow to upload PNG and JPG.
-    // "imageAllowedTypes": ['jpeg', 'jpg', 'png'],
-
-    // "events": {
-    //     'image.beforeUpload': function(images) {
-    //         // Return false if you want to stop the image upload.
-    //     },
-    //     'image.uploaded': function(response) {
-    //         // Image was uploaded to the server.
-    //     },
-    //     'image.inserted': function($img, response) {
-    //         // Image was inserted in the editor.
-    //     },
-    //     'image.replaced': function($img, response) {
-    //         // Image was replaced in the editor.
-    //     },
-    //     'image.error': function(error, response) {
-    //         // Bad link.
-    //         if (error.code == 1) {
-    //             //
-    //         }
-
-    //         // No link in upload response.
-    //         else if (error.code == 2) {
-    //             //
-    //         }
-
-    //         // Error during image upload.
-    //         else if (error.code == 3) {
-    //             //
-    //         }
-
-    //         // Parsing response failed.
-    //         else if (error.code == 4) {
-    //             //
-    //         }
-
-    //         // Image too text-large.
-    //         else if (error.code == 5) {
-    //             //
-    //         }
-
-    //         // Invalid image type.
-    //         else if (error.code == 6) {
-    //             //
-    //         }
-
-    //         // Image can be uploaded only to same domain in IE 8 and IE 9.
-    //         else if (error.code == 7) {
-    //             //
-    //         }
-
-    //         // Response contains the original server response to the request if available.
-    //     }
-    // }
+    // Allow to upload PNG and JPG.
+    "imageAllowedTypes": ['jpeg', 'jpg', 'png', 'gif']
 });
 </script>
 @endsection

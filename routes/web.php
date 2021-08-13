@@ -46,3 +46,4 @@ Route::group(['prefix' => 'panel', 'middleware' => ['auth', 'revalidate']], func
 });
 
 Route::resource('image', 'ImageController');
+Route::post('image/upload', 'ImageController@upload_image')->name('upload_gambar');
