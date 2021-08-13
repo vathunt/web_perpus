@@ -45,4 +45,4 @@ Route::group(['prefix' => 'panel', 'middleware' => ['auth', 'revalidate']], func
     Route::get('/signout', 'AuthController@signout')->name('signout');
 });
 
-// Route::resource('image', 'ImageController');
+Route::resource('image', 'ImageController');
