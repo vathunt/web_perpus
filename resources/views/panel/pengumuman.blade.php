@@ -206,11 +206,12 @@ function editPengumuman(id) {
             onSelect: (d, i) => {
                 if (d !== i.lastVal) $(this).change()
             },
-        endDate: new Date(new Date().setDate(new Date().getDate() + 0))
-    });
+            endDate: new Date(new Date().setDate(new Date().getDate() + 0))
+        });
 
         const editor = new FroalaEditor('#detailEdit', {
             "charCounterCount": true,
+            "zIndex": 2501,
             "toolbarButtons": [
             'undo', 'redo', 'clearFormatting', '|',
             'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'inlineClass',
@@ -231,12 +232,48 @@ function editPengumuman(id) {
             "fontSizeUnit": "px",
             "autofocus": true,
             "attribution": false,
-            "height": -1,
             "linkAlwaysBlank": true,
             "paragraphDefaultSelection": "Normal",
             "paragraphFormatSelection": true,
             "quickInsertButtons": ['table', 'ol', 'ul', 'hr'],
             "language": "id",
+            "imageEditButtons": ['imageReplace', 'imageAlign', 'imageRemove', '|', 'imageLink', 'linkOpen', 'linkEdit', 'linkRemove', '-', 'imageDisplay', 'imageStyle', 'imageAlt', 'imageSize'
+            ],
+
+            // Set the image upload parameter.
+            "imageUploadParam": 'image_param',
+
+            // Set the image upload URL.
+            "imageUploadURL": "{{ route('upload.gambar.detail.pengumuman') }}",
+
+            // Additional upload params.
+            "imageUploadParams": {
+                "froala": 'true',
+                "_token": "{{ csrf_token() }}"
+            },
+
+            // Set request type.
+            "imageUploadMethod": 'POST',
+
+            // Set max image size to 5MB.
+            "imageMaxSize": 5 * 1024 * 1024,
+
+            // Allow to upload PNG and JPG.
+            "imageAllowedTypes": ['jpeg', 'jpg', 'png', 'gif'],
+
+            "events": {
+                'image.removed': ($img) => {
+                    $.ajax({
+                        "url": "{{ route('remove.gambar.detail.pengumuman') }}",
+                        "dataType": "json",
+                        "type": "POST",
+                        "data": {
+                            src: $img.attr('src'),
+                            "_token": "{{ csrf_token() }}"
+                        }
+                    });
+                }
+            }
         }, () => {
             // Call the method inside the initialized event.
             editor.events.focus(true);
@@ -382,7 +419,7 @@ aria-hidden="true">
                     <div id="viewThumbnail"></div>
                     <div class="card-body">
                         <h5 class="card-title text-center" id="viewJudul"></h5>
-                        <div class="card-text text-justify" id="viewDetail"></div>
+                        <div class="card-text" id="viewDetail"></div>
                     </div>
                 </div>
                 <ul class="list-group list-group-flush">
@@ -857,15 +894,18 @@ src="{{ asset('assets/vendors/bootstrap-datepicker/dist/locales/bootstrap-datepi
 <script>
     new FroalaEditor('#detailPengumuman', {
         "charCounterCount": true,
+        "placeholderText": 'Isikan Detail Pengumuman Disini!',
+        "zIndex": 2501, // Untuk memunculkan popup bawaan froala jika ada dalam modal bootstrap
         "toolbarButtons": [
-        'undo', 'redo', 'clearFormatting', '|',
-        'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'inlineClass', 'paragraphStyle',
-        'lineHeight', '|',
-        'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|',
-        'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink',
-        'insertImage', 'insertTable', '|',
-        'specialCharacters', 'insertHR', 'selectAll', '|',
-        'spellChecker', 'help', 'html', '|',
+            'undo', 'redo', 'clearFormatting', '|',
+            'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'inlineClass', 'paragraphStyle',
+            'lineHeight', '|',
+            'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|',
+            'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-',
+            'insertLink',
+            'insertImage', 'insertTable', '|',
+            'specialCharacters', 'insertHR', 'selectAll', '|',
+            'spellChecker', 'help', 'html', '|',
         ],
         "tabSpaces": 4,
         "fontFamilyDefaultSelection": "Arial",
@@ -875,12 +915,48 @@ src="{{ asset('assets/vendors/bootstrap-datepicker/dist/locales/bootstrap-datepi
         "fontSizeUnit": "px",
         "autofocus": true,
         "attribution": false,
-        "height": -1,
         "linkAlwaysBlank": true,
         "paragraphDefaultSelection": "Normal",
         "paragraphFormatSelection": true,
         "quickInsertButtons": ['table', 'ol', 'ul', 'hr'],
-        "language": "id"
+        "language": "id",
+        "imageEditButtons": ['imageReplace', 'imageAlign', 'imageRemove', '|', 'imageLink', 'linkOpen', 'linkEdit', 'linkRemove', '-', 'imageDisplay', 'imageStyle', 'imageAlt', 'imageSize'
+        ],
+
+        // Set the image upload parameter.
+        "imageUploadParam": 'image_param',
+
+        // Set the image upload URL.
+        "imageUploadURL": "{{ route('upload.gambar.detail.pengumuman') }}",
+
+        // Additional upload params.
+        "imageUploadParams": {
+            "froala": 'true',
+            "_token": "{{ csrf_token() }}"
+        },
+
+        // Set request type.
+        "imageUploadMethod": 'POST',
+
+        // Set max image size to 5MB.
+        "imageMaxSize": 5 * 1024 * 1024,
+
+        // Allow to upload PNG and JPG.
+        "imageAllowedTypes": ['jpeg', 'jpg', 'png', 'gif'],
+
+        "events": {
+            'image.removed': ($img) => {
+                $.ajax({
+                    "url": "{{ route('remove.gambar.detail.pengumuman') }}",
+                    "dataType": "json",
+                    "type": "POST",
+                    "data": {
+                        src: $img.attr('src'),
+                        "_token": "{{ csrf_token() }}"
+                    }
+                });
+            }
+        }
     });
 </script>
 <!-- End of Text Editor -->

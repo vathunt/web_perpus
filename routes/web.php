@@ -41,9 +41,11 @@ Route::group(['prefix' => 'panel', 'middleware' => ['auth', 'revalidate']], func
     Route::get('/pengumuman/{id}', 'PengumumanController@show')->name('pengumuman.show');
     Route::put('/pengumuman', 'PengumumanController@update')->name('pengumuman.update');
     Route::delete('/pengumuman', 'PengumumanController@destroy')->name('pengumuman.delete');
+    Route::post('/pengumuman/upload', 'PengumumanController@upload_image')->name('upload.gambar.detail.pengumuman');
+    Route::post('/pengumuman/remove', 'PengumumanController@remove_image')->name('remove.gambar.detail.pengumuman');
 
     Route::get('/signout', 'AuthController@signout')->name('signout');
 });
 
-Route::resource('image', 'ImageController');
-Route::post('image/upload', 'ImageController@upload_image')->name('upload_gambar');
+// Route::resource('image', 'ImageController');
+// Route::post('image/upload', 'ImageController@upload_image')->name('upload_gambar');
