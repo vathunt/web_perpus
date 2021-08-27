@@ -244,7 +244,7 @@ function editPengumuman(id) {
             "imageUploadParam": 'image_param',
 
             // Set the image upload URL.
-            "imageUploadURL": "{{ route('upload.gambar.detail.pengumuman') }}",
+            "imageUploadURL": "{{ route('upload.gambar.editor') }}",
 
             // Additional upload params.
             "imageUploadParams": {
@@ -264,7 +264,7 @@ function editPengumuman(id) {
             "events": {
                 'image.removed': ($img) => {
                     $.ajax({
-                        "url": "{{ route('remove.gambar.detail.pengumuman') }}",
+                        "url": "{{ route('remove.gambar.editor') }}",
                         "dataType": "json",
                         "type": "POST",
                         "data": {
@@ -927,7 +927,7 @@ src="{{ asset('assets/vendors/bootstrap-datepicker/dist/locales/bootstrap-datepi
         "imageUploadParam": 'image_param',
 
         // Set the image upload URL.
-        "imageUploadURL": "{{ route('upload.gambar.detail.pengumuman') }}",
+        "imageUploadURL": "{{ route('upload.gambar.editor') }}",
 
         // Additional upload params.
         "imageUploadParams": {
@@ -947,7 +947,7 @@ src="{{ asset('assets/vendors/bootstrap-datepicker/dist/locales/bootstrap-datepi
         "events": {
             'image.removed': ($img) => {
                 $.ajax({
-                    "url": "{{ route('remove.gambar.detail.pengumuman') }}",
+                    "url": "{{ route('remove.gambar.editor') }}",
                     "dataType": "json",
                     "type": "POST",
                     "data": {

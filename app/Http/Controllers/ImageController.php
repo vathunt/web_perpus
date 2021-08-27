@@ -153,7 +153,18 @@ class ImageController extends Controller
             $response = new \StdClass;
             $response->link = $protocol.$_SERVER["HTTP_HOST"].dirname($_SERVER["PHP_SELF"]). "/assets/images/" . $name;
             echo stripslashes(json_encode($response));
+        }
+    }
 
+    public function remove_image(Request $request) {
+        // Get src
+        $src = explode('/', $request->src);
+        $file = end($src);
+
+        // Check if file exists
+        if (file_exists(getcwd() . "/assets/images/" . $file)) {
+            // Delete file
+            unlink(getcwd() . "/assets/images/" . $file);
         }
     }
 }

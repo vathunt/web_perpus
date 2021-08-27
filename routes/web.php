@@ -13,18 +13,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route Dashboard
 Route::get('/', 'LandingController@index')->name('home');
 
+// Route Halaman Login Administrator
 Route::get('/signin', 'AuthController@showFormLogin')->name('login');
 Route::post('/signin', 'AuthController@postLogin')->name('post.login');
 
+// Route Panel Administrator
 Route::group(['middleware' => ['auth', 'revalidate']], function() {
     Route::get('/panel', 'AdminController@home');
 });
 
+// Route Panel Administrator
 Route::group(['prefix' => 'panel', 'middleware' => ['auth', 'revalidate']], function() {
+    // Route Panel Dashboard Administrator
     Route::get('/dashboard', 'AdminController@home')->name('admin.panel');
 
+    // Route Panel Slide Banner Administrator
     Route::get('/slide', 'SlideController@index')->name('slide.banner');
     Route::post('/slide', 'SlideController@store')->name('slide.post');
     Route::post('/slide/data', 'SlideController@data')->name('slide.data');
@@ -33,17 +39,27 @@ Route::group(['prefix' => 'panel', 'middleware' => ['auth', 'revalidate']], func
     Route::get('/slide/status/{id}', 'SlideController@update_status')->name('slide.status');
     Route::delete('/slide', 'SlideController@destroy')->name('slide.delete');
 
+    // Route Panel Artikel Administrator
     Route::get('/artikel', 'ArtikelController@index')->name('panel.artikel');
+    Route::post('/artikel/data', 'ArtikelController@data')->name('artikel.data');
+    Route::post('/artikel', 'ArtikelController@store')->name('artikel.post');
+    Route::get('/artikel/{id}', 'ArtikelController@show')->name('artikel.show');
+    Route::put('/artikel', 'ArtikelController@update')->name('artikel.update');
+    Route::delete('/artikel', 'ArtikelController@destroy')->name('artikel.delete');
 
+    // Route Panel Pengumuman Administrator
     Route::get('/pengumuman', 'PengumumanController@index')->name('panel.pengumuman');
     Route::post('/pengumuman', 'PengumumanController@store')->name('pengumuman.post');
     Route::post('/pengumuman/data', 'PengumumanController@data')->name('pengumuman.data');
     Route::get('/pengumuman/{id}', 'PengumumanController@show')->name('pengumuman.show');
     Route::put('/pengumuman', 'PengumumanController@update')->name('pengumuman.update');
     Route::delete('/pengumuman', 'PengumumanController@destroy')->name('pengumuman.delete');
-    Route::post('/pengumuman/upload', 'PengumumanController@upload_image')->name('upload.gambar.detail.pengumuman');
-    Route::post('/pengumuman/remove', 'PengumumanController@remove_image')->name('remove.gambar.detail.pengumuman');
 
+    // Route Upload dan Remove Gambar Text Editor
+    Route::post('/pengumuman/upload', 'ImageController@upload_image')->name('upload.gambar.editor');
+    Route::post('/pengumuman/remove', 'ImageController@remove_image')->name('remove.gambar.editor');
+
+    // Route Logout Administrator
     Route::get('/signout', 'AuthController@signout')->name('signout');
 });
 
