@@ -425,7 +425,7 @@ aria-hidden="true">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Tanggal Pengumuman : <span class="font-bold"
                         id="viewTanggal"></span></li>
-                        <li class="list-group-item">Diupload Oleh : <span class="font-bold" id="viewAdmin"></span></li>
+                        <li class="list-group-item">Diposting Oleh : <span class="font-bold" id="viewAdmin"></span></li>
                         <li class="list-group-item">
                             <span class="font-bold">Lampiran Pengumuman</span>
                             <ol id="viewLampiran"></ol>
@@ -819,7 +819,7 @@ aria-hidden="true">
 
 <!-- Menampilkan Data Pengumuman di DataTable -->
 <script type="text/javascript">
-    var table_slide = $('#tbl_pengumuman').DataTable({
+    var table_announcement = $('#tbl_pengumuman').DataTable({
         processing: true,
         serverSide: true,
         ajax: {

@@ -87,82 +87,68 @@ function formattedDate(inputDate) {
 
 function lihatArtikel(id) {
     $.ajax({
-        url: "{{ url('/') }}/panel/pengumuman/" + id,
+        url: "{{ url('/') }}/panel/artikel/" + id,
         dataType: "json"
     }).done(function(response) {
-        let date = formattedDate(new Date(response.tgl_pengumuman));
+        const date = formattedDate(new Date(response.tgl_artikel));
+        const tags = response.tag.split('#');
 
-        $('#viewJudul').html(response.judul_pengumuman);
+        if (tags) {
+            tags.forEach(tag => $('#viewTag').append(`<span class='badge bg-secondary'>#${tag}</span> `));
+        }
+
+        $('#viewJudul').html(response.judul_artikel);
         $('#viewTanggal').html(date);
-        $('#viewDetail').html(response.detail_pengumuman);
+        $('#viewIsi').html(response.isi_artikel);
         $('#viewAdmin').html(response.user['name']);
 
         $("#viewThumbnail").html('');
-        let thumbnail = response.thumbnail_pengumuman;
+        let thumbnail = response.thumbnail_artikel;
         if (thumbnail) {
-            thumbnail = response.thumbnail_pengumuman
+            thumbnail = response.thumbnail_artikel
         }
 
-        $("#viewThumbnail").append("<img src='../assets/images/thumbnail/pengumuman/" + thumbnail +
-            "' id='thumbnailPengumuman' class='card-img-top img-fluid' alt='Thumbnail " + response
-            .judul_pengumuman + "'>");
+        $("#viewThumbnail").append("<img src='../assets/images/thumbnail/artikel/" + thumbnail +
+            "' id='thumbnailArtikel' class='card-img-top img-fluid' alt='Thumbnail " + response
+            .judul_artikel + "'>");
 
-        $('#lhtPengumuman').modal('toggle');
+        $('#lhtArtikel').modal('toggle');
     });
 }
 
 function hapusArtikel(id) {
     $.ajax({
-        url: "{{ url('/') }}/panel/pengumuman/" + id,
+        url: "{{ url('/') }}/panel/artikel/" + id,
         dataType: "json"
     }).done((response) => {
         $('#idDelete').val(response.id);
-        $('#judulPengumumanDelete').html(`"${response.judul_pengumuman}"`);
+        $('#judulArtikelDelete').html(`${response.judul_artikel}`);
 
-        $('#hapusPengumuman').modal('toggle');
+        $('#hapusArtikel').modal('toggle');
     });
 }
 
 function editArtikel(id) {
-    // $('.datepicker').datepicker('remove');
     $('.datepicker').datepicker('destroy');
     $.ajax({
-        url: "{{ url('/') }}/panel/pengumuman/" + id,
+        url: "{{ url('/') }}/panel/artikel/" + id,
         dataType: "json"
     }).done( response => {
         $('#idEdit').val(response.id);
-        $('#judulEdit').val(response.judul_pengumuman);
-        $('#tglEdit').val(formattedDate(response.tgl_pengumuman));
+        $('#judulEdit').val(response.judul_artikel);
+        $('#tglEdit').val(formattedDate(response.tgl_artikel));
+        $('#tagEdit').val(response.tag);
 
         // Preview Thumbnail
         $("#previewThumbnail").html('');
-        let gambar = response.thumbnail_pengumuman;
+        let gambar = response.thumbnail_artikel;
         if (gambar) {
-            gambar = response.thumbnail_pengumuman;
+            gambar = response.thumbnail_artikel;
         }
 
-        $("#previewThumbnail").append("<img src='../assets/images/thumbnail/pengumuman/" + gambar +
+        $("#previewThumbnail").append("<img src='../assets/images/thumbnail/artikel/" + gambar +
             "' id='thumbnailTampil' style='max-width: 100%;'>");
         // End of Preview Thumbnail
-
-        // Preview Lampiran
-        $('#previewLampiran').html('');
-        let lampiran = response.lampiran_pengumuman;
-        let namaFileLamp = response.nama_file_lampiran;
-
-        if (lampiran && namaFileLamp) {
-            lampiran = response.lampiran_pengumuman;
-            namaFileLamp = response.nama_file_lampiran;
-        }
-
-        if (lampiran) {
-            for (let i = 0; i < lampiran.length; i++) {
-                $('#previewLampiran').append(
-                    "<li><a class='badge bg-warning' target='_blank' href='../assets/files/pengumuman/" +
-                    lampiran[i] + "'>" + namaFileLamp[i] + "</a></li>")
-            }
-        }
-        // End of Preview Lampiran
 
         $('.datepicker').datepicker({
             format: 'yyyy-mm-dd',
@@ -179,7 +165,7 @@ function editArtikel(id) {
             endDate: new Date(new Date().setDate(new Date().getDate() + 0))
         });
 
-        const editor = new FroalaEditor('#detailEdit', {
+        const editor = new FroalaEditor('#isiEdit', {
             "charCounterCount": true,
             "zIndex": 2501,
             "toolbarButtons": [
@@ -247,7 +233,7 @@ function editArtikel(id) {
         }, () => {
             // Call the method inside the initialized event.
             editor.events.focus(true);
-            editor.html.set(response.detail_pengumuman);
+            editor.html.set(response.isi_artikel);
         });
 
         $('#editArtikel').modal('toggle');
@@ -309,6 +295,9 @@ aria-hidden="true">
                             <div class="col-md-6 col-12">
                                 <div class="form-group has-icon-left">
                                     <label for="tagArtikel">Tags</label>
+                                    <small class="text-muted">&nbsp;
+                                        <i class="text-primary font-bold">*) Pisahkan dengan tanda (#). Misal : pustakawan#literasi#referensi</i>
+                                    </small>
                                     <div class="position-relative">
                                         <input type="text" name="tagArtikel" id="tagArtikel" class="form-control" autocomplete="off">
                                         <div class="form-control-icon">
@@ -366,13 +355,14 @@ aria-hidden="true">
                     <div id="viewThumbnail"></div>
                     <div class="card-body">
                         <h5 class="card-title text-center" id="viewJudul"></h5>
-                        <div class="card-text" id="viewDetail"></div>
+                        <div class="card-text text-center font-bold" id="viewTag"></div>
+                        <div class="card-text" id="viewIsi"></div>
                     </div>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Tanggal Pengumuman : <span class="font-bold"
+                    <li class="list-group-item">Tanggal Artikel : <span class="font-bold"
                         id="viewTanggal"></span></li>
-                        <li class="list-group-item">Diupload Oleh : <span class="font-bold" id="viewAdmin"></span></li>
+                        <li class="list-group-item">Diposting Oleh : <span class="font-bold" id="viewAdmin"></span></li>
                     </ul>
                 </div>
             </div>
@@ -391,7 +381,7 @@ aria-hidden="true">
 <div class="modal fade text-left" id="editArtikel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160"
 aria-hidden="true">
     <div class="modal-dialog modal-borderless modal-dialog-scrollable modal-full" role="document">
-        <form method="POST" class="form form-vertical" id="formEditArtikel" action="{{ route('pengumuman.update') }}" enctype="multipart/form-data">
+        <form method="POST" class="form form-vertical" id="formEditArtikel" action="{{ route('artikel.update') }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
             <input type="hidden" name="idEdit" id="idEdit">
@@ -407,9 +397,9 @@ aria-hidden="true">
                 <div class="modal-body">
                     <div class="form-body">
                         <div class="row">
-                            <div class="col-md-8 col-12">
+                            <div class="col-md-9 col-12">
                                 <div class="form-group has-icon-left">
-                                    <label for="judulEdit">Judul Pengumuman</label>
+                                    <label for="judulEdit">Judul Artikel</label>
                                     <div class="position-relative">
                                         <input type="text" name="judulEdit" id="judulEdit" class="form-control"
                                         autocomplete="off">
@@ -419,9 +409,9 @@ aria-hidden="true">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 col-12">
+                            <div class="col-md-3 col-12">
                                 <div class="form-group has-icon-left">
-                                    <label for="tglEdit">Tanggal Pengumuman</label>
+                                    <label for="tglEdit">Tanggal Artikel</label>
                                     <div class="position-relative">
                                         <input type="text" name="tglEdit" id="tglEdit" class="datepicker form-control"
                                         readonly>
@@ -431,36 +421,48 @@ aria-hidden="true">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 col-12">
+                            <div class="col-md-6 col-12">
                                 <div class="form-group">
-                                    <label for="thumbEdit" class="font-bold">Thumbnail Pengumuman</label>
-                                    <small class="text-muted"><i class="text-primary font-bold">*) Kosongkan jika tidak
-                                        ada
-                                    perubahan</i></small>
+                                    <label for="thumbEdit" class="font-bold">Thumbnail Artikel</label>
+                                    <small class="text-muted"><i class="text-primary font-bold">*) Kosongkan jika tidak ada perubahan</i></small>
                                     <input type="file" name="thumbEdit" class="form-control" id="thumbEdit"
                                     accept="image/*">
                                     <div id="previewThumbnail" class="mt-2"></div>
                                 </div>
                             </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group has-icon-left">
+                                    <label for="tagEdit">Tags</label>
+                                    <small class="text-muted">&nbsp;
+                                        <i class="text-primary font-bold">*) Pisahkan dengan tanda (#). Misal : #pustakawan#literasi</i>
+                                    </small>
+                                    <div class="position-relative">
+                                        <input type="text" name="tagEdit" id="tagEdit" class="form-control" autocomplete="off">
+                                        <div class="form-control-icon">
+                                            <i class="bi bi-chat-text"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-12">
                                 <div class="form-group has-icon-left">
-                                    <label for="detailEdit">Detail Pengumuman</label>
-                                    <textarea name="detailEdit" id="detailEdit" class="form-control" autofocus="true"></textarea>
+                                    <label for="isiEdit">Detail Pengumuman</label>
+                                    <textarea name="isiEdit" id="isiEdit" class="form-control" autofocus="true"></textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                    <i class="bx bx-x d-block d-sm-none"></i>
-                    <span class="d-none d-sm-block">Close</span>
-                </button>
-                <button type="submit" class="btn btn-primary ml-1" id="btnEdit">
-                    <i class="bx bx-check d-block d-sm-none"></i>
-                    <span class="d-none d-sm-block">Simpan</span>
-                </button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Close</span>
+                    </button>
+                    <button type="submit" class="btn btn-primary ml-1" id="btnEdit">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Simpan</span>
+                    </button>
+                </div>
             </div>
         </form>
     </div>
@@ -486,7 +488,7 @@ aria-hidden="true">
             </h3>
         </div>
         <div class="modal-footer">
-            <form action="{{ route('pengumuman.delete') }}" method="POST">
+            <form action="{{ route('artikel.delete') }}" method="POST">
                 @csrf
                 @method('DELETE')
                 <input type="hidden" name="idDelete" id="idDelete">
@@ -565,33 +567,33 @@ aria-hidden="true">
         validClass: 'is-valid',
         ignore: "[contenteditable='true'].fr-element.fr-view",
         rules: {
-            judulPengumuman: {
+            judulArtikel: {
                 required: true
             },
-            tglPengumuman: {
+            tglArtikel: {
                 required: true
             },
-            detailPengumuman: {
+            isiArtikel: {
                 required: true
             },
-            thumbPengumuman: {
+            thumbArtikel: {
                 required: true,
                 extension: "jpg|jpeg|png",
                 maxfilesize: 2
             }
         },
         messages: {
-            judulPengumuman: {
-                required: "Judul Pengumuman Harus Diisi"
+            judulArtikel: {
+                required: "Judul Artikel Harus Diisi"
             },
-            tglPengumuman: {
-                required: "Tanggal Pengumuman Belum Dipilih"
+            tglArtikel: {
+                required: "Tanggal Artikel Belum Dipilih"
             },
-            detailPengumuman: {
-                required: "Detail Pengumuman Harus Diisi"
+            isiArtikel: {
+                required: "Detail Artikel Harus Diisi"
             },
-            thumbPengumuman: {
-                required: "Thumbnail Pengumuman Belum Dipilih",
+            thumbArtikel: {
+                required: "Thumbnail Artikel Belum Dipilih",
                 extension: "Ekstensi File *.jpg, *.jpeg atau *.png",
                 maxfilesize: 'Ukuran File Tidak Boleh Lebih dari 2 MB'
             }
@@ -642,7 +644,7 @@ aria-hidden="true">
             tglEdit: {
                 required: true
             },
-            detailEdit: {
+            isiEdit: {
                 required: true
             },
             thumbEdit: {
@@ -652,13 +654,13 @@ aria-hidden="true">
         },
         messages: {
             judulEdit: {
-                required: "Judul Pengumuman Harus Diisi"
+                required: "Judul Artikel Harus Diisi"
             },
             tglEdit: {
-                required: "Tanggal Pengumuman Belum Dipilih"
+                required: "Tanggal Artikel Belum Dipilih"
             },
-            detailEdit: {
-                required: "Detail Pengumuman Harus Diisi"
+            isiEdit: {
+                required: "Detail Artikel Harus Diisi"
             },
             thumbEdit: {
                 extension: "Ekstensi File *.jpg, *.jpeg atau *.png",
@@ -680,7 +682,7 @@ aria-hidden="true">
 
 <!-- Menampilkan Data Artikel di DataTable -->
 <script type="text/javascript">
-    var table_slide = $('#tbl_artikel').DataTable({
+    var table_article = $('#tbl_artikel').DataTable({
         processing: true,
         serverSide: true,
         ajax: {
@@ -702,7 +704,8 @@ aria-hidden="true">
             "data": "tgl_artikel"
         },
         {
-            "data": "judul_artikel"
+            "data": "judul_artikel",
+            "orderable": true
         },
         {
             "data": "isi_artikel"
