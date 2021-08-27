@@ -19,7 +19,7 @@ class CreateArtikelTable extends Migration
             $table->id();
             $table->string('judul_artikel');
             $table->string('judul_seo');
-            $table->text('tags');
+            $table->text('tag');
             $table->date('tgl_artikel');
             $table->text('isi_artikel');
             $table->string('thumbnail_artikel');
