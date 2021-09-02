@@ -21,12 +21,12 @@ Route::get('/signin', 'AuthController@showFormLogin')->name('login');
 Route::post('/signin', 'AuthController@postLogin')->name('post.login');
 
 // Route Panel Administrator
-Route::group(['middleware' => ['auth', 'revalidate']], function() {
+Route::group(['middleware' => ['auth', 'revalidate']], function () {
     Route::get('/panel', 'AdminController@home');
 });
 
 // Route Panel Administrator
-Route::group(['prefix' => 'panel', 'middleware' => ['auth', 'revalidate']], function() {
+Route::group(['prefix' => 'panel', 'middleware' => ['auth', 'revalidate']], function () {
     // Route Panel Dashboard Administrator
     Route::get('/dashboard', 'AdminController@home')->name('admin.panel');
 
@@ -46,6 +46,9 @@ Route::group(['prefix' => 'panel', 'middleware' => ['auth', 'revalidate']], func
     Route::get('/artikel/{id}', 'ArtikelController@show')->name('artikel.show');
     Route::put('/artikel', 'ArtikelController@update')->name('artikel.update');
     Route::delete('/artikel', 'ArtikelController@destroy')->name('artikel.delete');
+
+    // Route Panel Berita Administrator
+    Route::get('/berita', 'BeritaController@index')->name('panel.berita');
 
     // Route Panel Pengumuman Administrator
     Route::get('/pengumuman', 'PengumumanController@index')->name('panel.pengumuman');

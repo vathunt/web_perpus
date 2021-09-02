@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-class CreateArtikelTable extends Migration
+class CreateBeritaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,22 +14,23 @@ class CreateArtikelTable extends Migration
      */
     public function up()
     {
-        Schema::create('artikel', function (Blueprint $table) {
+        Schema::create('berita', function (Blueprint $table) {
             $table->engine = 'MyISAM';
             $table->id();
-            $table->string('judul_artikel');
+            $table->string('judul_berita');
             $table->string('judul_seo');
-            $table->text('tag')->nullable();
-            $table->date('tgl_artikel');
-            $table->text('isi_artikel');
-            $table->string('thumbnail_artikel');
+            $table->unsignedBigInteger('kategori_berita_id');
+            $table->date('tgl_berita');
+            $table->text('isi_berita');
+            $table->string('thumbnail_berita');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');
+            $table->foreign('kategori_berita_id')->references('id')->on('kategori_berita')->onUpdate('cascade');
             $table->timestamps();
         });
 
-        // Add Fultext Index
-        DB::statement('ALTER TABLE `artikel` ADD FULLTEXT fulltext_index(judul_artikel, tag, isi_artikel)');
+        // Add Fulltext Index
+        DB::statement('ALTER TABLE berita ADD FULLTEXT fulltext_index(judul_berita, isi_berita)');
     }
 
     /**
@@ -40,10 +41,10 @@ class CreateArtikelTable extends Migration
     public function down()
     {
         // Delete Fulltext Index
-        Schema::table('artikel', function ($table) {
+        Schema::table('berita', function ($table) {
             $table->dropIndex('fulltext_index');
         });
 
-        Schema::dropIfExists('artikel');
+        Schema::dropIfExists('berita');
     }
 }
