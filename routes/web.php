@@ -49,6 +49,11 @@ Route::group(['prefix' => 'panel', 'middleware' => ['auth', 'revalidate']], func
 
     // Route Panel Berita Administrator
     Route::get('/berita', 'BeritaController@index')->name('panel.berita');
+    Route::post('/berita', 'BeritaController@store')->name('berita.post');
+    Route::post('/berita/data', 'BeritaController@data')->name('berita.data');
+    Route::get('/berita/{id}', 'BeritaController@show')->name('berita.show');
+    Route::put('/berita', 'BeritaController@update')->name('berita.update');
+    Route::delete('/berita', 'BeritaController@destroy')->name('berita.delete');
 
     // Route Panel Pengumuman Administrator
     Route::get('/pengumuman', 'PengumumanController@index')->name('panel.pengumuman');

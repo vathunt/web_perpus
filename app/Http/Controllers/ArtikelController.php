@@ -80,7 +80,7 @@ class ArtikelController extends Controller
             $fileThumb = '';
         }
         // Akhir Proses Thumbnail Artikel
-        
+
         $article = new Artikel;
         $article->judul_artikel = strtoupper(strip_tags($request->judulArtikel));
         $article->judul_seo     = Str::slug(strip_tags($request->judulArtikel));
@@ -90,6 +90,9 @@ class ArtikelController extends Controller
         $article->thumbnail_artikel = $fileThumb;
         $article->user_id       = Auth::user()->id;
         $article->save();
+
+        $tags = explode(",", $request->tagArtikel);
+        $article->tag($tags);
 
         return redirect('/panel/artikel')->with('sukses', 'Data Artikel Berhasil Disimpan');
     }
@@ -102,7 +105,8 @@ class ArtikelController extends Controller
      */
     public function show($id)
     {
-        $article = Artikel::with('user')->find($id);
+        $article = Artikel::with('user')
+            ->find($id);
         return response()->json($article);
     }
 
@@ -169,9 +173,13 @@ class ArtikelController extends Controller
         $article->judul_artikel = strtoupper(strip_tags($request->judulEdit));
         $article->judul_seo     = Str::slug(strip_tags($request->judulEdit));
         $article->tgl_artikel   = $request->tglEdit;
+        $article->tag           = $request->tagEdit;
         $article->isi_artikel   = $request->isiEdit;
         $article->user_id       = Auth::user()->id;
         $article->update();
+
+        $tags = explode(',', $request->tagEdit);
+        $article->tag($tags);
 
         return redirect('/panel/artikel')->with('sukses', 'Data Artikel Berhasil Diubah');
     }
@@ -194,12 +202,13 @@ class ArtikelController extends Controller
         return redirect('/panel/artikel')->with('sukses', 'Data Artikel Berhasil Dihapus');
     }
 
-    public function data(Request $request) {
+    public function data(Request $request)
+    {
         $columns = array(
             0 => 'id',
             1 => 'tgl_artikel',
             2 => 'judul_artikel',
-            3 => 'isi_artikel' 
+            3 => 'isi_artikel'
         );
 
         $totalData = Artikel::count();
@@ -213,9 +222,9 @@ class ArtikelController extends Controller
 
         if (empty($request->input('search.value'))) {
             $articles = Artikel::offset($start)
-                        ->limit($limit)
-                        ->orderBy($order, $dir)
-                        ->get();
+                ->limit($limit)
+                ->orderBy($order, $dir)
+                ->get();
         } else {
             $search = implode('* ', explode(' ', $request->input('search.value'))) . '*';
 

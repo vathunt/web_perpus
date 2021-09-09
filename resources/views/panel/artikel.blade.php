@@ -6,6 +6,10 @@
 <!-- Text Editor Style -->
 <link href="{{ asset('assets/vendors/froala-editor/froala_editor.pkgd.min.css') }}" rel="stylesheet" type="text/css" />
 <!-- Akhir Text Editor Style -->
+
+<!-- bootstrap-tagsinput -->
+<link rel="stylesheet" href="{{ asset('assets/vendors/bootstrap-tagsinput/bootstrap-tagsinput.css') }}" rel="stylesheet"
+    type="text/css" />
 @endsection
 
 @section('content')
@@ -91,10 +95,10 @@ function lihatArtikel(id) {
         dataType: "json"
     }).done(function(response) {
         const date = formattedDate(new Date(response.tgl_artikel));
-        const tags = response.tag.split('#');
+        const tags = response.tag.split(',');
 
         if (tags) {
-            tags.forEach(tag => $('#viewTag').append(`<span class='badge bg-secondary'>#${tag}</span> `));
+            tags.forEach(tag => $('#viewTag').append(`<span class='tag label label-info'>#${tag}</span> `));
         }
 
         $('#viewJudul').html(response.judul_artikel);
@@ -133,11 +137,11 @@ function editArtikel(id) {
     $.ajax({
         url: "{{ url('/') }}/panel/artikel/" + id,
         dataType: "json"
-    }).done( response => {
+    }).done(response => {
         $('#idEdit').val(response.id);
         $('#judulEdit').val(response.judul_artikel);
         $('#tglEdit').val(formattedDate(response.tgl_artikel));
-        $('#tagEdit').val(response.tag);
+        $('#tagEdit').tagsinput('add', response.tag);
 
         // Preview Thumbnail
         $("#previewThumbnail").html('');
@@ -169,16 +173,16 @@ function editArtikel(id) {
             "charCounterCount": true,
             "zIndex": 2501,
             "toolbarButtons": [
-            'undo', 'redo', 'clearFormatting', '|',
-            'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'inlineClass',
-            'paragraphStyle',
-            'lineHeight', '|',
-            'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|',
-            'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote',
-            '-', 'insertLink',
-            'insertImage', 'insertTable', '|',
-            'specialCharacters', 'insertHR', 'selectAll', '|',
-            'spellChecker', 'help', 'html', '|',
+                'undo', 'redo', 'clearFormatting', '|',
+                'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'inlineClass',
+                'paragraphStyle',
+                'lineHeight', '|',
+                'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|',
+                'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote',
+                '-', 'insertLink',
+                'insertImage', 'insertTable', '|',
+                'specialCharacters', 'insertHR', 'selectAll', '|',
+                'spellChecker', 'help', 'html', '|',
             ],
             "tabSpaces": 4,
             "fontFamilyDefaultSelection": "Arial",
@@ -193,7 +197,9 @@ function editArtikel(id) {
             "paragraphFormatSelection": true,
             "quickInsertButtons": ['table', 'ol', 'ul', 'hr'],
             "language": "id",
-            "imageEditButtons": ['imageReplace', 'imageAlign', 'imageRemove', '|', 'imageLink', 'linkOpen', 'linkEdit', 'linkRemove', '-', 'imageDisplay', 'imageStyle', 'imageAlt', 'imageSize'
+            "imageEditButtons": ['imageReplace', 'imageAlign', 'imageRemove', '|', 'imageLink',
+                'linkOpen', 'linkEdit', 'linkRemove', '-', 'imageDisplay', 'imageStyle', 'imageAlt',
+                'imageSize'
             ],
 
             // Set the image upload parameter.
@@ -244,10 +250,11 @@ function editArtikel(id) {
 @section('modal')
 <!-- Modal Tambah Artikel -->
 <div class="modal fade text-left" id="tmbArtikel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160"
-aria-hidden="true">
+    aria-hidden="true">
     <div class="modal-dialog modal-borderless modal-dialog-scrollable modal-full" role="document">
-        <form method="POST" class="form form-vertical" id="formTmbArtikel" action="{{ route('artikel.post') }}" enctype="multipart/form-data">
-        @csrf
+        <form method="POST" class="form form-vertical" id="formTmbArtikel" action="{{ route('artikel.post') }}"
+            enctype="multipart/form-data">
+            @csrf
             <div class="modal-content">
                 <div class="modal-header bg-primary">
                     <h5 class="modal-title white" id="myModalLabel160">
@@ -264,8 +271,8 @@ aria-hidden="true">
                                 <div class="form-group has-icon-left">
                                     <label for="judulArtikel">Judul Artikel</label>
                                     <div class="position-relative">
-                                        <input type="text" name="judulArtikel" id="judulArtikel"
-                                        class="form-control" autocomplete="off">
+                                        <input type="text" name="judulArtikel" id="judulArtikel" class="form-control"
+                                            autocomplete="off">
                                         <div class="form-control-icon">
                                             <i class="bi bi-chat-text"></i>
                                         </div>
@@ -277,7 +284,7 @@ aria-hidden="true">
                                     <label for="tglArtikel">Tanggal Artikel</label>
                                     <div class="position-relative">
                                         <input type="text" name="tglArtikel" id="tglArtikel"
-                                        class="datepicker form-control" readonly>
+                                            class="datepicker form-control" readonly>
                                         <div class="form-control-icon">
                                             <i class="bi bi-calendar-date"></i>
                                         </div>
@@ -288,29 +295,22 @@ aria-hidden="true">
                                 <div class="form-group">
                                     <label for="thumbArtikel" class="font-bold">Thumbnail Artikel</label>
                                     <input type="file" name="thumbArtikel" class="form-control" id="thumbArtikel"
-                                    accept="image/*">
+                                        accept="image/*">
                                     <img class="fotoThumbnail mt-2" style="max-width: 100%;">
                                 </div>
                             </div>
                             <div class="col-md-6 col-12">
-                                <div class="form-group has-icon-left">
+                                <div class="form-group">
                                     <label for="tagArtikel">Tags</label>
-                                    <small class="text-muted">&nbsp;
-                                        <i class="text-primary font-bold">*) Pisahkan dengan tanda (#). Misal : pustakawan#literasi#referensi</i>
-                                    </small>
                                     <div class="position-relative">
-                                        <input type="text" name="tagArtikel" id="tagArtikel" class="form-control" autocomplete="off">
-                                        <div class="form-control-icon">
-                                            <i class="bi bi-chat-text"></i>
-                                        </div>
+                                        <input type="text" name="tagArtikel" id="tagArtikel" data-role="tagsinput">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-group has-icon-left">
                                     <label for="isiArtikel">Isi Artikel</label>
-                                    <textarea name="isiArtikel" id="isiArtikel"
-                                    class="form-control"></textarea>
+                                    <textarea name="isiArtikel" id="isiArtikel" class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -325,7 +325,8 @@ aria-hidden="true">
                         <i class="bx bx-check d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Simpan</span>
                     </button>
-                    <button class="btn btn-primary" type="button" id="btnSubmitLoading" disabled="" style="display: none;">
+                    <button class="btn btn-primary" type="button" id="btnSubmitLoading" disabled=""
+                        style="display: none;">
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         Loading...
                     </button>
@@ -338,30 +339,30 @@ aria-hidden="true">
 
 <!-- Modal Lihat Artikel -->
 <div class="modal fade text-left" id="lhtArtikel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160"
-aria-hidden="true">
-<div class="modal-dialog modal-borderless modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-        <div class="modal-header bg-success">
-            <h5 class="modal-title white" id="myModalLabel160">
-                Lihat Artikel
-            </h5>
-            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                <i data-feather="x"></i>
-            </button>
-        </div>
-        <div class="modal-body">
-            <div class="card">
-                <div class="card-content">
-                    <div id="viewThumbnail"></div>
-                    <div class="card-body">
-                        <h5 class="card-title text-center" id="viewJudul"></h5>
-                        <div class="card-text text-center font-bold" id="viewTag"></div>
-                        <div class="card-text" id="viewIsi"></div>
+    aria-hidden="true">
+    <div class="modal-dialog modal-borderless modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-success">
+                <h5 class="modal-title white" id="myModalLabel160">
+                    Lihat Artikel
+                </h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-content">
+                        <div id="viewThumbnail"></div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center" id="viewJudul"></h5>
+                            <div class="card-text text-center font-bold" id="viewTag"></div>
+                            <div class="card-text" id="viewIsi"></div>
+                        </div>
                     </div>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Tanggal Artikel : <span class="font-bold"
-                        id="viewTanggal"></span></li>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Tanggal Artikel : <span class="font-bold" id="viewTanggal"></span>
+                        </li>
                         <li class="list-group-item">Diposting Oleh : <span class="font-bold" id="viewAdmin"></span></li>
                     </ul>
                 </div>
@@ -379,11 +380,12 @@ aria-hidden="true">
 
 <!-- Modal Edit Artikel -->
 <div class="modal fade text-left" id="editArtikel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160"
-aria-hidden="true">
+    aria-hidden="true">
     <div class="modal-dialog modal-borderless modal-dialog-scrollable modal-full" role="document">
-        <form method="POST" class="form form-vertical" id="formEditArtikel" action="{{ route('artikel.update') }}" enctype="multipart/form-data">
-        @csrf
-        @method('PUT')
+        <form method="POST" class="form form-vertical" id="formEditArtikel" action="{{ route('artikel.update') }}"
+            enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
             <input type="hidden" name="idEdit" id="idEdit">
             <div class="modal-content">
                 <div class="modal-header bg-primary">
@@ -402,7 +404,7 @@ aria-hidden="true">
                                     <label for="judulEdit">Judul Artikel</label>
                                     <div class="position-relative">
                                         <input type="text" name="judulEdit" id="judulEdit" class="form-control"
-                                        autocomplete="off">
+                                            autocomplete="off">
                                         <div class="form-control-icon">
                                             <i class="bi bi-chat-text"></i>
                                         </div>
@@ -414,7 +416,7 @@ aria-hidden="true">
                                     <label for="tglEdit">Tanggal Artikel</label>
                                     <div class="position-relative">
                                         <input type="text" name="tglEdit" id="tglEdit" class="datepicker form-control"
-                                        readonly>
+                                            readonly>
                                         <div class="form-control-icon">
                                             <i class="bi bi-calendar-date"></i>
                                         </div>
@@ -424,30 +426,26 @@ aria-hidden="true">
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
                                     <label for="thumbEdit" class="font-bold">Thumbnail Artikel</label>
-                                    <small class="text-muted"><i class="text-primary font-bold">*) Kosongkan jika tidak ada perubahan</i></small>
+                                    <small class="text-muted"><i class="text-primary font-bold">*) Kosongkan jika tidak
+                                            ada perubahan</i></small>
                                     <input type="file" name="thumbEdit" class="form-control" id="thumbEdit"
-                                    accept="image/*">
+                                        accept="image/*">
                                     <div id="previewThumbnail" class="mt-2"></div>
                                 </div>
                             </div>
                             <div class="col-md-6 col-12">
-                                <div class="form-group has-icon-left">
+                                <div class="form-group">
                                     <label for="tagEdit">Tags</label>
-                                    <small class="text-muted">&nbsp;
-                                        <i class="text-primary font-bold">*) Pisahkan dengan tanda (#). Misal : #pustakawan#literasi</i>
-                                    </small>
                                     <div class="position-relative">
-                                        <input type="text" name="tagEdit" id="tagEdit" class="form-control" autocomplete="off">
-                                        <div class="form-control-icon">
-                                            <i class="bi bi-chat-text"></i>
-                                        </div>
+                                        <input type="text" name="tagEdit" id="tagEdit" data-role="tagsinput">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-group has-icon-left">
                                     <label for="isiEdit">Detail Pengumuman</label>
-                                    <textarea name="isiEdit" id="isiEdit" class="form-control" autofocus="true"></textarea>
+                                    <textarea name="isiEdit" id="isiEdit" class="form-control"
+                                        autofocus="true"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -471,68 +469,68 @@ aria-hidden="true">
 
 <!-- Modal Hapus Artikel -->
 <div class="modal fade text-left" id="hapusArtikel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160"
-aria-hidden="true">
-<div class="modal-dialog modal-borderless modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-        <div class="modal-header bg-danger">
-            <h5 class="modal-title white" id="myModalLabel160">
-                Hapus Artikel
-            </h5>
-            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                <i data-feather="x"></i>
-            </button>
-        </div>
-        <div class="modal-body">
-            <h4 class="text-center">Hapus Artikel Ini?</h4>
-            <h5 class="text-center fst-italic" id="judulArtikelDelete">
-            </h3>
-        </div>
-        <div class="modal-footer">
-            <form action="{{ route('artikel.delete') }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <input type="hidden" name="idDelete" id="idDelete">
-                <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                    <i class="bx bx-x d-block d-sm-none"></i>
-                    <span class="d-none d-sm-block">Close</span>
+    aria-hidden="true">
+    <div class="modal-dialog modal-borderless modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title white" id="myModalLabel160">
+                    Hapus Artikel
+                </h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <i data-feather="x"></i>
                 </button>
-                <button type="submit" class="btn btn-danger ml-1">
-                    <i class="bx bx-check d-block d-sm-none"></i>
-                    <span class="d-none d-sm-block">Hapus</span>
-                </button>
-            </form>
+            </div>
+            <div class="modal-body">
+                <h4 class="text-center">Hapus Artikel Ini?</h4>
+                <h5 class="text-center fst-italic" id="judulArtikelDelete">
+                    </h3>
+            </div>
+            <div class="modal-footer">
+                <form action="{{ route('artikel.delete') }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <input type="hidden" name="idDelete" id="idDelete">
+                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Close</span>
+                    </button>
+                    <button type="submit" class="btn btn-danger ml-1">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Hapus</span>
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 </div>
 <!-- Akhir Modal Hapus Artikel -->
 @endsection
 
 @section('javascript')
 <script>
-    $('#btnSubmit').on('click', () => {
-        document.getElementById('btnSubmit').style.display = 'none';
-        document.getElementById('btnSubmitLoading').style.display = 'block';
-    });
+$('#btnSubmit').on('click', () => {
+    document.getElementById('btnSubmit').style.display = 'none';
+    document.getElementById('btnSubmitLoading').style.display = 'block';
+});
 </script>
 
 <!-- Uppercase Judul Artikel -->
 <script>
-    $('#judulArtikel').keyup(function() {
+$('#judulArtikel').keyup(function() {
     document.getElementById('judulArtikel').style.textTransform = "uppercase";
 });
 
-    $('#judulEdit').keyup(() => {
-        document.getElementById('judulEdit').style.textTransform = "uppercase";
-    });
+$('#judulEdit').keyup(() => {
+    document.getElementById('judulEdit').style.textTransform = "uppercase";
+});
 </script>
 <!-- End of Uppercase Judul Artikel -->
 
 <!-- Toggle Modal Tambah Artikel -->
 <script type="text/javascript">
-    $('#btnTmbArtikel').on('click', () => {
-        $('#tmbArtikel').modal('toggle');
-    });
+$('#btnTmbArtikel').on('click', () => {
+    $('#tmbArtikel').modal('toggle');
+});
 </script>
 <!-- Akhir Toggle Modal Tambah Artikel -->
 
@@ -542,18 +540,18 @@ aria-hidden="true">
 
 <!-- Validasi Form Tambah Artikel -->
 <script>
-    $("#formTmbArtikel").on('blur keyup', function() {
-        if ($("#formTmbArtikel").valid()) {
-            $('#btnSubmit').prop('disabled', false);
-        } else {
-            $('#btnSubmit').prop('disabled', 'disabled');
-        }
-    });
+$("#formTmbArtikel").on('blur keyup', function() {
+    if ($("#formTmbArtikel").valid()) {
+        $('#btnSubmit').prop('disabled', false);
+    } else {
+        $('#btnSubmit').prop('disabled', 'disabled');
+    }
+});
 
-    $.validator.addMethod('maxfilesize', function(value, element, param) {
-        let length = (element.files.length);
-        let fileSize = 0;
-        if (length > 0) {
+$.validator.addMethod('maxfilesize', function(value, element, param) {
+    let length = (element.files.length);
+    let fileSize = 0;
+    if (length > 0) {
         fileSize = element.files[0].size; // get file size
         fileSize = fileSize / 1000000; //file size in Mb
         return this.optional(element) || fileSize <= param;
@@ -562,138 +560,138 @@ aria-hidden="true">
     }
 });
 
-    $('#formTmbArtikel').validate({
-        errorClass: 'error is-invalid',
-        validClass: 'is-valid',
-        ignore: "[contenteditable='true'].fr-element.fr-view",
-        rules: {
-            judulArtikel: {
-                required: true
-            },
-            tglArtikel: {
-                required: true
-            },
-            isiArtikel: {
-                required: true
-            },
-            thumbArtikel: {
-                required: true,
-                extension: "jpg|jpeg|png",
-                maxfilesize: 2
-            }
+$('#formTmbArtikel').validate({
+    errorClass: 'error is-invalid',
+    validClass: 'is-valid',
+    ignore: "[contenteditable='true'].fr-element.fr-view",
+    rules: {
+        judulArtikel: {
+            required: true
         },
-        messages: {
-            judulArtikel: {
-                required: "Judul Artikel Harus Diisi"
-            },
-            tglArtikel: {
-                required: "Tanggal Artikel Belum Dipilih"
-            },
-            isiArtikel: {
-                required: "Detail Artikel Harus Diisi"
-            },
-            thumbArtikel: {
-                required: "Thumbnail Artikel Belum Dipilih",
-                extension: "Ekstensi File *.jpg, *.jpeg atau *.png",
-                maxfilesize: 'Ukuran File Tidak Boleh Lebih dari 2 MB'
-            }
+        tglArtikel: {
+            required: true
         },
-        errorPlacement: function(error, element) {
-            error.insertAfter(element);
+        isiArtikel: {
+            required: true
         },
-        highlight: function(element, errorClass, validClass) {
-            $(element).addClass(errorClass).removeClass(validClass);
-        },
-        unhighlight: function(element, errorClass, validClass) {
-            $(element).removeClass(errorClass).addClass(validClass);
+        thumbArtikel: {
+            required: true,
+            extension: "jpg|jpeg|png",
+            maxfilesize: 2
         }
-    });
+    },
+    messages: {
+        judulArtikel: {
+            required: "Judul Artikel Harus Diisi"
+        },
+        tglArtikel: {
+            required: "Tanggal Artikel Belum Dipilih"
+        },
+        isiArtikel: {
+            required: "Detail Artikel Harus Diisi"
+        },
+        thumbArtikel: {
+            required: "Thumbnail Artikel Belum Dipilih",
+            extension: "Ekstensi File *.jpg, *.jpeg atau *.png",
+            maxfilesize: 'Ukuran File Tidak Boleh Lebih dari 2 MB'
+        }
+    },
+    errorPlacement: function(error, element) {
+        error.insertAfter(element);
+    },
+    highlight: function(element, errorClass, validClass) {
+        $(element).addClass(errorClass).removeClass(validClass);
+    },
+    unhighlight: function(element, errorClass, validClass) {
+        $(element).removeClass(errorClass).addClass(validClass);
+    }
+});
 </script>
 <!-- Akhir Validasi Form Tambah Artikel -->
 
 <!-- Validasi Form Edit Artikel -->
 <script>
-    $("#formEditArtikel").on('blur keyup', function() {
-        if ($("#formEditArtikel").valid()) {
-            $('#btnEdit').prop('disabled', false);
-        } else {
-            $('#btnEdit').prop('disabled', 'disabled');
-        }
-    });
+$("#formEditArtikel").on('blur keyup', function() {
+    if ($("#formEditArtikel").valid()) {
+        $('#btnEdit').prop('disabled', false);
+    } else {
+        $('#btnEdit').prop('disabled', 'disabled');
+    }
+});
 
-    $.validator.addMethod('maxfilesize', function(value, element, param) {
-        let length = (element.files.length);
-        let fileSize = 0;
-        if (length > 0) {
-            fileSize = element.files[0].size; // get file size
-            fileSize = fileSize / 1000000; //file size in Mb
-            return this.optional(element) || fileSize <= param;
-        } else {
-            return this.optional(element) || fileSize <= param;
-        }
-    });
+$.validator.addMethod('maxfilesize', function(value, element, param) {
+    let length = (element.files.length);
+    let fileSize = 0;
+    if (length > 0) {
+        fileSize = element.files[0].size; // get file size
+        fileSize = fileSize / 1000000; //file size in Mb
+        return this.optional(element) || fileSize <= param;
+    } else {
+        return this.optional(element) || fileSize <= param;
+    }
+});
 
-    $('#formEditArtikel').validate({
-        errorClass: 'error is-invalid',
-        validClass: 'is-valid',
-        ignore: "[contenteditable='true'].fr-element.fr-view",
-        rules: {
-            judulEdit: {
-                required: true
-            },
-            tglEdit: {
-                required: true
-            },
-            isiEdit: {
-                required: true
-            },
-            thumbEdit: {
-                extension: "jpg|jpeg|png",
-                maxfilesize: 2
-            }
+$('#formEditArtikel').validate({
+    errorClass: 'error is-invalid',
+    validClass: 'is-valid',
+    ignore: "[contenteditable='true'].fr-element.fr-view",
+    rules: {
+        judulEdit: {
+            required: true
         },
-        messages: {
-            judulEdit: {
-                required: "Judul Artikel Harus Diisi"
-            },
-            tglEdit: {
-                required: "Tanggal Artikel Belum Dipilih"
-            },
-            isiEdit: {
-                required: "Detail Artikel Harus Diisi"
-            },
-            thumbEdit: {
-                extension: "Ekstensi File *.jpg, *.jpeg atau *.png",
-                maxfilesize: 'Ukuran File Tidak Boleh Lebih dari 2 MB'
-            }
+        tglEdit: {
+            required: true
         },
-        errorPlacement: function(error, element) {
-            error.insertAfter(element);
+        isiEdit: {
+            required: true
         },
-        highlight: function(element, errorClass, validClass) {
-            $(element).addClass(errorClass).removeClass(validClass);
-        },
-        unhighlight: function(element, errorClass, validClass) {
-            $(element).removeClass(errorClass).addClass(validClass);
+        thumbEdit: {
+            extension: "jpg|jpeg|png",
+            maxfilesize: 2
         }
-    });
+    },
+    messages: {
+        judulEdit: {
+            required: "Judul Artikel Harus Diisi"
+        },
+        tglEdit: {
+            required: "Tanggal Artikel Belum Dipilih"
+        },
+        isiEdit: {
+            required: "Detail Artikel Harus Diisi"
+        },
+        thumbEdit: {
+            extension: "Ekstensi File *.jpg, *.jpeg atau *.png",
+            maxfilesize: 'Ukuran File Tidak Boleh Lebih dari 2 MB'
+        }
+    },
+    errorPlacement: function(error, element) {
+        error.insertAfter(element);
+    },
+    highlight: function(element, errorClass, validClass) {
+        $(element).addClass(errorClass).removeClass(validClass);
+    },
+    unhighlight: function(element, errorClass, validClass) {
+        $(element).removeClass(errorClass).addClass(validClass);
+    }
+});
 </script>
 <!-- Akhir Validasi Form Edit Artikel -->
 
 <!-- Menampilkan Data Artikel di DataTable -->
 <script type="text/javascript">
-    var table_article = $('#tbl_artikel').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: {
-            "url": "{{ route('artikel.data') }}",
-            "dataType": "json",
-            "type": "POST",
-            "data": {
-                _token: "{{ csrf_token() }}"
-            }
-        },
-        columns: [{
+var table_article = $('#tbl_artikel').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: {
+        "url": "{{ route('artikel.data') }}",
+        "dataType": "json",
+        "type": "POST",
+        "data": {
+            _token: "{{ csrf_token() }}"
+        }
+    },
+    columns: [{
             "data": null,
             "orderable": false,
             render: function(data, type, row, meta) {
@@ -715,38 +713,38 @@ aria-hidden="true">
             "name": "action",
             "orderable": false
         },
-        ],
-        "columnDefs": [{
-            "targets": "_all",
-            "className": "text-center",
-            "visible": true
-        }],
-        "responsive": true
-    });
+    ],
+    "columnDefs": [{
+        "targets": "_all",
+        "className": "text-center",
+        "visible": true
+    }],
+    "responsive": true
+});
 </script>
 <!-- Menampilkan Data Artikel di DataTable -->
 
 <!-- Datepicker -->
 <link rel="stylesheet" type="text/css"
-href="{{ asset('assets/vendors/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css') }}">
+    href="{{ asset('assets/vendors/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css') }}">
 <script type="text/javascript" src="{{ asset('assets/vendors/bootstrap-datepicker/dist/js/bootstrap-datepicker.js') }}">
 </script>
 <script type="text/javascript"
-src="{{ asset('assets/vendors/bootstrap-datepicker/dist/locales/bootstrap-datepicker.id.min.js') }}"></script>
+    src="{{ asset('assets/vendors/bootstrap-datepicker/dist/locales/bootstrap-datepicker.id.min.js') }}"></script>
 
 <script>
-    $('.datepicker').datepicker({
-        format: 'yyyy-mm-dd',
-        autoclose: true,
-        clearBtn: true,
-        language: 'id',
-        orientation: 'bottom right',
-        showOnFocus: true,
-        todayBtn: "linked",
-        todayHighlight: true,
-        onSelect: (d, i) => {
-            if (d !== i.lastVal) $(this).change()
-        },
+$('.datepicker').datepicker({
+    format: 'yyyy-mm-dd',
+    autoclose: true,
+    clearBtn: true,
+    language: 'id',
+    orientation: 'bottom right',
+    showOnFocus: true,
+    todayBtn: "linked",
+    todayHighlight: true,
+    onSelect: (d, i) => {
+        if (d !== i.lastVal) $(this).change()
+    },
     endDate: new Date(new Date().setDate(new Date().getDate() + 0))
 });
 </script>
@@ -756,93 +754,94 @@ src="{{ asset('assets/vendors/bootstrap-datepicker/dist/locales/bootstrap-datepi
 <script type="text/javascript" src="{{ asset('assets/vendors/froala-editor/froala_editor.pkgd.min.js') }}"></script>
 
 <script>
-    new FroalaEditor('#isiArtikel', {
-        "charCounterCount": true,
-        "placeholderText": 'Isi Artikel Ketik Disini!',
-        "zIndex": 2501, // Untuk memunculkan popup bawaan froala jika ada dalam modal bootstrap
-        "toolbarButtons": [
-            'undo', 'redo', 'clearFormatting', '|',
-            'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'inlineClass', 'paragraphStyle',
-            'lineHeight', '|',
-            'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|',
-            'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-',
-            'insertLink',
-            'insertImage', 'insertTable', '|',
-            'specialCharacters', 'insertHR', 'selectAll', '|',
-            'spellChecker', 'help', 'html', '|',
-        ],
-        "tabSpaces": 4,
-        "fontFamilyDefaultSelection": "Arial",
-        "fontFamilySelection": true,
-        "fontSizeSelection": true,
-        "fontSizeDefaultSelection": "12",
-        "fontSizeUnit": "px",
-        "autofocus": true,
-        "attribution": false,
-        "linkAlwaysBlank": true,
-        "paragraphDefaultSelection": "Normal",
-        "paragraphFormatSelection": true,
-        "quickInsertButtons": ['table', 'ol', 'ul', 'hr'],
-        "language": "id",
-        "imageEditButtons": ['imageReplace', 'imageAlign', 'imageRemove', '|', 'imageLink', 'linkOpen', 'linkEdit', 'linkRemove', '-', 'imageDisplay', 'imageStyle', 'imageAlt', 'imageSize'
-        ],
+new FroalaEditor('#isiArtikel', {
+    "charCounterCount": true,
+    "placeholderText": 'Isi Artikel Ketik Disini!',
+    "zIndex": 2501, // Untuk memunculkan popup bawaan froala jika ada dalam modal bootstrap
+    "toolbarButtons": [
+        'undo', 'redo', 'clearFormatting', '|',
+        'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'inlineClass', 'paragraphStyle',
+        'lineHeight', '|',
+        'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|',
+        'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-',
+        'insertLink',
+        'insertImage', 'insertTable', '|',
+        'specialCharacters', 'insertHR', 'selectAll', '|',
+        'spellChecker', 'help', 'html', '|',
+    ],
+    "tabSpaces": 4,
+    "fontFamilyDefaultSelection": "Arial",
+    "fontFamilySelection": true,
+    "fontSizeSelection": true,
+    "fontSizeDefaultSelection": "12",
+    "fontSizeUnit": "px",
+    "autofocus": true,
+    "attribution": false,
+    "linkAlwaysBlank": true,
+    "paragraphDefaultSelection": "Normal",
+    "paragraphFormatSelection": true,
+    "quickInsertButtons": ['table', 'ol', 'ul', 'hr'],
+    "language": "id",
+    "imageEditButtons": ['imageReplace', 'imageAlign', 'imageRemove', '|', 'imageLink', 'linkOpen', 'linkEdit',
+        'linkRemove', '-', 'imageDisplay', 'imageStyle', 'imageAlt', 'imageSize'
+    ],
 
-        // Set the image upload parameter.
-        "imageUploadParam": 'image_param',
+    // Set the image upload parameter.
+    "imageUploadParam": 'image_param',
 
-        // Set the image upload URL.
-        "imageUploadURL": "{{ route('upload.gambar.editor') }}",
+    // Set the image upload URL.
+    "imageUploadURL": "{{ route('upload.gambar.editor') }}",
 
-        // Additional upload params.
-        "imageUploadParams": {
-            "froala": 'true',
-            "_token": "{{ csrf_token() }}"
-        },
+    // Additional upload params.
+    "imageUploadParams": {
+        "froala": 'true',
+        "_token": "{{ csrf_token() }}"
+    },
 
-        // Set request type.
-        "imageUploadMethod": 'POST',
+    // Set request type.
+    "imageUploadMethod": 'POST',
 
-        // Set max image size to 5MB.
-        "imageMaxSize": 5 * 1024 * 1024,
+    // Set max image size to 5MB.
+    "imageMaxSize": 5 * 1024 * 1024,
 
-        // Allow to upload PNG and JPG.
-        "imageAllowedTypes": ['jpeg', 'jpg', 'png', 'gif'],
+    // Allow to upload PNG and JPG.
+    "imageAllowedTypes": ['jpeg', 'jpg', 'png', 'gif'],
 
-        "events": {
-            'image.removed': ($img) => {
-                $.ajax({
-                    "url": "{{ route('remove.gambar.editor') }}",
-                    "dataType": "json",
-                    "type": "POST",
-                    "data": {
-                        src: $img.attr('src'),
-                        "_token": "{{ csrf_token() }}"
-                    }
-                });
-            }
+    "events": {
+        'image.removed': ($img) => {
+            $.ajax({
+                "url": "{{ route('remove.gambar.editor') }}",
+                "dataType": "json",
+                "type": "POST",
+                "data": {
+                    src: $img.attr('src'),
+                    "_token": "{{ csrf_token() }}"
+                }
+            });
         }
-    });
+    }
+});
 </script>
 <!-- End of Text Editor -->
 
 <!-- Menampilkan Foto Thumbnail (Insert) -->
 <script>
-    $(document).ready(function() {
-        $("#thumbArtikel").change(function(event) {
-            fadeInAdd();
-            getURL(this);
-        });
+$(document).ready(function() {
+    $("#thumbArtikel").change(function(event) {
+        fadeInAdd();
+        getURL(this);
+    });
 
-        $("#thumbArtikel").on('click', function(event) {
-            fadeInAdd();
-        });
+    $("#thumbArtikel").on('click', function(event) {
+        fadeInAdd();
+    });
 
-        function getURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                var filename = $("#thumbArtikel").val();
-                filename = filename.substring(filename.lastIndexOf('\\') + 1);
-                reader.onload = function(e) {
+    function getURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            var filename = $("#thumbArtikel").val();
+            filename = filename.substring(filename.lastIndexOf('\\') + 1);
+            reader.onload = function(e) {
                 // debugger;
                 $('.fotoThumbnail').attr('src', e.target.result);
                 $('.fotoThumbnail').hide();
@@ -854,34 +853,34 @@ src="{{ asset('assets/vendors/bootstrap-datepicker/dist/locales/bootstrap-datepi
     }
 });
 
-    function fadeInAdd() {
-        fadeInAlert();
-    }
+function fadeInAdd() {
+    fadeInAlert();
+}
 
-    function fadeInAlert(text) {
-        $(".alert").text(text).addClass("loadAnimate");
-    }
+function fadeInAlert(text) {
+    $(".alert").text(text).addClass("loadAnimate");
+}
 </script>
 <!-- Akhir Menampilkan Foto Thumbnail (Insert) -->
 
 <!-- Menampilkan Foto Thumbnail (Update) -->
 <script>
-    $(document).ready(function() {
-        $("#thumbEdit").change(function(event) {
-            fadeInAdd();
-            getURL(this);
-        });
+$(document).ready(function() {
+    $("#thumbEdit").change(function(event) {
+        fadeInAdd();
+        getURL(this);
+    });
 
-        $("#thumbEdit").on('click', function(event) {
-            fadeInAdd();
-        });
+    $("#thumbEdit").on('click', function(event) {
+        fadeInAdd();
+    });
 
-        function getURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                var filename = $("#thumbEdit").val();
-                filename = filename.substring(filename.lastIndexOf('\\') + 1);
-                reader.onload = function(e) {
+    function getURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            var filename = $("#thumbEdit").val();
+            filename = filename.substring(filename.lastIndexOf('\\') + 1);
+            reader.onload = function(e) {
                 // debugger;
                 $('#thumbnailTampil').attr('src', e.target.result);
                 $('#thumbnailTampil').hide();
@@ -893,13 +892,16 @@ src="{{ asset('assets/vendors/bootstrap-datepicker/dist/locales/bootstrap-datepi
     }
 });
 
-    function fadeInAdd() {
-        fadeInAlert();
-    }
+function fadeInAdd() {
+    fadeInAlert();
+}
 
-    function fadeInAlert(text) {
-        $(".alert").text(text).addClass("loadAnimate");
-    }
+function fadeInAlert(text) {
+    $(".alert").text(text).addClass("loadAnimate");
+}
 </script>
 <!-- Akhir Menampilkan Foto Thumbnail (Update) -->
+
+<!-- bootstrap-tagsinput -->
+<script src="{{ asset('assets/vendors/bootstrap-tagsinput/bootstrap-tagsinput.js') }}"></script>
 @endsection

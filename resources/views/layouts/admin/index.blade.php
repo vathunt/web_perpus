@@ -62,7 +62,7 @@
     <!-- Feather Icons -->
     <script src="{{ asset('assets/js/feather-icons.min.js') }}"></script>
     <script>
-        feather.replace();
+    feather.replace();
     </script>
 
     <script src="{{ asset('assets/js/main.js') }}"></script>

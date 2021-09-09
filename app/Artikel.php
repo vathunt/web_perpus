@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Artikel extends Model
 {
+    use \Conner\Tagging\Taggable;
+
     protected $table = 'artikel';
 
     protected $dates = ['tgl_artikel'];
@@ -20,7 +22,8 @@ class Artikel extends Model
         'user_id'
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo('App\User');
     }
 }

@@ -6,6 +6,8 @@
 <!-- Text Editor Style -->
 <link href="{{ asset('assets/vendors/froala-editor/froala_editor.pkgd.min.css') }}" rel="stylesheet" type="text/css" />
 <!-- Akhir Text Editor Style -->
+
+<link rel="stylesheet" href="{{ asset('assets/vendors/choices.js/choices.min.css') }}">
 @endsection
 
 @section('content')
@@ -33,7 +35,7 @@
             <div class="row">
                 <div class="col-12 col-lg-12">
                     <div class="btn-group mb-3" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-primary" id="btnTmbArtikel">Tambah Berita</button>
+                        <button type="button" class="btn btn-primary" id="btnTmbBerita">Tambah Berita</button>
                     </div>
                     <div class="card">
                         <div class="card-header">
@@ -48,7 +50,7 @@
                             @endforeach
                             @endif
                             <div class="table-responsive">
-                                <table class="table table-hover table-bordered table-lg" id="tbl_artikel">
+                                <table class="table table-hover table-bordered table-lg" id="tbl_berita">
                                     <thead class="text-center">
                                         <tr>
                                             <th>No</th>
@@ -72,7 +74,7 @@
 </div>
 @endsection
 
-<!-- Lihat, Update dan Delete Artikel -->
+<!-- Lihat, Update dan Delete Berita -->
 <script>
 // Fungsi Merubah Format Tanggal Menjadi mm/dd/yyyy
 function formattedDate(inputDate) {
@@ -85,9 +87,9 @@ function formattedDate(inputDate) {
     }
 }
 
-function lihatArtikel(id) {
+function lihatBerita(id) {
     $.ajax({
-        url: "{{ url('/') }}/panel/artikel/" + id,
+        url: "{{ url('/') }}/panel/berita/" + id,
         dataType: "json"
     }).done(function(response) {
         const date = formattedDate(new Date(response.tgl_artikel));
@@ -108,30 +110,30 @@ function lihatArtikel(id) {
             thumbnail = response.thumbnail_artikel
         }
 
-        $("#viewThumbnail").append("<img src='../assets/images/thumbnail/artikel/" + thumbnail +
-            "' id='thumbnailArtikel' class='card-img-top img-fluid' alt='Thumbnail " + response
+        $("#viewThumbnail").append("<img src='../assets/images/thumbnail/berita/" + thumbnail +
+            "' id='thumbnailBerita' class='card-img-top img-fluid' alt='Thumbnail " + response
             .judul_artikel + "'>");
 
-        $('#lhtArtikel').modal('toggle');
+        $('#lhtBerita').modal('toggle');
     });
 }
 
-function hapusArtikel(id) {
+function hapusBerita(id) {
     $.ajax({
-        url: "{{ url('/') }}/panel/artikel/" + id,
+        url: "{{ url('/') }}/panel/berita/" + id,
         dataType: "json"
     }).done((response) => {
         $('#idDelete').val(response.id);
         $('#judulArtikelDelete').html(`${response.judul_artikel}`);
 
-        $('#hapusArtikel').modal('toggle');
+        $('#hapusBerita').modal('toggle');
     });
 }
 
-function editArtikel(id) {
+function editBerita(id) {
     $('.datepicker').datepicker('destroy');
     $.ajax({
-        url: "{{ url('/') }}/panel/artikel/" + id,
+        url: "{{ url('/') }}/panel/berita/" + id,
         dataType: "json"
     }).done(response => {
         $('#idEdit').val(response.id);
@@ -238,23 +240,23 @@ function editArtikel(id) {
             editor.html.set(response.isi_artikel);
         });
 
-        $('#editArtikel').modal('toggle');
+        $('#editBerita').modal('toggle');
     });
 }
 </script>
 
 @section('modal')
-<!-- Modal Tambah Artikel -->
-<div class="modal fade text-left" id="tmbArtikel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160"
+<!-- Modal Tambah Berita -->
+<div class="modal fade text-left" id="tmbBerita" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160"
     aria-hidden="true">
     <div class="modal-dialog modal-borderless modal-dialog-scrollable modal-full" role="document">
-        <form method="POST" class="form form-vertical" id="formTmbArtikel" action="{{ route('artikel.post') }}"
+        <form method="POST" class="form form-vertical" id="formTmbBerita" action="{{ route('berita.post') }}"
             enctype="multipart/form-data">
             @csrf
             <div class="modal-content">
                 <div class="modal-header bg-primary">
                     <h5 class="modal-title white" id="myModalLabel160">
-                        Tambah Artikel
+                        Tambah Berita
                     </h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <i data-feather="x"></i>
@@ -265,9 +267,9 @@ function editArtikel(id) {
                         <div class="row">
                             <div class="col-md-9 col-12">
                                 <div class="form-group has-icon-left">
-                                    <label for="judulArtikel">Judul Artikel</label>
+                                    <label for="judulBerita">Judul Berita</label>
                                     <div class="position-relative">
-                                        <input type="text" name="judulArtikel" id="judulArtikel" class="form-control"
+                                        <input type="text" name="judulBerita" id="judulBerita" class="form-control"
                                             autocomplete="off">
                                         <div class="form-control-icon">
                                             <i class="bi bi-chat-text"></i>
@@ -277,9 +279,9 @@ function editArtikel(id) {
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group has-icon-left">
-                                    <label for="tglArtikel">Tanggal Artikel</label>
+                                    <label for="tglBerita">Tanggal Berita</label>
                                     <div class="position-relative">
-                                        <input type="text" name="tglArtikel" id="tglArtikel"
+                                        <input type="text" name="tglBerita" id="tglBerita"
                                             class="datepicker form-control" readonly>
                                         <div class="form-control-icon">
                                             <i class="bi bi-calendar-date"></i>
@@ -289,32 +291,36 @@ function editArtikel(id) {
                             </div>
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
-                                    <label for="thumbArtikel" class="font-bold">Thumbnail Artikel</label>
-                                    <input type="file" name="thumbArtikel" class="form-control" id="thumbArtikel"
+                                    <label for="thumbBerita" class="font-bold">Thumbnail Berita</label>
+                                    <input type="file" name="thumbBerita" class="form-control" id="thumbBerita"
                                         accept="image/*">
                                     <img class="fotoThumbnail mt-2" style="max-width: 100%;">
                                 </div>
                             </div>
                             <div class="col-md-6 col-12">
-                                <div class="form-group has-icon-left">
-                                    <label for="tagArtikel">Tags</label>
-                                    <small class="text-muted">&nbsp;
-                                        <i class="text-primary font-bold">*) Pisahkan dengan tanda (#). Misal :
-                                            pustakawan#literasi#referensi</i>
-                                    </small>
-                                    <div class="position-relative">
-                                        <input type="text" name="tagArtikel" id="tagArtikel" class="form-control"
-                                            autocomplete="off">
-                                        <div class="form-control-icon">
-                                            <i class="bi bi-chat-text"></i>
-                                        </div>
-                                    </div>
+                                <div class="form-group">
+                                    <label for="kategoriBerita" class="font-bold">Kategori Berita</label>
+                                    <select name="" id="" class="choices form-select multiple-remove"
+                                        multiple="multiple">
+                                        <optgroup label="Figures">
+                                            <option value="1">Nilai 1</option>
+                                            <option value="2">Nilai 2</option>
+                                            <option value="3">Nilai 3</option>
+                                            <option value="4">Nilai 4</option>
+                                        </optgroup>
+                                        <optgroup label="Colors">
+                                            <option value="1">Nilai 1</option>
+                                            <option value="2">Nilai 2</option>
+                                            <option value="3">Nilai 3</option>
+                                            <option value="4">Nilai 4</option>
+                                        </optgroup>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-group has-icon-left">
-                                    <label for="isiArtikel">Isi Artikel</label>
-                                    <textarea name="isiArtikel" id="isiArtikel" class="form-control"></textarea>
+                                    <label for="isiBerita">Isi Berita</label>
+                                    <textarea name="isiBerita" id="isiBerita" class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -339,7 +345,7 @@ function editArtikel(id) {
         </form>
     </div>
 </div>
-<!-- Akhir Modal Tambah Artikel -->
+<!-- Akhir Modal Tambah Berita -->
 
 <!-- Modal Lihat Artikel -->
 <div class="modal fade text-left" id="lhtArtikel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160"
@@ -538,13 +544,13 @@ $('#judulEdit').keyup(() => {
 </script>
 <!-- End of Uppercase Judul Artikel -->
 
-<!-- Toggle Modal Tambah Artikel -->
+<!-- Toggle Modal Tambah Berita -->
 <script type="text/javascript">
-$('#btnTmbArtikel').on('click', () => {
-    $('#tmbArtikel').modal('toggle');
+$('#btnTmbBerita').on('click', () => {
+    $('#tmbBerita').modal('toggle');
 });
 </script>
-<!-- Akhir Toggle Modal Tambah Artikel -->
+<!-- Akhir Toggle Modal Tambah Berita -->
 
 <!-- jQuery Validate Plugins -->
 <script src="{{ asset('assets/vendors/validate/jquery.validate.min.js') }}"></script>
@@ -913,4 +919,6 @@ function fadeInAlert(text) {
 }
 </script>
 <!-- Akhir Menampilkan Foto Thumbnail (Update) -->
+
+<script src="{{ asset('assets/vendors/choices.js/choices.min.js') }}"></script>
 @endsection

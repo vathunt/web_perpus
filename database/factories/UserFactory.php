@@ -20,13 +20,13 @@ use Illuminate\Support\Facades\Hash;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
-        'username' => Str::random(7),
+        'username' => 'user',
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
         'password' => Hash::make('password'), // password
         'role' => 'admin',
-        'image' => Str::random(7).".jpg",
+        'image' => Str::random(7) . ".jpg",
         'remember_token' => Str::random(10),
     ];
 });

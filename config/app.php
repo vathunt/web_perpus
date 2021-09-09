@@ -187,6 +187,7 @@ return [
          * Installed Providers
          */
         Intervention\Image\ImageServiceProvider::class,
+        \Conner\Tagging\Providers\TaggingServiceProvider::class,
 
 
     ],
