@@ -16,64 +16,71 @@
 
                 <li class="sidebar-item {{ set_active('admin.panel') }}">
                     <a href="{{ route('admin.panel') }}" class='sidebar-link'>
-                        <i class="bi bi-grid-fill"></i>
+                        <i class="bi bi-grid"></i>
                         <span>Beranda</span>
                     </a>
                 </li>
 
                 <li class="sidebar-item {{ set_active('slide.banner') }}">
                     <a href="{{ route('slide.banner') }}" class='sidebar-link'>
-                        <i class="bi bi-collection"></i>
+                        <i class="bi bi-collection-fill"></i>
                         <span>Banner Slide</span>
                     </a>
                 </li>
 
                 <li class="sidebar-item {{ set_active('panel.artikel') }}">
                     <a href="{{ route('panel.artikel') }}" class='sidebar-link'>
-                        <i class="bi bi-pen-fill"></i>
+                        <i class="bi bi-pen"></i>
                         <span>Artikel</span>
                     </a>
                 </li>
 
                 <li class="sidebar-item {{ set_active('panel.berita') }}">
                     <a href="{{ route('panel.berita') }}" class='sidebar-link'>
-                        <i class="bi bi-file-earmark-text"></i>
+                        <i class="bi bi-file-earmark-text-fill"></i>
                         <span>Berita</span>
                     </a>
                 </li>
 
                 <li class="sidebar-item {{ set_active('panel.pengumuman') }}">
                     <a href="{{ route('panel.pengumuman') }}" class='sidebar-link'>
-                        <i class="bi bi-mic"></i>
+                        <i class="bi bi-megaphone"></i>
                         <span>Pengumuman</span>
                     </a>
                 </li>
 
                 <li class="sidebar-item ">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-calendar-date"></i>
+                        <i class="bi bi-calendar-date-fill"></i>
                         <span>Agenda</span>
                     </a>
                 </li>
 
                 <li class="sidebar-item ">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-bar-chart-line-fill"></i>
+                        <i class="bi bi-bar-chart-line"></i>
                         <span>Polling</span>
                     </a>
                 </li>
 
                 <li class="sidebar-item ">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-download"></i>
+                        <i class="bi bi-cloud-download-fill"></i>
                         <span>Download</span>
                     </a>
                 </li>
 
                 <li class="sidebar-item ">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-camera-fill"></i>
+                        <i class="bi bi-camera"></i>
                         <span>Galeri</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item {{ set_active('panel.pengguna') }}">
+                    <a href="{{ route('panel.pengguna') }}" class='sidebar-link'>
+                        <i class="bi bi-person-badge-fill"></i>
+                        <span>Pengguna</span>
                     </a>
                 </li>
 

@@ -179,7 +179,7 @@ class ArtikelController extends Controller
         $article->update();
 
         $tags = explode(',', $request->tagEdit);
-        $article->tag($tags);
+        $article->retag(array($tags));
 
         return redirect('/panel/artikel')->with('sukses', 'Data Artikel Berhasil Diubah');
     }
@@ -198,6 +198,7 @@ class ArtikelController extends Controller
         File::delete($this->pathThumbnail . '/' . $article->thumbnail_artikel);
 
         $article->delete();
+        $article->untag($article->tag);
 
         return redirect('/panel/artikel')->with('sukses', 'Data Artikel Berhasil Dihapus');
     }

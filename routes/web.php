@@ -63,6 +63,10 @@ Route::group(['prefix' => 'panel', 'middleware' => ['auth', 'revalidate']], func
     Route::put('/pengumuman', 'PengumumanController@update')->name('pengumuman.update');
     Route::delete('/pengumuman', 'PengumumanController@destroy')->name('pengumuman.delete');
 
+    // Route Panel Pengguna Administrator
+    Route::get('/pengguna', 'PenggunaController@index')->name('panel.pengguna');
+
+
     // Route Upload dan Remove Gambar Text Editor
     Route::post('/pengumuman/upload', 'ImageController@upload_image')->name('upload.gambar.editor');
     Route::post('/pengumuman/remove', 'ImageController@remove_image')->name('remove.gambar.editor');

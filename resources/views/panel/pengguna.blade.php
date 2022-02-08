@@ -1,6 +1,6 @@
 @extends('layouts.admin.index')
 
-@section('title', 'Banner Slide')
+@section('title', 'Pengguna')
 
 @section('style-css')
 <!-- Text Editor Style -->

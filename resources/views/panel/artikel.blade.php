@@ -91,7 +91,7 @@ function formattedDate(inputDate) {
 
 function lihatArtikel(id) {
     $.ajax({
-        url: "{{ url('/') }}/panel/artikel/" + id,
+        url: `{{ url('/') }}/panel/artikel/${id}`,
         dataType: "json"
     }).done(function(response) {
         const date = formattedDate(new Date(response.tgl_artikel));
@@ -112,9 +112,8 @@ function lihatArtikel(id) {
             thumbnail = response.thumbnail_artikel
         }
 
-        $("#viewThumbnail").append("<img src='../assets/images/thumbnail/artikel/" + thumbnail +
-            "' id='thumbnailArtikel' class='card-img-top img-fluid' alt='Thumbnail " + response
-            .judul_artikel + "'>");
+        $("#viewThumbnail").append(`<img src='../assets/images/thumbnail/artikel/${thumbnail}' id='thumbnailArtikel' class='card-img-top img-fluid' alt='Thumbnail ${response
+            .judul_artikel}'>`);
 
         $('#lhtArtikel').modal('toggle');
     });
@@ -122,7 +121,7 @@ function lihatArtikel(id) {
 
 function hapusArtikel(id) {
     $.ajax({
-        url: "{{ url('/') }}/panel/artikel/" + id,
+        url: `{{ url('/') }}/panel/artikel/${id}`,
         dataType: "json"
     }).done((response) => {
         $('#idDelete').val(response.id);
@@ -135,7 +134,7 @@ function hapusArtikel(id) {
 function editArtikel(id) {
     $('.datepicker').datepicker('destroy');
     $.ajax({
-        url: "{{ url('/') }}/panel/artikel/" + id,
+        url: `{{ url('/') }}/panel/artikel/${id}`,
         dataType: "json"
     }).done(response => {
         $('#idEdit').val(response.id);
@@ -150,8 +149,9 @@ function editArtikel(id) {
             gambar = response.thumbnail_artikel;
         }
 
-        $("#previewThumbnail").append("<img src='../assets/images/thumbnail/artikel/" + gambar +
-            "' id='thumbnailTampil' style='max-width: 100%;'>");
+        $("#previewThumbnail").append(
+            `<img src='../assets/images/thumbnail/artikel/${gambar}' id='thumbnailTampil' style='max-width: 100%;'>`
+        );
         // End of Preview Thumbnail
 
         $('.datepicker').datepicker({

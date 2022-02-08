@@ -188,6 +188,7 @@ return [
          */
         Intervention\Image\ImageServiceProvider::class,
         \Conner\Tagging\Providers\TaggingServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
 
 
     ],
