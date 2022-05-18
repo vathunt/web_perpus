@@ -119,15 +119,13 @@ class SlideController extends Controller
 			$request,
 			[
 				'gambar_slide_edit' 	=> 'image|mimes:jpg,png,jpeg|file|max:1024',
-				'ket_gambar_edit'		=> 'required',
-				'status_tampil_edit' 	=> 'required'
+				'ket_gambar_edit'		=> 'required'
 			],
 			[
 				'gambar_slide_edit.image' 		=> 'Gambar Banner Slide Harus Berbentuk File Gambar',
 				'gambar_slide_edit.mimes' 		=> 'Ekstensi Yang Diijinkan Harus *.png, *.jpg, *.jpeg',
 				'gambar_slide_edit.max'  		=> 'Ukuran File Tidak Boleh Lebih dari 1 MB',
-				'ket_gambar_edit.required'		=> 'Keterangan Gambar Harus Diisi',
-				'status_tampil_edit.required'	=> 'Status Tampil Harus Dipilih',
+				'ket_gambar_edit.required'		=> 'Keterangan Gambar Harus Diisi'
 			]
 		);
 
